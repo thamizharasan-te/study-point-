@@ -161,4 +161,4 @@ Supabase → **Project Settings** (கியர் ஐகான்) → **API** 
 - பொதுப் பக்கங்கள் ISR (`revalidate = 60`); admin செயல்கள் `revalidatePath` மூலம் உடனே புதுப்பிக்கும்.
 - Supabase அமைக்கப்படாவிட்டால் `src/lib/data.ts` → `src/lib/defaults.ts` மாதிரி உள்ளடக்கத்துக்கு மாறும்.
 - தற்காலிகப் படங்களை மீண்டும் உருவாக்க: `node scripts/make-placeholders.mjs`
-- நிறங்கள்: `tailwind.config.ts` (`brand.green`, `brand.pink`, `brand.navy`, `brand.cream`). எழுத்துருக்கள்: Playfair Display (தலைப்புகள்), Nunito (உரை), Kaushan Script (லோகோ), Noto Sans Tamil (admin தமிழ் வரிகள்).
+- நிறங்கள்: `tailwind.config.ts` (`brand.green`, `brand.pink`, `brand.navy`, `brand.cream`). எழுத்துருக்கள்: Playfair Display (தலைப்புகள்), Nunito (உரை), Kaushan Script (லோகோ), Noto Sans Tamil (admin தமிழ் வரிகள்) — எல்லாம் npm மூலம் self-host (@fontsource).

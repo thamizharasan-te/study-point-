@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Self-hosted font stacks (see layout.tsx). Tailwind's font-display / font-sans / font-script read these. */
+:root {
+  --font-display: "Playfair Display Variable";
+  --font-body: "Nunito Variable";
+  --font-script: "Kaushan Script";
+  --font-tamil: "Noto Sans Tamil Variable";
+}
+
 @layer base {
   html { scroll-behavior: smooth; }
   body { @apply bg-brand-cream text-brand-ink font-sans antialiased; }
