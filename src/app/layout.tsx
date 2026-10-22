@@ -1,10 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Kaushan_Script, Nunito, Playfair_Display } from "next/font/google";
+import { Kaushan_Script, Noto_Sans_Tamil, Nunito, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { SITE_NAME, SITE_URL } from "@/lib/utils";
 
 const display = Playfair_Display({ subsets: ["latin"], weight: ["600", "700", "800"], variable: "--font-display", display: "swap" });
 const body = Nunito({ subsets: ["latin"], weight: ["400", "600", "700", "800"], variable: "--font-body", display: "swap" });
+// Tamil helper lines in the admin area use this font.
+const tamil = Noto_Sans_Tamil({ subsets: ["tamil"], weight: ["400", "600"], variable: "--font-tamil", display: "swap" });
 const script = Kaushan_Script({ subsets: ["latin"], weight: "400", variable: "--font-script", display: "swap" });
 
 export const metadata: Metadata = {
@@ -26,7 +28,7 @@ export const viewport: Viewport = { themeColor: "#2e7d32", width: "device-width"
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${script.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${script.variable} ${tamil.variable}`}>
       <body>{children}</body>
     </html>
   );
