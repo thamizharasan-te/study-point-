@@ -1,0 +1,105 @@
+-- ============================================================================
+-- Study Point — database tables
+-- Run this FIRST in Supabase → SQL Editor (then policies.sql, storage.sql, seed.sql).
+-- Safe to re-run: every statement is idempotent.
+-- ============================================================================
+
+-- Who may use /admin. Add rows with supabase/add_admin.sql.
+create table if not exists public.admin_users (
+  email      text primary key check (email = lower(email)),
+  created_at timestamptz not null default now()
+);
+
+-- Enquiries sent from the website form.
+create table if not exists public.enquiries (
+  id          uuid primary key default gen_random_uuid(),
+  created_at  timestamptz not null default now(),
+  parent_name text not null check (char_length(parent_name) between 2 and 100),
+  phone       text not null check (char_length(phone) between 7 and 30),
+  child_name  text,
+  child_age   text,
+  interest    text not null default 'Not sure yet',
+  branch      text,
+  message     text check (char_length(message) <= 1000),
+  status      text not null default 'new' check (status in ('new', 'contacted', 'joined')),
+  ip_hash     text  -- salted hash of the sender's IP, used only for rate limiting
+);
+create index if not exists enquiries_status_created_idx on public.enquiries (status, created_at desc);
+create index if not exists enquiries_ip_created_idx on public.enquiries (ip_hash, created_at);
+
+-- Gallery photos. image_url is the public URL; storage_path is the file in the
+-- "gallery" bucket (null for built-in sample images).
+create table if not exists public.gallery_items (
+  id           uuid primary key default gen_random_uuid(),
+  image_url    text not null,
+  storage_path text,
+  alt          text not null default '',
+  album        text not null default 'General',
+  sort_order   integer not null default 0,
+  is_sample    boolean not null default false,  -- true = placeholder, not a real photo
+  created_at   timestamptz not null default now()
+);
+create index if not exists gallery_items_order_idx on public.gallery_items (sort_order);
+
+-- Parent comments.
+create table if not exists public.testimonials (
+  id             uuid primary key default gen_random_uuid(),
+  quote          text not null,
+  author         text not null default 'Parent',
+  is_visible     boolean not null default true,
+  is_placeholder boolean not null default false,  -- true = SAMPLE text, not a real parent
+  sort_order     integer not null default 0,
+  created_at     timestamptz not null default now()
+);
+
+-- The four home-page counters.
+create table if not exists public.site_stats (
+  key            text primary key check (key in ('children', 'years', 'branches', 'satisfaction')),
+  label          text not null,
+  value          text not null,
+  sort_order     integer not null default 0,
+  is_placeholder boolean not null default false  -- true = SAMPLE number to be confirmed by the client
+);
+
+-- The two branches.
+create table if not exists public.branches (
+  id             text primary key,               -- e.g. 'point-pedro'
+  name           text not null,
+  address        text not null default '',
+  phones         text[] not null default '{}',
+  whatsapp       text not null default '',
+  hours          text not null default '',
+  map_url        text not null default '',
+  sort_order     integer not null default 0,
+  is_placeholder boolean not null default false  -- true = details to be confirmed
+);
+
+-- Editable website text (hero text, programme lists), stored as JSON.
+create table if not exists public.site_content (
+  key   text primary key check (key in ('hero', 'nursery_programs', 'class_programs')),
+  value jsonb not null
+);
+
+-- Short notices shown at the top of the home page.
+create table if not exists public.announcements (
+  id         uuid primary key default gen_random_uuid(),
+  text       text not null check (char_length(text) between 1 and 200),
+  is_active  boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+-- True when the signed-in user's email is in admin_users.
+-- SECURITY DEFINER so policies can check the list without exposing it.
+create or replace function public.is_admin()
+returns boolean
+language sql
+stable
+security definer
+set search_path = public
+as $$
+  select exists (
+    select 1 from public.admin_users
+    where email = lower(coalesce(auth.jwt() ->> 'email', ''))
+  );
+$$;
+grant execute on function public.is_admin() to anon, authenticated;

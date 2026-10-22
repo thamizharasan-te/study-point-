@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-brand-cream text-brand-ink font-sans antialiased; }
+  h1, h2, h3 { @apply font-display; font-family: var(--font-display), var(--font-tamil), Georgia, serif; }
+  /* Clear, visible keyboard focus everywhere (accessibility). */
+  :focus-visible { @apply outline-none ring-2 ring-brand-navy ring-offset-2; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+}
+
+@layer components {
+  /* Page-width container with comfortable mobile gutters. */
+  .container-page { @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8; }
+
+  .btn { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold transition-colors sm:text-base; }
+  .btn-pink { @apply btn bg-brand-pink text-white shadow-md hover:bg-brand-pink-dark; }
+  .btn-green { @apply btn bg-brand-green text-white shadow-md hover:bg-brand-green-dark; }
+  .btn-navy { @apply btn bg-brand-navy text-white shadow-md hover:bg-brand-navy-dark; }
+  .btn-outline { @apply btn border-2 border-brand-green text-brand-green hover:bg-brand-green-soft; }
+  .btn-white { @apply btn bg-white text-brand-green-dark hover:bg-brand-green-soft; }
+
+  .input { @apply w-full rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-base text-brand-ink placeholder:text-gray-400 focus:border-brand-navy; }
+  .label { @apply mb-1 block text-sm font-semibold text-brand-navy; }
+}
+
+/* Visually hidden but available to screen readers. */
+.sr-only-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

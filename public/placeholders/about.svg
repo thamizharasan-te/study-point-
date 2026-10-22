@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="1000" height="760" role="img" aria-label="Study Point students (placeholder)">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8f3e4"/><stop offset="1" stop-color="#e7eefb"/></linearGradient></defs>
+  <rect width="1000" height="760" fill="url(#g)"/>
+  <circle cx="120" cy="136.79999999999998" r="50" fill="#fff" opacity=".5"/>
+  <circle cx="900" cy="570" r="80" fill="#fff" opacity=".35"/>
+  
+  <g transform="translate(360 364.8) scale(0.9090909090909091)">
+    <rect x="-55" y="60" width="110" height="130" rx="40" fill="#2e7d32"/>
+    <circle cx="0" cy="0" r="58" fill="#f2b88f"/>
+    <path d="M-60 -5 C-62 -70 62 -70 60 -5 C40 -40 -40 -40 -60 -5Z" fill="#2b1a12"/>
+    <circle cx="-20" cy="5" r="6" fill="#3b2a20"/><circle cx="20" cy="5" r="6" fill="#3b2a20"/>
+    <path d="M-18 28 Q0 46 18 28" stroke="#b5473a" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+  <g transform="translate(640 380) scale(0.9090909090909091)">
+    <rect x="-55" y="60" width="110" height="130" rx="40" fill="#14306b"/>
+    <circle cx="0" cy="0" r="58" fill="#f2b88f"/>
+    <path d="M-60 -5 C-62 -70 62 -70 60 -5 C40 -40 -40 -40 -60 -5Z" fill="#4a2c17"/>
+    <circle cx="-20" cy="5" r="6" fill="#3b2a20"/><circle cx="20" cy="5" r="6" fill="#3b2a20"/>
+    <path d="M-18 28 Q0 46 18 28" stroke="#b5473a" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+    <rect x="220" y="608" width="560" height="60.800000000000004" rx="14" fill="#fff" opacity=".9"/>
+  <text x="500" y="746" text-anchor="middle" font-family="sans-serif" font-size="16.666666666666668" fill="#14306b" opacity=".55">Placeholder photo</text>
+</svg>

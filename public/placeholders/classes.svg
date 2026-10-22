@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" width="800" height="700" role="img" aria-label="Student reading (placeholder)">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#dbe8ff"/><stop offset="1" stop-color="#eaf3ff"/></linearGradient></defs>
+  <rect width="800" height="700" fill="url(#g)"/>
+  <circle cx="96" cy="126" r="40" fill="#fff" opacity=".5"/>
+  <circle cx="720" cy="525" r="64" fill="#fff" opacity=".35"/>
+  
+  <g transform="translate(400 294) scale(0.7272727272727273)">
+    <rect x="-55" y="60" width="110" height="130" rx="40" fill="#14306b"/>
+    <circle cx="0" cy="0" r="58" fill="#f2b88f"/>
+    <path d="M-60 -5 C-62 -70 62 -70 60 -5 C40 -40 -40 -40 -60 -5Z" fill="#2b1a12"/>
+    <circle cx="-20" cy="5" r="6" fill="#3b2a20"/><circle cx="20" cy="5" r="6" fill="#3b2a20"/>
+    <path d="M-18 28 Q0 46 18 28" stroke="#b5473a" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+    <path d="M224.00000000000003 560 L400 518 L576 560 L576 630 L400 588 L224.00000000000003 630Z" fill="#fff"/>
+  <text x="400" y="686" text-anchor="middle" font-family="sans-serif" font-size="13.333333333333334" fill="#14306b" opacity=".55">Placeholder photo</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Gallery photo 6 (placeholder)">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe3ec"/><stop offset="1" stop-color="#fff3d6"/></linearGradient></defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <circle cx="96" cy="108" r="40" fill="#fff" opacity=".5"/>
+  <circle cx="720" cy="450" r="64" fill="#fff" opacity=".35"/>
+  
+    <rect x="240" y="360" width="112.00000000000001" height="112.00000000000001" fill="#e61e63" rx="8"/>
+    <rect x="368" y="360" width="112.00000000000001" height="112.00000000000001" fill="#14306b" rx="8"/>
+    <rect x="304" y="248" width="112.00000000000001" height="112.00000000000001" fill="#ffc83d" rx="8"/>
+    
+  <g transform="translate(592 270) scale(0.6153846153846154)">
+    <rect x="-55" y="60" width="110" height="130" rx="40" fill="#e61e63"/>
+    <circle cx="0" cy="0" r="58" fill="#f2b88f"/>
+    <path d="M-60 -5 C-62 -70 62 -70 60 -5 C40 -40 -40 -40 -60 -5Z" fill="#2b1a12"/>
+    <circle cx="-20" cy="5" r="6" fill="#3b2a20"/><circle cx="20" cy="5" r="6" fill="#3b2a20"/>
+    <path d="M-18 28 Q0 46 18 28" stroke="#b5473a" stroke-width="6" fill="none" stroke-linecap="round"/>
+  </g>
+  <text x="400" y="586" text-anchor="middle" font-family="sans-serif" font-size="13.333333333333334" fill="#14306b" opacity=".55">Placeholder photo</text>
+</svg>
