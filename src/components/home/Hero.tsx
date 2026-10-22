@@ -1,16 +1,19 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { HeroContent } from "@/lib/types";
+import { LeafSprig, Wave } from "../Decor";
 import { SmartImage } from "../SmartImage";
 
 /** Home hero. (The "Watch Our Story" video button is intentionally omitted until a video exists.) */
 export function Hero({ hero }: { hero: HeroContent }) {
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-brand-green-soft via-white to-brand-pink-soft">
-      <div className="container-page grid items-center gap-6 py-8 sm:py-12 lg:grid-cols-2 lg:gap-10 lg:py-16">
+      <LeafSprig className="pointer-events-none absolute -left-20 bottom-6 hidden h-72 w-32 xl:block" />
+      <LeafSprig flip className="pointer-events-none absolute -right-6 top-0 hidden h-56 w-24 lg:block" />
+      <div className="container-page relative grid items-center gap-6 pb-12 pt-8 sm:pb-16 sm:pt-12 lg:grid-cols-2 lg:gap-10 lg:pb-20 lg:pt-16">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-brand-navy sm:text-sm">{hero.eyebrow}</p>
-          <h1 className="mt-3 text-4xl font-extrabold leading-[1.05] sm:text-5xl lg:text-6xl">
+          <h1 className="mt-3 text-4xl font-extrabold leading-[1.05] sm:text-5xl lg:text-7xl">
             <span className="block text-brand-navy-dark">{hero.line1}</span>
             <span className="block text-brand-green">{hero.line2}</span>
             <span className="block text-brand-pink">{hero.line3}</span>
@@ -23,7 +26,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
         </div>
 
         <div className="relative">
-          <div className="overflow-hidden rounded-[2rem] shadow-card">
+          <div className="overflow-hidden rounded-[2rem] border-4 border-white shadow-card">
             <SmartImage
               src="/placeholders/hero.svg"
               alt="Two smiling Study Point children learning together at a desk"
@@ -39,6 +42,7 @@ export function Hero({ hero }: { hero: HeroContent }) {
           </p>
         </div>
       </div>
+      <Wave className="absolute inset-x-0 bottom-0" />
     </section>
   );
 }

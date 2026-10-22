@@ -1,11 +1,12 @@
 import { cache } from "react";
 import {
-  DEFAULT_BRANCHES, DEFAULT_CLASS_PROGRAMS, DEFAULT_GALLERY, DEFAULT_HERO,
-  DEFAULT_NURSERY_PROGRAMS, DEFAULT_STATS, DEFAULT_TESTIMONIALS,
+  DEFAULT_BRANCHES, DEFAULT_CLASS_PROGRAMS, DEFAULT_FAQ, DEFAULT_GALLERY, DEFAULT_HERO,
+  DEFAULT_NURSERY_PROGRAMS, DEFAULT_SOCIAL, DEFAULT_STATS, DEFAULT_TESTIMONIALS,
 } from "./defaults";
+import { SHOW_SAMPLE } from "./sample";
 import { createPublicClient } from "./supabase/public";
 import type {
-  Announcement, Branch, GalleryItem, HeroContent, Program, SiteData, SiteStat, Testimonial,
+  Announcement, Branch, GalleryItem, HeroContent, Program, SiteData, SiteStat, Social, Testimonial,
 } from "./types";
 
 /**
@@ -13,12 +14,34 @@ import type {
  * defaults in ./defaults.ts when Supabase is not set up or a query fails,
  * so the site never shows a blank section.
  */
-export const getSiteData = cache(async (): Promise<SiteData> => {
+/**
+ * Hides unconfirmed sample content from the public site (see ./sample.ts):
+ *  - example numbers and example comments are dropped,
+ *  - sample gallery pictures are dropped as soon as one real photo exists,
+ *  - unconfirmed branch opening hours are blanked.
+ */
+function publicView(d: SiteData): SiteData {
+  if (SHOW_SAMPLE) return d;
+  const hasRealPhotos = d.gallery.some((g) => !g.is_sample);
+  return {
+    ...d,
+    stats: d.stats.filter((s) => !s.is_placeholder),
+    testimonials: d.testimonials.filter((t) => !t.is_placeholder),
+    gallery: hasRealPhotos ? d.gallery.filter((g) => !g.is_sample) : d.gallery,
+    branches: d.branches.map((b) => (b.is_placeholder ? { ...b, hours: "" } : b)),
+  };
+}
+
+export const getSiteData = cache(async (): Promise<SiteData> => publicView(await loadSiteData()));
+
+async function loadSiteData(): Promise<SiteData> {
   const db = createPublicClient();
   const fallback: SiteData = {
     hero: DEFAULT_HERO,
     nurseryPrograms: DEFAULT_NURSERY_PROGRAMS,
     classPrograms: DEFAULT_CLASS_PROGRAMS,
+    faq: DEFAULT_FAQ,
+    social: DEFAULT_SOCIAL,
     stats: DEFAULT_STATS,
     testimonials: DEFAULT_TESTIMONIALS,
     gallery: DEFAULT_GALLERY,
@@ -45,6 +68,8 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
       hero: { ...DEFAULT_HERO, ...(byKey.get("hero") as Partial<HeroContent> | undefined) },
       nurseryPrograms: (byKey.get("nursery_programs") as Program[] | undefined) ?? DEFAULT_NURSERY_PROGRAMS,
       classPrograms: (byKey.get("class_programs") as Program[] | undefined) ?? DEFAULT_CLASS_PROGRAMS,
+      faq: (byKey.get("faq") as Program[] | undefined) ?? DEFAULT_FAQ,
+      social: { ...DEFAULT_SOCIAL, ...(byKey.get("social") as Partial<Social> | undefined) },
       stats: rows<SiteStat>(stats, DEFAULT_STATS),
       testimonials: (testimonials.data as Testimonial[] | null) ?? DEFAULT_TESTIMONIALS,
       gallery: rows<GalleryItem>(gallery, DEFAULT_GALLERY),
@@ -54,4 +79,4 @@ export const getSiteData = cache(async (): Promise<SiteData> => {
   } catch {
     return fallback;
   }
-});
+}

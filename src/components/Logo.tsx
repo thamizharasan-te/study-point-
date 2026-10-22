@@ -18,7 +18,7 @@ export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link href="/" className="flex items-center gap-2" aria-label="Study Point — home">
+    <Link href="/" className="flex items-center gap-2">
       <LogoMark />
       <span className="leading-none">
         <span className={`block font-script text-2xl sm:text-3xl ${light ? "text-white" : "text-brand-green"}`}>

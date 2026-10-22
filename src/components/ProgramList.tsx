@@ -7,7 +7,7 @@ export function ProgramList({ items, accent }: { items: Program[]; accent: "pink
   return (
     <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((p) => (
-        <li key={p.title} className="rounded-2xl bg-white p-5 shadow-card">
+        <li key={p.title} className="lift rounded-2xl bg-white p-5 shadow-card">
           <span className={`flex h-12 w-12 items-center justify-center rounded-full ${iconColor}`}>
             <ProgramIcon title={p.title} className="h-6 w-6" />
           </span>

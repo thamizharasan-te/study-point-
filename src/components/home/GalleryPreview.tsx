@@ -6,7 +6,7 @@ import { SmartImage } from "../SmartImage";
 export function GalleryPreview({ items }: { items: GalleryItem[] }) {
   if (!items.length) return null;
   return (
-    <section className="container-page py-8" aria-labelledby="moments-title">
+    <section className="container-page reveal py-8" aria-labelledby="moments-title">
       <div className="mb-4 flex items-center justify-between gap-3">
         <h2 id="moments-title" className="text-2xl font-extrabold text-brand-navy sm:text-3xl">Our Learning Moments</h2>
         <Link href="/gallery" className="btn-outline !min-h-9 !px-4 !py-1.5 !text-sm">View Gallery <ArrowRight className="h-4 w-4" aria-hidden /></Link>

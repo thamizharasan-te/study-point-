@@ -9,12 +9,12 @@ const COLORS = { children: "text-brand-green", years: "text-brand-pink", branche
 export function StatsBand({ stats }: { stats: SiteStat[] }) {
   if (!stats.length) return null;
   return (
-    <section aria-label="Study Point in numbers" className="container-page py-8">
-      <ul className="grid grid-cols-2 gap-4 rounded-3xl bg-brand-cream p-5 shadow-card lg:grid-cols-4">
+    <section aria-label="Study Point in numbers" className="container-page reveal py-8">
+      <ul className="flex flex-wrap justify-around gap-x-8 gap-y-5 rounded-3xl bg-brand-cream p-6 shadow-card">
         {stats.map((s) => {
           const Icon = ICONS[s.key] ?? Star;
           return (
-            <li key={s.key} className="flex items-center gap-3 lg:justify-center">
+            <li key={s.key} className="flex items-center gap-3">
               <Icon className={`h-9 w-9 shrink-0 ${COLORS[s.key] ?? ""}`} aria-hidden />
               <span>
                 <span className="block font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">{s.value}</span>

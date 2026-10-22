@@ -10,7 +10,7 @@ const REASONS = [
 
 export function WhyStudyPoint() {
   return (
-    <section className="bg-white py-10" aria-labelledby="why-title">
+    <section className="reveal bg-white py-12" aria-labelledby="why-title">
       <div className="container-page grid items-center gap-8 lg:grid-cols-[1fr_2fr_1fr]">
         <SmartImage src="/placeholders/why.svg" alt="Two Study Point children reading a book together" width={800} height={700} sizes="(min-width:1024px) 280px, 100vw" className="hidden h-auto w-full rounded-3xl lg:block" />
         <div>

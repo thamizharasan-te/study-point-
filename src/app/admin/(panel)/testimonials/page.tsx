@@ -57,7 +57,7 @@ export default async function AdminTestimonials({ searchParams }: { searchParams
             <Card>
               <div className="mb-2 flex flex-wrap items-center gap-2">
                 <span className={`rounded-full px-3 py-1 text-xs font-bold ${t.is_visible ? "bg-brand-green-soft text-brand-green-dark" : "bg-gray-200 text-gray-700"}`}>{t.is_visible ? "Shown" : "Hidden"}</span>
-                {t.is_placeholder && <SampleTag label="Sample" />}
+                {t.is_placeholder && <SampleTag label="Sample" always />}
               </div>
               <form action={saveTestimonial} className="space-y-3">
                 <Fields t={t} />

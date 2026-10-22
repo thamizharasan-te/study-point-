@@ -74,11 +74,20 @@ export interface HeroContent {
   subtitle: string;
 }
 
+export interface Social {
+  facebook: string;
+  instagram: string;
+  youtube: string;
+}
+
 /** Everything the public pages need, loaded in one go. */
 export interface SiteData {
   hero: HeroContent;
   nurseryPrograms: Program[];
   classPrograms: Program[];
+  /** FAQ entries reuse Program: title = question, description = answer. */
+  faq: Program[];
+  social: Social;
   stats: SiteStat[];
   testimonials: Testimonial[];
   gallery: GalleryItem[];
