@@ -10,7 +10,7 @@ export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
       <circle cx="24" cy="24" r="22" fill="#e8f3e4" />
       <path d="M24 40V26" stroke="#2e7d32" strokeWidth="3" strokeLinecap="round" />
       <path d="M24 28C14 28 11 19 12 12c8 0 12 6 12 16Z" fill="#2e7d32" />
-      <path d="M24 28c10 0 13-9 12-16-8 0-12 6-12 16Z" fill="#e61e63" />
+      <path d="M24 28c10 0 13-9 12-16-8 0-12 6-12 16Z" fill="#d81b60" />
       <circle cx="24" cy="14" r="4" fill="#14306b" />
     </svg>
   );

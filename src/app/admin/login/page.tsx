@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: "Sign in" };
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const { error } = await searchParams;
   return (
-    <main className="flex min-h-screen items-center justify-center p-4">
+    <main id="main" className="flex min-h-screen items-center justify-center p-4">
       <div className="w-full max-w-sm rounded-3xl bg-white p-6 shadow-card sm:p-8">
         <div className="mb-5 flex flex-col items-center text-center">
           <LogoMark className="h-14 w-14" />
