@@ -1,4 +1,4 @@
-import type { Branch, GalleryItem, HeroContent, Program, Social, SiteStat, Testimonial } from "./types";
+import type { Branch, GalleryItem, HeroContent, ImageSlot, Program, Social, SiteStat, Testimonial } from "./types";
 
 /**
  * Fallback content. It is used when Supabase is not configured yet, or a
@@ -101,3 +101,15 @@ export const DEFAULT_GALLERY: GalleryItem[] = albumFor.map((album, i) => ({
   sort_order: i + 1,
   is_sample: true,
 }));
+
+/**
+ * The main pictures of the site. `fallback` is the built-in illustration used
+ * until a real photo is uploaded in /admin → Main Pictures.
+ */
+export const IMAGE_SLOTS: Record<ImageSlot, { label: string; where: string; fallback: string; alt: string; width: number; height: number }> = {
+  hero: { label: "Home page — main picture", where: "Top of the home page", fallback: "/placeholders/hero.svg", alt: "Smiling Study Point children learning together", width: 1100, height: 800 },
+  nursery: { label: "Nursery picture", where: "Home page Nursery card and the Nursery page", fallback: "/placeholders/nursery.svg", alt: "A Study Point nursery child at play", width: 800, height: 700 },
+  classes: { label: "Classes picture", where: "Home page Classes card and the Classes page", fallback: "/placeholders/classes.svg", alt: "A Study Point student learning in class", width: 800, height: 700 },
+  why: { label: "“Why Study Point” picture", where: "Home page, beside “More Than Just Classes”", fallback: "/placeholders/why.svg", alt: "A Study Point child reading a book", width: 800, height: 700 },
+  about: { label: "About Us picture", where: "About Us page", fallback: "/placeholders/about.svg", alt: "Study Point students in the classroom", width: 1000, height: 760 },
+};

@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { HeroContent } from "@/lib/types";
+import { slotImage } from "@/lib/images";
+import type { HeroContent, SiteImages } from "@/lib/types";
 import { LeafSprig, Wave } from "../Decor";
 import { SmartImage } from "../SmartImage";
 
 /** Home hero. (The "Watch Our Story" video button is intentionally omitted until a video exists.) */
-export function Hero({ hero }: { hero: HeroContent }) {
+export function Hero({ hero, images }: { hero: HeroContent; images: SiteImages }) {
+  const pic = slotImage(images, "hero");
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-brand-green-soft via-white to-brand-pink-soft">
       <LeafSprig className="pointer-events-none absolute -left-20 bottom-6 hidden h-72 w-32 xl:block" />
@@ -28,13 +30,13 @@ export function Hero({ hero }: { hero: HeroContent }) {
         <div className="relative">
           <div className="overflow-hidden rounded-[2rem] border-4 border-white shadow-card">
             <SmartImage
-              src="/placeholders/hero.svg"
-              alt="Two smiling Study Point children learning together at a desk"
-              width={1100}
-              height={800}
+              src={pic.src}
+              alt={pic.alt}
+              width={pic.width}
+              height={pic.height}
               priority
               sizes="(min-width: 1024px) 560px, 100vw"
-              className="h-auto w-full"
+              className="aspect-[11/8] w-full object-cover"
             />
           </div>
           <p className="absolute -top-2 right-2 rotate-6 rounded-3xl bg-white/90 px-4 py-2 text-center font-script text-lg leading-tight text-brand-green shadow-md sm:right-4 sm:text-2xl">

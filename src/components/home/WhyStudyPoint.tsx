@@ -1,4 +1,6 @@
 import { ChartColumn, Heart, ShieldCheck, Star, Users } from "lucide-react";
+import { slotImage } from "@/lib/images";
+import type { SiteImages } from "@/lib/types";
 import { SmartImage } from "../SmartImage";
 
 const REASONS = [
@@ -8,11 +10,12 @@ const REASONS = [
   { icon: Star, bg: "bg-amber-500", title: "Focus on Overall Development", text: "Building confidence for life beyond the classroom." },
 ];
 
-export function WhyStudyPoint() {
+export function WhyStudyPoint({ images }: { images: SiteImages }) {
+  const pic = slotImage(images, "why");
   return (
     <section className="reveal bg-white py-12" aria-labelledby="why-title">
       <div className="container-page grid items-center gap-8 lg:grid-cols-[1fr_2fr_1fr]">
-        <SmartImage src="/placeholders/why.svg" alt="Two Study Point children reading a book together" width={800} height={700} sizes="(min-width:1024px) 280px, 100vw" className="hidden h-auto w-full rounded-3xl lg:block" />
+        <SmartImage src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 280px, 100vw" className="hidden aspect-[8/7] w-full rounded-3xl object-cover lg:block" />
         <div>
           <p className="text-center text-xs font-bold uppercase tracking-[0.25em] text-brand-navy">Why choose Study Point?</p>
           <h2 id="why-title" className="mt-1 text-center text-3xl font-extrabold text-brand-navy sm:text-4xl">More Than Just Classes</h2>

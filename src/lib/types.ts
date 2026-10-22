@@ -74,6 +74,10 @@ export interface HeroContent {
   subtitle: string;
 }
 
+/** The main pictures that can be replaced from /admin → Main Pictures. */
+export type ImageSlot = "hero" | "nursery" | "classes" | "why" | "about";
+export type SiteImages = Partial<Record<ImageSlot, string>>;
+
 export interface Social {
   facebook: string;
   instagram: string;
@@ -88,6 +92,7 @@ export interface SiteData {
   /** FAQ entries reuse Program: title = question, description = answer. */
   faq: Program[];
   social: Social;
+  images: SiteImages;
   stats: SiteStat[];
   testimonials: Testimonial[];
   gallery: GalleryItem[];

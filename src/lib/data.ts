@@ -6,7 +6,7 @@ import {
 import { SHOW_SAMPLE } from "./sample";
 import { createPublicClient } from "./supabase/public";
 import type {
-  Announcement, Branch, GalleryItem, HeroContent, Program, SiteData, SiteStat, Social, Testimonial,
+  Announcement, Branch, GalleryItem, HeroContent, Program, SiteData, SiteImages, SiteStat, Social, Testimonial,
 } from "./types";
 
 /**
@@ -42,6 +42,7 @@ async function loadSiteData(): Promise<SiteData> {
     classPrograms: DEFAULT_CLASS_PROGRAMS,
     faq: DEFAULT_FAQ,
     social: DEFAULT_SOCIAL,
+    images: {},
     stats: DEFAULT_STATS,
     testimonials: DEFAULT_TESTIMONIALS,
     gallery: DEFAULT_GALLERY,
@@ -70,6 +71,7 @@ async function loadSiteData(): Promise<SiteData> {
       classPrograms: (byKey.get("class_programs") as Program[] | undefined) ?? DEFAULT_CLASS_PROGRAMS,
       faq: (byKey.get("faq") as Program[] | undefined) ?? DEFAULT_FAQ,
       social: { ...DEFAULT_SOCIAL, ...(byKey.get("social") as Partial<Social> | undefined) },
+      images: (byKey.get("images") as SiteImages | undefined) ?? {},
       stats: rows<SiteStat>(stats, DEFAULT_STATS),
       testimonials: (testimonials.data as Testimonial[] | null) ?? DEFAULT_TESTIMONIALS,
       gallery: rows<GalleryItem>(gallery, DEFAULT_GALLERY),

@@ -74,7 +74,7 @@ create table if not exists public.branches (
   is_placeholder boolean not null default false  -- true = details to be confirmed
 );
 
--- Editable website text (hero text, programme lists, FAQ, social links), stored as JSON.
+-- Editable website text (hero text, programme lists, FAQ, social links, main picture URLs), stored as JSON.
 create table if not exists public.site_content (
   key   text primary key,
   value jsonb not null
@@ -82,7 +82,7 @@ create table if not exists public.site_content (
 -- Allowed keys. Dropped and re-added so re-running this file also upgrades older databases.
 alter table public.site_content drop constraint if exists site_content_key_check;
 alter table public.site_content add constraint site_content_key_check
-  check (key in ('hero', 'nursery_programs', 'class_programs', 'faq', 'social'));
+  check (key in ('hero', 'nursery_programs', 'class_programs', 'faq', 'social', 'images'));
 
 -- Short notices shown at the top of the home page.
 create table if not exists public.announcements (

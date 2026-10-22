@@ -7,25 +7,7 @@ import { GALLERY_ALBUMS } from "@/lib/defaults";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { addGalleryItem } from "@/app/admin/(panel)/gallery/actions";
 
-const MAX_SIDE = 1600; // longest side after resizing
-const MAX_BYTES = 5 * 1024 * 1024; // bucket limit (see supabase/storage.sql)
-
-/** Shrinks a photo in the browser (phone photos are often 5–10 MB) and converts it to WebP. */
-async function shrink(file: File): Promise<{ blob: Blob; ext: string }> {
-  try {
-    const bmp = await createImageBitmap(file);
-    const scale = Math.min(1, MAX_SIDE / Math.max(bmp.width, bmp.height));
-    const canvas = document.createElement("canvas");
-    canvas.width = Math.round(bmp.width * scale);
-    canvas.height = Math.round(bmp.height * scale);
-    canvas.getContext("2d")!.drawImage(bmp, 0, 0, canvas.width, canvas.height);
-    const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, "image/webp", 0.82));
-    if (blob) return { blob, ext: "webp" };
-  } catch {
-    // fall through to the original file
-  }
-  return { blob: file, ext: file.name.split(".").pop()?.toLowerCase() || "jpg" };
-}
+import { MAX_UPLOAD_BYTES, shrinkImage } from "@/lib/shrink-image";
 
 export function GalleryUploader() {
   const router = useRouter();
@@ -48,8 +30,8 @@ export function GalleryUploader() {
     try {
       for (const file of files) {
         if (!file.type.startsWith("image/")) throw new Error(`“${file.name}” is not a picture.`);
-        const { blob, ext } = await shrink(file);
-        if (blob.size > MAX_BYTES) throw new Error(`“${file.name}” is too large (max 5 MB).`);
+        const { blob, ext } = await shrinkImage(file);
+        if (blob.size > MAX_UPLOAD_BYTES) throw new Error(`“${file.name}” is too large (max 5 MB).`);
         const path = `${album.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "general"}/${crypto.randomUUID()}.${ext}`;
         const { error } = await supabase.storage.from("gallery").upload(path, blob, { contentType: blob.type || "image/jpeg", cacheControl: "31536000" });
         if (error) throw new Error(error.message);
