@@ -44,7 +44,7 @@ export default async function AdminGallery({ searchParams }: { searchParams: Pro
             <Card className="grid gap-4 sm:grid-cols-[160px_1fr]">
               <div>
                 <SmartImage src={g.image_url} alt={g.alt} width={320} height={240} sizes="160px" className="aspect-[4/3] w-full rounded-xl object-cover" />
-                {g.is_sample && <div className="mt-2"><SampleTag label="Sample" /></div>}
+                {g.is_sample && <div className="mt-2"><SampleTag label="Sample" always /></div>}
               </div>
               <div className="space-y-3">
                 <form action={updateGalleryItem} className="space-y-2">

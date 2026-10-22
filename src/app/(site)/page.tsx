@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { CtaBand } from "@/components/home/CtaBand";
+import { Faq } from "@/components/home/Faq";
 import { FeatureBar } from "@/components/home/FeatureBar";
 import { GalleryPreview } from "@/components/home/GalleryPreview";
 import { Hero } from "@/components/home/Hero";
+import { HowToJoin } from "@/components/home/HowToJoin";
 import { ProgramCards } from "@/components/home/ProgramCards";
 import { StatsBand } from "@/components/home/StatsBand";
 import { Testimonials } from "@/components/home/Testimonials";
@@ -32,16 +34,26 @@ export default async function HomePage() {
     })),
   };
 
+  // FAQ rich results in Google.
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: site.faq.map((q) => ({ "@type": "Question", name: q.title, acceptedAnswer: { "@type": "Answer", text: q.description } })),
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      {site.faq.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
       <Hero hero={site.hero} />
       <FeatureBar />
       <ProgramCards nursery={site.nurseryPrograms} classes={site.classPrograms} />
       <WhyStudyPoint />
       <StatsBand stats={site.stats} />
+      <HowToJoin />
       <GalleryPreview items={site.gallery} />
       <Testimonials items={site.testimonials} />
+      <Faq items={site.faq} />
       <CtaBand branches={site.branches} />
     </>
   );

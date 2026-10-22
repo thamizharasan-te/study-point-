@@ -3,9 +3,9 @@ import { AdminHeading, Card, Notice } from "@/components/admin/Layout";
 import { ProgramsEditor } from "@/components/admin/ProgramsEditor";
 import { SubmitButton } from "@/components/admin/ui";
 import { requireAdmin } from "@/lib/admin";
-import { DEFAULT_CLASS_PROGRAMS, DEFAULT_HERO, DEFAULT_NURSERY_PROGRAMS } from "@/lib/defaults";
-import type { HeroContent, Program } from "@/lib/types";
-import { saveHero, savePrograms } from "./actions";
+import { DEFAULT_CLASS_PROGRAMS, DEFAULT_FAQ, DEFAULT_HERO, DEFAULT_NURSERY_PROGRAMS, DEFAULT_SOCIAL } from "@/lib/defaults";
+import type { HeroContent, Program, Social } from "@/lib/types";
+import { saveHero, savePrograms, saveSocial } from "./actions";
 
 export const metadata: Metadata = { title: "Website Text" };
 
@@ -17,6 +17,9 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
   const hero = { ...DEFAULT_HERO, ...(byKey.get("hero") as Partial<HeroContent> | undefined) };
   const nursery = (byKey.get("nursery_programs") as Program[] | undefined) ?? DEFAULT_NURSERY_PROGRAMS;
   const classes = (byKey.get("class_programs") as Program[] | undefined) ?? DEFAULT_CLASS_PROGRAMS;
+
+  const faq = (byKey.get("faq") as Program[] | undefined) ?? DEFAULT_FAQ;
+  const social = { ...DEFAULT_SOCIAL, ...(byKey.get("social") as Partial<Social> | undefined) };
 
   return (
     <>
@@ -53,13 +56,37 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
         </form>
       </Card>
 
-      <Card>
+      <Card className="mb-6">
         <h2 className="mb-1 text-lg font-bold text-brand-navy">Study Point Classes — what we teach</h2>
         <p className="mb-3 text-sm text-gray-600">Shown on the Classes page and the home page.</p>
         <form action={savePrograms} className="space-y-3">
           <input type="hidden" name="key" value="class_programs" />
           <ProgramsEditor name="programs" idPrefix="classes" initial={classes} />
           <SubmitButton>Save Classes list</SubmitButton>
+        </form>
+      </Card>
+
+      <Card className="mb-6">
+        <h2 className="mb-1 text-lg font-bold text-brand-navy">Frequently asked questions</h2>
+        <p className="mb-3 text-sm text-gray-600">Shown on the home page. Only write answers that are true — for example fees and timings.</p>
+        <form action={savePrograms} className="space-y-3">
+          <input type="hidden" name="key" value="faq" />
+          <ProgramsEditor name="programs" idPrefix="faq" initial={faq} titleLabel="Question" descLabel="Answer" maxDesc={600} />
+          <SubmitButton>Save questions</SubmitButton>
+        </form>
+      </Card>
+
+      <Card>
+        <h2 className="mb-1 text-lg font-bold text-brand-navy">Social media links</h2>
+        <p className="mb-3 text-sm text-gray-600">Paste the full page address (starting with https://). Leave empty to hide an icon.</p>
+        <form action={saveSocial} className="space-y-3">
+          {(["facebook", "instagram", "youtube"] as const).map((k) => (
+            <div key={k}>
+              <label className="label capitalize" htmlFor={`social-${k}`}>{k}</label>
+              <input id={`social-${k}`} name={k} defaultValue={social[k]} inputMode="url" maxLength={300} placeholder="https://…" className="input" />
+            </div>
+          ))}
+          <SubmitButton>Save links</SubmitButton>
         </form>
       </Card>
     </>

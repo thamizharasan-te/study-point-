@@ -4,8 +4,9 @@
 -- overwrites anything you have already edited.
 --
 -- IMPORTANT: rows flagged is_placeholder / is_sample are NOT real client data.
--- The website shows a "Sample — to be confirmed" tag on them until the client
--- replaces them in /admin. (Saving an item in admin removes the tag.)
+-- The public website HIDES them (example numbers, example comments, sample
+-- photos) until the client confirms/replaces them in /admin. Set the env var
+-- SHOW_SAMPLE_CONTENT=true to preview them with a "Sample" tag.
 -- ============================================================================
 
 insert into public.site_content (key, value) values
@@ -25,7 +26,16 @@ insert into public.site_content (key, value) values
     {"title":"Writing Skills","description":"Sentences, paragraphs and creative writing, with friendly feedback."},
     {"title":"Small Groups","description":"Small classes so every student gets the teacher''s attention."},
     {"title":"Exam Preparation","description":"Focused revision and exam technique for school English exams."}
-  ]')
+  ]'),
+  ('faq', '[
+    {"title":"What age group is the Nursery for?","description":"Our Nursery is for children aged 3 to 5 years, with phonics, creative activities, play based learning, social skills and confidence building."},
+    {"title":"What do Study Point Classes teach?","description":"English, grammar, phonics, spoken English, writing skills and exam preparation, taught in small groups."},
+    {"title":"Are the groups small?","description":"Yes. We keep groups small so that teachers can give every child proper attention."},
+    {"title":"Where are your branches?","description":"We have two branches, in Point Pedro and Vathiry. Addresses, phone numbers and maps are on the Contact page."},
+    {"title":"How can I enquire or enrol my child?","description":"Press Enquire Now, call us or send a WhatsApp message. We will get back to you and answer your questions."},
+    {"title":"What about fees, timings and available places?","description":"These can differ by branch and class, so please contact your nearest branch and we will be happy to help."}
+  ]'),
+  ('social', '{"facebook":"","instagram":"","youtube":""}')
 on conflict (key) do nothing;
 
 -- SAMPLE numbers — the client must confirm real figures.
@@ -38,10 +48,10 @@ on conflict (key) do nothing;
 
 -- Phone numbers come from the client's design; addresses and hours are placeholders.
 insert into public.branches (id, name, address, phones, whatsapp, hours, map_url, sort_order, is_placeholder) values
-  ('point-pedro', 'Point Pedro', 'Point Pedro, Northern Province, Sri Lanka (full address to be confirmed)',
-    array['0767666826', '0767666827'], '0767666826', 'Mon – Fri: 8:00 AM – 5:00 PM (to be confirmed)', '', 1, true),
-  ('vathiry', 'Vathiry', 'Vathiry, Northern Province, Sri Lanka (full address to be confirmed)',
-    array['0767666826', '0767666827'], '0767666827', 'Mon – Fri: 8:00 AM – 5:00 PM (to be confirmed)', '', 2, true)
+  ('point-pedro', 'Point Pedro', 'Point Pedro, Northern Province, Sri Lanka',
+    array['0767666826', '0767666827'], '0767666826', 'Please call us for class timings', '', 1, true),
+  ('vathiry', 'Vathiry', 'Vathiry, Northern Province, Sri Lanka',
+    array['0767666826', '0767666827'], '0767666827', 'Please call us for class timings', '', 2, true)
 on conflict (id) do nothing;
 
 -- SAMPLE parent comments — NOT real parents. Replace with genuine feedback.

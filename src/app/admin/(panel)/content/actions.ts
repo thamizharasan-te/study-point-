@@ -24,12 +24,13 @@ export async function saveHero(fd: FormData) {
 export async function savePrograms(fd: FormData) {
   const { supabase } = await requireAdmin();
   const key = field(fd, "key");
-  if (key !== "nursery_programs" && key !== "class_programs") back(PATH, { error: "Unknown list." });
+  if (!["nursery_programs", "class_programs", "faq"].includes(key)) back(PATH, { error: "Unknown list." });
+  const isFaq = key === "faq";
 
   let list: Program[] = [];
   try {
     list = (JSON.parse(field(fd, "programs")) as Program[])
-      .map((p) => ({ title: String(p.title ?? "").trim().slice(0, 40), description: String(p.description ?? "").trim().slice(0, 200) }))
+      .map((p) => ({ title: String(p.title ?? "").trim().slice(0, isFaq ? 120 : 40), description: String(p.description ?? "").trim().slice(0, isFaq ? 600 : 200) }))
       .filter((p) => p.title);
   } catch {
     back(PATH, { error: "Could not read the list. Please try again." });
@@ -40,4 +41,19 @@ export async function savePrograms(fd: FormData) {
   if (error) back(PATH, { error: "Could not save. Please try again." });
   refreshSite();
   back(PATH, { saved: "List saved." });
+}
+
+/** Social media links. Empty = not shown on the website. */
+export async function saveSocial(fd: FormData) {
+  const { supabase } = await requireAdmin();
+  const value: Record<string, string> = {};
+  for (const k of ["facebook", "instagram", "youtube"]) {
+    const url = field(fd, k).slice(0, 300);
+    if (url && !/^https:\/\//i.test(url)) back(PATH, { error: "Social media links must start with https://" });
+    value[k] = url;
+  }
+  const { error } = await supabase.from("site_content").upsert({ key: "social", value });
+  if (error) back(PATH, { error: "Could not save. Please try again." });
+  refreshSite();
+  back(PATH, { saved: "Social media links saved." });
 }

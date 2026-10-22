@@ -1,4 +1,4 @@
-import type { Branch, GalleryItem, HeroContent, Program, SiteStat, Testimonial } from "./types";
+import type { Branch, GalleryItem, HeroContent, Program, Social, SiteStat, Testimonial } from "./types";
 
 /**
  * Fallback content. It is used when Supabase is not configured yet, or a
@@ -36,6 +36,18 @@ export const DEFAULT_CLASS_PROGRAMS: Program[] = [
   { title: "Exam Preparation", description: "Focused revision and exam technique for school English exams." },
 ];
 
+/** Safe, general answers only — no fees, timings or promises. Editable in /admin → Website Text. */
+export const DEFAULT_FAQ: Program[] = [
+  { title: "What age group is the Nursery for?", description: "Our Nursery is for children aged 3 to 5 years, with phonics, creative activities, play based learning, social skills and confidence building." },
+  { title: "What do Study Point Classes teach?", description: "English, grammar, phonics, spoken English, writing skills and exam preparation, taught in small groups." },
+  { title: "Are the groups small?", description: "Yes. We keep groups small so that teachers can give every child proper attention." },
+  { title: "Where are your branches?", description: "We have two branches, in Point Pedro and Vathiry. Addresses, phone numbers and maps are on the Contact page." },
+  { title: "How can I enquire or enrol my child?", description: "Press Enquire Now, call us or send a WhatsApp message. We will get back to you and answer your questions." },
+  { title: "What about fees, timings and available places?", description: "These can differ by branch and class, so please contact your nearest branch and we will be happy to help." },
+];
+
+export const DEFAULT_SOCIAL: Social = { facebook: "", instagram: "", youtube: "" };
+
 /** PLACEHOLDER numbers — the client must confirm real figures in admin. */
 export const DEFAULT_STATS: SiteStat[] = [
   { key: "children", label: "Happy Students", value: "500+", sort_order: 1, is_placeholder: true },
@@ -56,10 +68,10 @@ export const DEFAULT_BRANCHES: Branch[] = [
   {
     id: "point-pedro",
     name: "Point Pedro",
-    address: "Point Pedro, Northern Province, Sri Lanka (full address to be confirmed)",
+    address: "Point Pedro, Northern Province, Sri Lanka",
     phones: ["0767666826", "0767666827"],
     whatsapp: "0767666826",
-    hours: "Mon – Fri: 8:00 AM – 5:00 PM (to be confirmed)",
+    hours: "Please call us for class timings",
     map_url: "",
     sort_order: 1,
     is_placeholder: true,
@@ -67,10 +79,10 @@ export const DEFAULT_BRANCHES: Branch[] = [
   {
     id: "vathiry",
     name: "Vathiry",
-    address: "Vathiry, Northern Province, Sri Lanka (full address to be confirmed)",
+    address: "Vathiry, Northern Province, Sri Lanka",
     phones: ["0767666826", "0767666827"],
     whatsapp: "0767666827",
-    hours: "Mon – Fri: 8:00 AM – 5:00 PM (to be confirmed)",
+    hours: "Please call us for class timings",
     map_url: "",
     sort_order: 2,
     is_placeholder: true,

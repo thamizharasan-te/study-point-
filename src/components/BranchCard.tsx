@@ -22,7 +22,7 @@ export function BranchCard({ branch: b }: { branch: Branch }) {
           {b.is_placeholder && <SampleTag label="Details to be confirmed" />}
         </div>
         <p className="flex gap-2 text-gray-700"><MapPin className="mt-1 h-5 w-5 shrink-0 text-brand-pink" aria-hidden />{b.address}</p>
-        <p className="flex gap-2 text-gray-700"><Clock className="mt-1 h-5 w-5 shrink-0 text-brand-green" aria-hidden />{b.hours}</p>
+        {b.hours && <p className="flex gap-2 text-gray-700"><Clock className="mt-1 h-5 w-5 shrink-0 text-brand-green" aria-hidden />{b.hours}</p>}
         <p className="flex flex-wrap gap-x-3 gap-y-1 text-gray-700">
           <Phone className="mt-1 h-5 w-5 shrink-0 text-brand-navy" aria-hidden />
           {b.phones.map((p) => <a key={p} href={telLink(p)} className="font-semibold text-brand-navy underline-offset-2 hover:underline">{p}</a>)}
