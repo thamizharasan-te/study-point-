@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/admin";
 const TILES = [
   { href: "/admin/enquiries", icon: Inbox, title: "Enquiries", text: "See who has contacted you" },
   { href: "/admin/gallery", icon: ImageIcon, title: "Gallery", text: "Add or remove photos" },
+  { href: "/admin/images", icon: ImageIcon, title: "Main Pictures", text: "Replace the big pictures on the pages" },
   { href: "/admin/testimonials", icon: MessageSquareQuote, title: "Parent Comments", text: "Add, edit, show or hide" },
   { href: "/admin/stats", icon: ChartColumn, title: "Numbers", text: "Students, years, branches…" },
   { href: "/admin/branches", icon: MapPin, title: "Branches", text: "Address, phone, hours, map" },

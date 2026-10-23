@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { ProgramList } from "@/components/ProgramList";
 import { SmartImage } from "@/components/SmartImage";
 import { getSiteData } from "@/lib/data";
+import { slotImage } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Study Point Classes — English, Spoken English & Exam Preparation",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ClassesPage() {
-  const { classPrograms } = await getSiteData();
+  const { classPrograms, images } = await getSiteData();
+  const pic = slotImage(images, "classes");
   return (
     <>
       <PageHero tone="navy" title="Study Point Classes" subtitle="Learn Today. Lead Tomorrow. English, Grammar, Phonics, Spoken English, Writing Skills, Exam Preparation and more.">
@@ -26,7 +28,7 @@ export default async function ClassesPage() {
 
       <section className="bg-white py-10">
         <div className="container-page grid items-center gap-8 lg:grid-cols-2">
-          <SmartImage src="/placeholders/classes.svg" alt="A student reading during a Study Point class" width={800} height={700} sizes="(min-width:1024px) 480px, 100vw" className="h-auto w-full rounded-3xl shadow-card" />
+          <SmartImage src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 480px, 100vw" className="aspect-[8/7] w-full rounded-3xl object-cover shadow-card" />
           <div className="space-y-3 text-gray-700">
             <h2 className="text-3xl font-extrabold text-brand-navy">Small groups, real progress</h2>
             <p>Our classes are kept small so every student is seen, heard and encouraged. Lessons mix clear teaching with plenty of speaking, reading and writing practice.</p>

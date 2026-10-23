@@ -4,6 +4,7 @@ import { PageHero } from "@/components/PageHero";
 import { ProgramList } from "@/components/ProgramList";
 import { SmartImage } from "@/components/SmartImage";
 import { getSiteData } from "@/lib/data";
+import { slotImage } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Nursery (Ages 3–5)",
@@ -12,7 +13,8 @@ export const metadata: Metadata = {
 };
 
 export default async function NurseryPage() {
-  const { nurseryPrograms } = await getSiteData();
+  const { nurseryPrograms, images } = await getSiteData();
+  const pic = slotImage(images, "nursery");
   return (
     <>
       <PageHero tone="pink" title="Nursery · 3 – 5 Years" subtitle="A happy place to learn, play and grow! A strong foundation through play-based learning, creativity and structured early years activities.">
@@ -32,7 +34,7 @@ export default async function NurseryPage() {
             <p>Teachers keep groups small, celebrate every small step and keep parents informed about how their child is growing.</p>
             <div className="pt-2"><EnquireButton /></div>
           </div>
-          <SmartImage src="/placeholders/nursery.svg" alt="Nursery children playing with colourful blocks" width={800} height={700} sizes="(min-width:1024px) 480px, 100vw" className="h-auto w-full rounded-3xl shadow-card" />
+          <SmartImage src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 480px, 100vw" className="aspect-[8/7] w-full rounded-3xl object-cover shadow-card" />
         </div>
       </section>
     </>

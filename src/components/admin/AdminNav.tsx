@@ -8,6 +8,7 @@ const ITEMS = [
   { href: "/admin", label: "Home" },
   { href: "/admin/enquiries", label: "Enquiries" },
   { href: "/admin/gallery", label: "Gallery" },
+  { href: "/admin/images", label: "Main Pictures" },
   { href: "/admin/testimonials", label: "Parent Comments" },
   { href: "/admin/stats", label: "Numbers" },
   { href: "/admin/branches", label: "Branches" },

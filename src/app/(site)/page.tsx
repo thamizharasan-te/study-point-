@@ -45,10 +45,10 @@ export default async function HomePage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {site.faq.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
-      <Hero hero={site.hero} />
+      <Hero hero={site.hero} images={site.images} />
       <FeatureBar />
-      <ProgramCards nursery={site.nurseryPrograms} classes={site.classPrograms} />
-      <WhyStudyPoint />
+      <ProgramCards nursery={site.nurseryPrograms} classes={site.classPrograms} images={site.images} />
+      <WhyStudyPoint images={site.images} />
       <StatsBand stats={site.stats} />
       <HowToJoin />
       <GalleryPreview items={site.gallery} />

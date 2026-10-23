@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import type { Program } from "@/lib/types";
+import { slotImage } from "@/lib/images";
+import type { Program, SiteImages } from "@/lib/types";
 import { ProgramIcon } from "../ProgramIcon";
 import { SmartImage } from "../SmartImage";
 
 /** The two big cards: Nursery (pink) and Study Point Classes (blue). */
-export function ProgramCards({ nursery, classes }: { nursery: Program[]; classes: Program[] }) {
+export function ProgramCards({ nursery, classes, images }: { nursery: Program[]; classes: Program[]; images: SiteImages }) {
+  const nurseryPic = slotImage(images, "nursery");
+  const classesPic = slotImage(images, "classes");
   return (
     <section className="container-page reveal grid gap-5 py-10 lg:grid-cols-2" aria-label="Our programs">
       <article className="overflow-hidden rounded-3xl bg-gradient-to-br from-brand-pink-soft to-amber-50 shadow-card">
@@ -20,7 +23,7 @@ export function ProgramCards({ nursery, classes }: { nursery: Program[]; classes
             <Link href="/nursery" className="btn-pink mt-4">Learn More<span className="sr-only"> about our Nursery</span> <ArrowRight className="h-4 w-4" aria-hidden /></Link>
           </div>
           <div className="col-span-2">
-            <SmartImage src="/placeholders/nursery.svg" alt="A Study Point nursery child playing with colourful blocks" width={800} height={700} sizes="(min-width:1024px) 220px, 40vw" className="h-auto w-full rounded-2xl" />
+            <SmartImage src={nurseryPic.src} alt={nurseryPic.alt} width={nurseryPic.width} height={nurseryPic.height} sizes="(min-width:1024px) 220px, 40vw" className="aspect-[8/7] w-full rounded-2xl object-cover" />
           </div>
         </div>
         <ul className="flex flex-wrap justify-center gap-x-4 gap-y-3 bg-white/70 px-3 py-4">
@@ -44,7 +47,7 @@ export function ProgramCards({ nursery, classes }: { nursery: Program[]; classes
             <Link href="/classes" className="btn-navy mt-4">Learn More<span className="sr-only"> about Study Point Classes</span> <ArrowRight className="h-4 w-4" aria-hidden /></Link>
           </div>
           <div className="col-span-2">
-            <SmartImage src="/placeholders/classes.svg" alt="A Study Point student reading in class" width={800} height={700} sizes="(min-width:1024px) 220px, 40vw" className="h-auto w-full rounded-2xl" />
+            <SmartImage src={classesPic.src} alt={classesPic.alt} width={classesPic.width} height={classesPic.height} sizes="(min-width:1024px) 220px, 40vw" className="aspect-[8/7] w-full rounded-2xl object-cover" />
           </div>
         </div>
         <ul className="flex flex-wrap justify-center gap-x-4 gap-y-3 bg-white/70 px-3 py-4">

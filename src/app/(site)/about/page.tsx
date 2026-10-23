@@ -5,6 +5,7 @@ import { EnquireButton } from "@/components/EnquireButton";
 import { PageHero } from "@/components/PageHero";
 import { SmartImage } from "@/components/SmartImage";
 import { getSiteData } from "@/lib/data";
+import { slotImage } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -20,13 +21,14 @@ const VALUES = [
 ];
 
 export default async function AboutPage() {
-  const { branches } = await getSiteData();
+  const { branches, images } = await getSiteData();
+  const pic = slotImage(images, "about");
   return (
     <>
       <PageHero title="About Study Point" subtitle="A nursery and English learning centre where little learners grow into confident, capable students." />
 
       <section className="container-page grid items-center gap-8 py-10 lg:grid-cols-2">
-        <SmartImage src="/placeholders/about.svg" alt="Study Point students and teacher in the classroom" width={1000} height={760} sizes="(min-width:1024px) 540px, 100vw" className="h-auto w-full rounded-3xl shadow-card" />
+        <SmartImage src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 540px, 100vw" className="aspect-[10/7.6] w-full rounded-3xl object-cover shadow-card" />
         <div className="space-y-4 text-gray-700">
           <h2 className="text-3xl font-extrabold text-brand-navy">Our story</h2>
           <p>
