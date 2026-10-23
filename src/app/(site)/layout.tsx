@@ -3,6 +3,7 @@ import { Announcements } from "@/components/Announcements";
 import { EnquiryProvider } from "@/components/EnquiryProvider";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { PageViewTracker } from "@/components/PageViewTracker";
 import { TopBar } from "@/components/TopBar";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { getSiteData } from "@/lib/data";
@@ -26,6 +27,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       <WhatsAppFab options={site.branches.map((b) => ({ name: b.name, whatsapp: b.whatsapp }))} />
       {/* Cookie-free visitor statistics; shows data once "Web Analytics" is enabled in the Vercel dashboard. */}
       <Analytics />
+      <PageViewTracker />
     </EnquiryProvider>
   );
 }
