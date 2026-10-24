@@ -10,7 +10,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
   const t = getDict(lang);
   return (
     <footer className="bg-brand-navy-dark text-white">
-      <div className="container-page grid items-start gap-x-10 gap-y-8 py-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8">
+      <div className="container-page grid items-start gap-x-10 gap-y-8 pb-8 pt-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8">
         <div className="space-y-4 lg:col-span-4">
           <Logo light icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
           <p className="max-w-xs text-sm text-white/80">{t.footer.about}</p>
@@ -55,7 +55,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
           </ul>
         </div>
       </div>
-      <p className="border-t border-white/10 pb-20 pt-4 text-center text-xs text-white/60 sm:pb-4">
+      <p className="border-t border-white/10 pb-16 pt-4 text-center text-xs text-white/60 sm:pb-4">
         {fmt(t.footer.rights, { year: new Date().getFullYear() })}
       </p>
     </footer>
