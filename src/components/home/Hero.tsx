@@ -24,8 +24,8 @@ export function Hero({ hero, images, lang }: { hero: HeroContent; images: SiteIm
           </h1>
           <p className="mt-4 max-w-md text-base text-gray-700 sm:text-lg">{hero.subtitle}</p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <Link href={localePath(lang, "/nursery")} className="btn-pink">{t.hero.exploreEarly} <ArrowRight className="h-4 w-4" aria-hidden /></Link>
-            <Link href={localePath(lang, "/classes")} className="btn-green">{t.hero.discoverClasses} <ArrowRight className="h-4 w-4" aria-hidden /></Link>
+            <Link href={localePath(lang, "/nursery")} className="btn-pink w-full sm:w-auto">{t.hero.exploreEarly} <ArrowRight className="h-4 w-4" aria-hidden /></Link>
+            <Link href={localePath(lang, "/classes")} className="btn-green w-full sm:w-auto">{t.hero.discoverClasses} <ArrowRight className="h-4 w-4" aria-hidden /></Link>
           </div>
         </div>
 

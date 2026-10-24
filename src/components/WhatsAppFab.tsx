@@ -18,10 +18,10 @@ export function WhatsAppFab({ options }: { options: { name: string; whatsapp: st
   const msg = t.whatsapp.message;
 
   const circle =
-    "flex h-14 w-14 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition-transform hover:scale-105";
+    "flex h-12 w-12 items-center justify-center rounded-full bg-[#25d366] text-white shadow-lg transition-transform hover:scale-105 sm:h-14 sm:w-14";
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-3 right-3 z-50 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
       {open && list.length > 1 && (
         <ul className="w-56 rounded-2xl bg-white p-2 shadow-card" aria-label={t.whatsapp.choose}>
           {list.map((o) => (
