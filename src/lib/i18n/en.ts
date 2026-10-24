@@ -236,6 +236,7 @@ export const en = {
         "Contact Study Point: addresses, phone numbers, opening hours and maps for our Point Pedro and Vathiry branches, plus an online enquiry form.",
       title: "Contact Us",
       subtitle: "We would love to hear from you. Visit a branch, call, WhatsApp or send an enquiry.",
+      follow: "Follow us",
       formTitle: "Send us an enquiry",
       formText: "Fill in the form and we will contact you.",
     },

@@ -46,7 +46,7 @@ export function Header() {
       <div className="container-page flex items-center justify-between gap-2 py-2.5">
         <Logo compact href={localePath(lang, "/")} tagline={t.brand.tagline} />
 
-        <nav aria-label={t.nav.main} className={clsx("hidden items-center gap-6", ta ? "xl:flex" : "lg:flex")}>
+        <nav aria-label={t.nav.main} className={clsx("hidden items-center", ta ? "gap-4 min-[1380px]:flex" : "gap-6 lg:flex")}>
           {t.nav.items.map((n) => {
             const active = n.href === "/" ? pathname === "/" : pathname.startsWith(n.href);
             return (
@@ -72,7 +72,7 @@ export function Header() {
           </EnquireButton>
           <button
             type="button"
-            className={clsx("rounded-full p-2 text-brand-navy hover:bg-brand-green-soft", ta ? "xl:hidden" : "lg:hidden")}
+            className={clsx("rounded-full p-2 text-brand-navy hover:bg-brand-green-soft", ta ? "min-[1380px]:hidden" : "lg:hidden")}
             aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -84,7 +84,7 @@ export function Header() {
       </div>
 
       {menuOpen && (
-        <nav id="mobile-menu" aria-label={t.nav.mobile} className={clsx("border-t bg-white", ta ? "xl:hidden" : "lg:hidden")}>
+        <nav id="mobile-menu" aria-label={t.nav.mobile} className={clsx("border-t bg-white", ta ? "min-[1380px]:hidden" : "lg:hidden")}>
           <ul className="container-page py-3">
             {t.nav.items.map((n) => {
               const active = pathname === n.href;
