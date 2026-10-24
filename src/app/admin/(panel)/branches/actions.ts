@@ -17,6 +17,8 @@ export async function saveBranch(fd: FormData) {
       hours: field(fd, "hours").slice(0, 200),
       map_url: mapUrl.slice(0, 1000),
       is_placeholder: fd.get("confirmed") !== "on",
+      // Tamil boxes exist only after schema.sql was re-run (see TamilSetupHelp).
+      ...(fd.has("address_ta") ? { address_ta: field(fd, "address_ta").slice(0, 300), hours_ta: field(fd, "hours_ta").slice(0, 200) } : {}),
     })
     .eq("id", id);
   if (error) back("/admin/branches", { error: "Could not save. Please try again." });

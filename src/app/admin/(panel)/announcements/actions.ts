@@ -8,7 +8,9 @@ export async function addAnnouncement(fd: FormData) {
   const { supabase } = await requireAdmin();
   const text = field(fd, "text").slice(0, 200);
   if (!text) back(PATH, { error: "Please type the announcement." });
-  const { error } = await supabase.from("announcements").insert({ text, is_active: true });
+  // Tamil box exists only after schema.sql was re-run.
+  const extra = fd.has("text_ta") ? { text_ta: field(fd, "text_ta").slice(0, 200) } : {};
+  const { error } = await supabase.from("announcements").insert({ text, is_active: true, ...extra });
   if (error) back(PATH, { error: "Could not save. Please try again." });
   refreshSite();
   back(PATH, { saved: "Announcement is now live on the website." });

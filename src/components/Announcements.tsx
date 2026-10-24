@@ -2,10 +2,10 @@ import { Megaphone } from "lucide-react";
 import type { Announcement } from "@/lib/types";
 
 /** Short notices set in /admin → Announcements, shown at the very top. */
-export function Announcements({ items }: { items: Announcement[] }) {
+export function Announcements({ items, label }: { items: Announcement[]; label: string }) {
   if (!items.length) return null;
   return (
-    <div className="bg-brand-navy text-white" role="region" aria-label="Announcements">
+    <div className="bg-brand-navy text-white" role="region" aria-label={label}>
       <ul className="container-page space-y-1 py-2 text-center text-sm font-semibold">
         {items.map((a) => (
           <li key={a.id} className="flex items-center justify-center gap-2">

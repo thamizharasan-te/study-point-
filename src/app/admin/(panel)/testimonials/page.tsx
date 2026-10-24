@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { Eye, EyeOff, Trash2 } from "lucide-react";
-import { AdminHeading, Card, ConfirmedCheckbox, Help, Notice } from "@/components/admin/Layout";
+import { AdminHeading, Card, ConfirmedCheckbox, Help, Notice, TamilField, TamilSetupHelp } from "@/components/admin/Layout";
 import { ConfirmButton, SubmitButton } from "@/components/admin/ui";
 import { SampleTag } from "@/components/SampleTag";
-import { requireAdmin } from "@/lib/admin";
+import { hasColumn, requireAdmin } from "@/lib/admin";
+import { taValue } from "@/lib/i18n/localize";
 import type { Testimonial } from "@/lib/types";
 import { deleteTestimonial, saveTestimonial, toggleTestimonial } from "./actions";
 
 export const metadata: Metadata = { title: "Parent Comments" };
 
-function Fields({ t }: { t?: Testimonial }) {
+function Fields({ t, tamil }: { t?: Testimonial; tamil: boolean }) {
   return (
     <div className="space-y-3">
       {t && <input type="hidden" name="id" value={t.id} />}
@@ -17,6 +18,7 @@ function Fields({ t }: { t?: Testimonial }) {
         <label className="label" htmlFor={`quote-${t?.id ?? "new"}`}>Comment</label>
         <textarea id={`quote-${t?.id ?? "new"}`} name="quote" rows={3} required maxLength={600} defaultValue={t?.quote} className="input" />
       </div>
+      {tamil && <TamilField id={`quote-ta-${t?.id ?? "new"}`} name="quote_ta" label="Comment" rows={3} defaultValue={t ? taValue(t.quote, t.quote_ta) : ""} maxLength={600} />}
       <div>
         <label className="label" htmlFor={`author-${t?.id ?? "new"}`}>Parent name (or “A Proud Parent”)</label>
         <input id={`author-${t?.id ?? "new"}`} name="author" maxLength={80} defaultValue={t?.author} className="input" />
@@ -34,11 +36,13 @@ export default async function AdminTestimonials({ searchParams }: { searchParams
   const { supabase } = await requireAdmin();
   const { data } = await supabase.from("testimonials").select("*").order("sort_order").order("created_at");
   const items = (data ?? []) as Testimonial[];
+  const tamilReady = await hasColumn(supabase, "testimonials", "quote_ta");
 
   return (
     <>
       <AdminHeading title="Parent Comments" tamil="பெற்றோர் கருத்துகளைச் சேர்க்க, திருத்த, காட்ட, மறைக்க" />
       <Notice saved={saved} error={error} />
+      {!tamilReady && <TamilSetupHelp />}
       {items.some((t) => t.is_placeholder) && (
         <Help>The comments marked <strong>Sample</strong> are examples, not real parents. Replace them with genuine feedback (with the parent&apos;s permission) or delete them.</Help>
       )}
@@ -46,7 +50,7 @@ export default async function AdminTestimonials({ searchParams }: { searchParams
       <Card className="mb-6">
         <h2 className="mb-3 text-lg font-bold text-brand-navy">Add a comment</h2>
         <form action={saveTestimonial} className="space-y-3">
-          <Fields />
+          <Fields tamil={tamilReady} />
           <SubmitButton>Add comment</SubmitButton>
         </form>
       </Card>
@@ -60,7 +64,7 @@ export default async function AdminTestimonials({ searchParams }: { searchParams
                 {t.is_placeholder && <SampleTag label="Sample" always />}
               </div>
               <form action={saveTestimonial} className="space-y-3">
-                <Fields t={t} />
+                <Fields t={t} tamil={tamilReady} />
                 <SubmitButton className="btn-navy">Save changes</SubmitButton>
               </form>
               <div className="mt-3 flex flex-wrap gap-2 border-t pt-3">

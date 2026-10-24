@@ -15,7 +15,13 @@ export async function saveHero(fd: FormData) {
     subtitle: field(fd, "subtitle").slice(0, 240),
   };
   if (!value.line1 || !value.line2 || !value.line3) back(PATH, { error: "All three heading lines are needed." });
-  const { error } = await supabase.from("site_content").upsert({ key: "hero", value });
+  // Optional Tamil version (only the boxes that were filled in).
+  const ta: Record<string, string> = {};
+  for (const [k, max] of [["eyebrow", 80], ["line1", 60], ["line2", 60], ["line3", 60], ["subtitle", 300]] as const) {
+    const v = field(fd, `ta_${k}`).slice(0, max);
+    if (v) ta[k] = v;
+  }
+  const { error } = await supabase.from("site_content").upsert({ key: "hero", value: Object.keys(ta).length ? { ...value, ta } : value });
   if (error) back(PATH, { error: "Could not save. Please try again." });
   refreshSite();
   back(PATH, { saved: "Home page heading saved." });
@@ -30,7 +36,16 @@ export async function savePrograms(fd: FormData) {
   let list: Program[] = [];
   try {
     list = (JSON.parse(field(fd, "programs")) as Program[])
-      .map((p) => ({ title: String(p.title ?? "").trim().slice(0, isFaq ? 120 : 40), description: String(p.description ?? "").trim().slice(0, isFaq ? 600 : 200) }))
+      .map((p) => {
+        const clean = (v: unknown, max: number) => String(v ?? "").trim().slice(0, max);
+        const item: Program = { title: clean(p.title, isFaq ? 120 : 40), description: clean(p.description, isFaq ? 600 : 200) };
+        // Optional Tamil version; empty boxes are not stored.
+        const tt = clean(p.title_ta, isFaq ? 160 : 60);
+        const td = clean(p.description_ta, isFaq ? 600 : 200);
+        if (tt) item.title_ta = tt;
+        if (td) item.description_ta = td;
+        return item;
+      })
       .filter((p) => p.title);
   } catch {
     back(PATH, { error: "Could not read the list. Please try again." });

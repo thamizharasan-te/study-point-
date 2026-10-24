@@ -33,3 +33,12 @@ export function back(path: string, flash: { saved?: string; error?: string }): n
 
 /** Read a trimmed string field from a form. */
 export const field = (fd: FormData, name: string) => String(fd.get(name) ?? "").trim();
+
+/**
+ * True when a database column exists. The Tamil columns are added by re-running
+ * supabase/schema.sql, so the admin hides the Tamil boxes until that is done.
+ */
+export async function hasColumn(supabase: Awaited<ReturnType<typeof createServerSupabase>>, table: string, column: string) {
+  const { error } = await supabase.from(table).select(column).limit(1);
+  return !error;
+}
