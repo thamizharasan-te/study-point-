@@ -11,8 +11,10 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
-  body { @apply bg-brand-cream text-brand-ink font-sans antialiased; }
+  /* The page behind/below the content is the footer colour, so on phones (where Safari's toolbar can sit
+     over an area beyond the page) the footer appears to run to the very bottom of the screen. */
+  html { scroll-behavior: smooth; background-color: #0e2250; }
+  body { @apply bg-brand-cream text-brand-ink font-sans antialiased; min-height: 100vh; min-height: 100dvh; }
   h1, h2, h3 { @apply font-display; font-family: var(--font-display), var(--font-tamil), Georgia, serif; }
   /* Clear, visible keyboard focus everywhere (accessibility). */
   :focus-visible { @apply outline-none ring-2 ring-brand-navy ring-offset-2; }
