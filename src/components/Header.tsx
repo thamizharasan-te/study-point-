@@ -31,7 +31,7 @@ function LanguageSwitch({ className = "" }: { className?: string }) {
   );
 }
 
-export function Header() {
+export function Header({ logo }: { logo?: { icon?: string; full?: string } }) {
   const { lang, t } = useLang();
   const rawPath = usePathname();
   const pathname = stripLang(rawPath); // "/ta/about" and "/about" both become "/about"
@@ -44,7 +44,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-white/95 shadow-sm backdrop-blur">
       <div className="container-page flex items-center justify-between gap-2 py-2.5">
-        <Logo compact href={localePath(lang, "/")} tagline={t.brand.tagline} />
+        <Logo compact icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
 
         <nav aria-label={t.nav.main} className={clsx("hidden items-center", ta ? "gap-4 min-[1380px]:flex" : "gap-6 lg:flex")}>
           {t.nav.items.map((n) => {

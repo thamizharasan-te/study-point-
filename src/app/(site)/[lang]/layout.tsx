@@ -37,9 +37,9 @@ export default async function SiteLayout({ children, params }: { children: React
           </a>
           <Announcements items={site.announcements} label={dict.announcements.aria} />
           <TopBar branches={site.branches} lang={lang} />
-          <Header />
+          <Header logo={{ icon: site.images.logo, full: site.images.logoFull }} />
           <main id="main">{children}</main>
-          <Footer branches={site.branches} social={site.social} lang={lang} />
+          <Footer branches={site.branches} social={site.social} lang={lang} logo={{ icon: site.images.logo, full: site.images.logoFull }} />
           <WhatsAppFab options={site.branches.map((b) => ({ name: b.display_name ?? b.name, whatsapp: b.whatsapp }))} />
           {/* Cookie-free visitor statistics; shows data once "Web Analytics" is enabled in the Vercel dashboard. */}
           <Analytics />

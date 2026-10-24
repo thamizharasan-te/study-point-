@@ -88,7 +88,7 @@ export interface HeroContent {
 }
 
 /** The main pictures that can be replaced from /admin → Main Pictures. */
-export type ImageSlot = "hero" | "nursery" | "classes" | "why" | "about";
+export type ImageSlot = "hero" | "nursery" | "classes" | "why" | "about" | "logo" | "logoFull";
 export type SiteImages = Partial<Record<ImageSlot, string>>;
 
 export interface Social {
