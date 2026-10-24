@@ -15,11 +15,13 @@ export function HowToJoin({ lang }: { lang: Lang }) {
         {t.join.steps.map(({ title, text }, i) => {
           const Icon = ICONS[i];
           return (
-            <li key={title} className="lift relative rounded-3xl bg-white p-6 text-center shadow-card">
-              <span className="absolute -top-3 left-1/2 flex h-7 w-7 -translate-x-1/2 items-center justify-center rounded-full bg-brand-pink text-sm font-extrabold text-white" aria-hidden>{i + 1}</span>
-              <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-green-soft text-brand-green"><Icon className="h-7 w-7" aria-hidden /></span>
-              <h3 className="mt-3 text-lg font-bold text-brand-navy"><span className="sr-only">{fmt(t.join.step, { n: i + 1 })}</span>{title}</h3>
+            <li key={title} className="lift relative flex items-start gap-4 rounded-3xl bg-white p-4 text-left shadow-card sm:block sm:p-6 sm:text-center">
+              <span className="absolute -top-2 left-3 flex h-6 w-6 items-center justify-center rounded-full bg-brand-pink text-xs font-extrabold text-white sm:-top-3 sm:left-1/2 sm:h-7 sm:w-7 sm:-translate-x-1/2 sm:text-sm" aria-hidden>{i + 1}</span>
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-green-soft text-brand-green sm:mx-auto sm:h-14 sm:w-14"><Icon className="h-7 w-7" aria-hidden /></span>
+              <div>
+                <h3 className="text-lg font-bold text-brand-navy sm:mt-3"><span className="sr-only">{fmt(t.join.step, { n: i + 1 })}</span>{title}</h3>
               <p className="mt-1 text-sm text-gray-700">{text}</p>
+              </div>
             </li>
           );
         })}

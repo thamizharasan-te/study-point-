@@ -16,7 +16,8 @@ export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
   );
 }
 
-export function Logo({ light = false, href = "/", tagline = "We make great learners" }: { light?: boolean; href?: string; tagline?: string }) {
+/** `compact` hides the small tagline on very narrow phones (used in the header, where space is tight). */
+export function Logo({ light = false, href = "/", tagline = "We make great learners", compact = false }: { light?: boolean; href?: string; tagline?: string; compact?: boolean }) {
   return (
     <Link href={href} className="flex items-center gap-2">
       <LogoMark />
@@ -24,7 +25,7 @@ export function Logo({ light = false, href = "/", tagline = "We make great learn
         <span className={`block font-script text-2xl sm:text-3xl ${light ? "text-white" : "text-brand-green"}`}>
           Study <span className={light ? "text-pink-200" : "text-brand-pink"}>Point</span>
         </span>
-        <span className={`block text-[9px] font-bold uppercase tracking-[0.2em] sm:text-[10px] ${light ? "text-white/80" : "text-brand-navy"}`}>
+        <span className={`${compact ? "hidden min-[430px]:block" : "block"} whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.2em] sm:text-[10px] ${light ? "text-white/80" : "text-brand-navy"}`}>
           {tagline}
         </span>
       </span>

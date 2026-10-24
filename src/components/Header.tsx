@@ -24,7 +24,7 @@ function LanguageSwitch({ className = "" }: { className?: string }) {
       hrefLang={other}
       lang={other}
       aria-label={t.switchTo.aria}
-      className={clsx("inline-flex min-h-10 items-center gap-1.5 rounded-full border-2 border-brand-navy/20 px-3 text-sm font-bold text-brand-navy hover:bg-brand-navy-soft", className)}
+      className={clsx("inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full border-2 border-brand-navy/20 px-3 text-sm font-bold text-brand-navy hover:bg-brand-navy-soft", className)}
     >
       <Globe className="h-4 w-4" aria-hidden /> {t.switchTo.label}
     </Link>
@@ -44,7 +44,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-white/95 shadow-sm backdrop-blur">
       <div className="container-page flex items-center justify-between gap-2 py-2.5">
-        <Logo href={localePath(lang, "/")} tagline={t.brand.tagline} />
+        <Logo compact href={localePath(lang, "/")} tagline={t.brand.tagline} />
 
         <nav aria-label={t.nav.main} className={clsx("hidden items-center gap-6", ta ? "xl:flex" : "lg:flex")}>
           {t.nav.items.map((n) => {
