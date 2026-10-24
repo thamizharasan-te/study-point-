@@ -48,12 +48,12 @@ export const DEFAULT_FAQ: Program[] = [
 
 export const DEFAULT_SOCIAL: Social = { facebook: "", instagram: "", youtube: "" };
 
-/** PLACEHOLDER numbers — the client must confirm real figures in admin. */
+/** Figures confirmed by the owner (500+ students, 10+ years, 2 branches, 95% satisfaction); editable in admin → Stats. */
 export const DEFAULT_STATS: SiteStat[] = [
-  { key: "children", label: "Happy Students", value: "500+", sort_order: 1, is_placeholder: true },
-  { key: "years", label: "Years of Experience", value: "10+", sort_order: 2, is_placeholder: true },
-  { key: "branches", label: "Branches", value: "2", sort_order: 3, is_placeholder: true },
-  { key: "satisfaction", label: "Parent Satisfaction", value: "95%", sort_order: 4, is_placeholder: true },
+  { key: "children", label: "Happy Students", value: "500+", sort_order: 1, is_placeholder: false },
+  { key: "years", label: "Years of Experience", value: "10+", sort_order: 2, is_placeholder: false },
+  { key: "branches", label: "Branches", value: "2", sort_order: 3, is_placeholder: false },
+  { key: "satisfaction", label: "Parent Satisfaction", value: "95%", sort_order: 4, is_placeholder: false },
 ];
 
 /** PLACEHOLDER quotes — NOT real parents. Replace with genuine feedback. */

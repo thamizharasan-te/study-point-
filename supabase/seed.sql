@@ -40,7 +40,7 @@ on conflict (key) do nothing;
 
 -- SAMPLE numbers — the client must confirm real figures.
 insert into public.site_stats (key, label, value, sort_order, is_placeholder) values
-  ('children',     'Happy Students',      '500+', 1, true),
+  ('children',     'Happy Students',      '500+', 1, false),
   ('years',        'Years of Experience', '10+',  2, true),
   ('branches',     'Branches',            '2',    3, true),
   ('satisfaction', 'Parent Satisfaction', '95%',  4, true)
