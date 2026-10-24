@@ -42,7 +42,7 @@ export function Header({ logo }: { logo?: { icon?: string; full?: string } }) {
   useEffect(() => setMenuOpen(false), [rawPath]);
 
   return (
-    <header className="sticky top-0 z-40 bg-white shadow-sm">
+    <header className="sticky top-0 z-40 transform-gpu bg-white shadow-sm">
       <div className="container-page flex items-center justify-between gap-2 py-2.5">
         <Logo compact icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
 

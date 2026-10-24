@@ -59,23 +59,15 @@
   [lang="ta"] h2:not(.text-lg):not(.text-xl) { font-size: 1.6rem; }
 }
 
-/* Gentle fade-up as sections scroll into view. Pure CSS, no JavaScript. Only
-   browsers that support scroll-driven animations get it; everyone else just
-   sees the content normally. Disabled for reduced-motion users. */
-@keyframes reveal-up {
-  /* Slide only (no fading), so text keeps full contrast while it moves. */
-  from { transform: translateY(24px); }
-  to { transform: none; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .reveal { animation: reveal-up linear both; animation-timeline: view(); animation-range: entry 0% entry 18%; }
-  }
-}
+/* Sections used to slide in with a scroll-driven animation; it made scrolling feel jerky on phones, so it is
+   gone. `.reveal` is kept as a harmless marker class. */
+.reveal { }
 
 /* Cards that lift slightly on hover. */
 .lift { transition: transform .2s ease, box-shadow .2s ease; }
-.lift:hover { transform: translateY(-3px); box-shadow: 0 14px 34px -14px rgba(20, 48, 107, .35); }
+@media (hover: hover) {
+  .lift:hover { transform: translateY(-3px); box-shadow: 0 14px 34px -14px rgba(20, 48, 107, .35); }
+}
 
 /* Visually hidden but available to screen readers. */
 .sr-only-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
