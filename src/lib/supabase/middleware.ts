@@ -6,8 +6,7 @@ import { SUPABASE_ANON_KEY, SUPABASE_URL, isSupabaseConfigured } from "./env";
  * Guards every /admin page.
  *  1. Refreshes the Supabase session cookie.
  *  2. Requires a signed-in user.
- *  3. Requires that user's email to be in the `admin_users` allow-list.
- * The admin layout and every server action repeat the check (defence in depth).
+ *  3. The `admin_users` allow-list is enforced by requireAdmin() in the admin layout, pages and actions.
  */
 export async function guardAdmin(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -30,11 +29,14 @@ export async function guardAdmin(request: NextRequest) {
     },
   });
 
-  const { data } = await supabase.auth.getUser();
-  const email = data.user?.email;
+  // getClaims() refreshes an expired session and verifies the token locally when possible, so a normal
+  // admin click costs no extra trip to Supabase here. The allow-list is re-checked by the admin layout,
+  // every page and every action (requireAdmin); it is only looked up here for the sign-in page redirect.
+  const { data } = await supabase.auth.getClaims();
+  const email = typeof data?.claims?.email === "string" ? data.claims.email : undefined;
 
-  let allowed = false;
-  if (email) {
+  let allowed = Boolean(email);
+  if (email && isLogin) {
     // RLS lets a user read only their own allow-list row.
     const { data: row } = await supabase.from("admin_users").select("email").eq("email", email.toLowerCase()).maybeSingle();
     allowed = Boolean(row);
