@@ -46,7 +46,7 @@ export function BranchCard({ branch: b, lang }: { branch: Branch; lang: Lang }) 
         src={mapEmbedSrc(b)}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        className="h-64 w-full border-0"
+        className="pointer-events-none h-64 w-full border-0 md:pointer-events-auto"
       />
     </article>
   );
