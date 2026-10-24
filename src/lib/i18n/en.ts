@@ -11,8 +11,8 @@ export const en = {
     items: [
       { href: "/", label: "Home" },
       { href: "/about", label: "About Us" },
-      { href: "/nursery", label: "Nursery" },
-      { href: "/classes", label: "Classes" },
+      { href: "/nursery", label: "Early Years" },
+      { href: "/classes", label: "Study Point Classes" },
       { href: "/gallery", label: "Gallery" },
       { href: "/contact", label: "Contact" },
     ],
@@ -30,38 +30,38 @@ export const en = {
   announcements: { aria: "Announcements" },
 
   hero: {
-    exploreEarly: "Explore Early Years",
-    discoverClasses: "Discover Our Classes",
-    badge: ["Learn", "Grow", "Belong"],
+    exploreEarly: "Explore Early Years (3 – 5 Years)",
+    discoverClasses: "Discover Study Point Classes",
+    badge: ["Happy", "Learners", "Brighter", "Tomorrows"],
     imageAlt: "Smiling Study Point children learning together",
   },
 
   features: {
     aria: "Highlights",
     items: [
-      "Safe & Caring Environment",
-      "Experienced Teachers",
-      "Fun & Effective Learning Methods",
-      "Small Class Groups",
-      "Continuous Progress Tracking",
+      { title: "Quality Education", text: "Strong foundation for life" },
+      { title: "Caring Environment", text: "Safe, supportive and friendly" },
+      { title: "Experienced Teachers", text: "Guiding every step" },
+      { title: "Holistic Development", text: "Learn • Play • Grow" },
     ],
   },
 
   cards: {
     aria: "Our programs",
     nursery: {
-      title: "Nursery",
-      age: "3 – 5 Years",
-      tagline: "A happy place to learn, play and grow!",
-      text: "We provide a strong foundation through play-based learning, creativity and structured early years activities.",
+      eyebrow: "Nursery / Early Years",
+      title: "A Happy Place to Learn & Grow",
+      age: "Ages 3 – 5 Years",
+      text: "Through play, creativity and guided learning, we help children build confidence, curiosity and essential skills for a bright future.",
       learnMore: "Learn More",
-      about: " about our Nursery",
+      about: " about our Early Years programme",
       imageAlt: "A Study Point nursery child at play",
     },
     classes: {
-      title: "Study Point Classes",
-      tagline: "Learn Today. Lead Tomorrow.",
-      text: "English, Grammar, Phonics, Spoken English, Writing Skills, Exam Preparation and more — for a brighter future.",
+      eyebrow: "Study Point Classes",
+      title: "Learn Today. Lead Tomorrow.",
+      tagline: "English | Grammar | Spoken English and more",
+      text: "We help students build strong language skills, confidence and communication for school, higher studies and real life.",
       learnMore: "Learn More",
       about: " about Study Point Classes",
       imageAlt: "A Study Point student learning in class",
@@ -95,8 +95,8 @@ export const en = {
   },
 
   stats: { aria: "Study Point in numbers" },
-  preview: { title: "Our Learning Moments", viewGallery: "View Gallery" },
-  testimonials: { title: "What Parents Say" },
+  preview: { eyebrow: "Our Gallery", title: "Moments of Learning, Joy and Growth", viewGallery: "View More Photos" },
+  testimonials: { eyebrow: "Parents' Love", title: "What Parents Say About Us" },
   faq: { title: "Frequently Asked Questions" },
   cta: {
     title: "Give Your Child the Best Start Today!",

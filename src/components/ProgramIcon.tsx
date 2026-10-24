@@ -6,7 +6,7 @@ import {
 // Picks an icon from the programme title, so programmes added/renamed in
 // /admin still get a sensible icon (falls back to a star).
 const MAP: [RegExp, LucideIcon][] = [
-  [/phonic|ஒலிப்பியல்/i, ALargeSmall],
+  [/phonic|ஒலிப்பிய/i, ALargeSmall],
   [/creative|art|படைப்பாற்றல்/i, Palette],
   [/play|விளையாட்டு/i, Puzzle],
   [/social|சமூக/i, Smile],
@@ -15,7 +15,7 @@ const MAP: [RegExp, LucideIcon][] = [
   [/writing|write|எழுத்து/i, PenLine],
   [/group|குழு/i, Users],
   [/exam|தேர்வு/i, Trophy],
-  [/english|grammar|read|ஆங்கிலம்|இலக்கணம்/i, BookOpen],
+  [/english|grammar|read|ஆங்கில|இலக்கண/i, BookOpen],
 ];
 
 export function ProgramIcon({ title, className }: { title: string; className?: string }) {

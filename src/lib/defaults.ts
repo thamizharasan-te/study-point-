@@ -11,29 +11,24 @@ import type { Branch, GalleryItem, HeroContent, ImageSlot, Program, Social, Site
 
 export const DEFAULT_HERO: HeroContent = {
   eyebrow: "Welcome to Study Point",
-  line1: "Little Learners.",
-  line2: "Brighter",
-  line3: "Tomorrows.",
-  subtitle:
-    "A nurturing early years program and quality English education — all under one roof.",
+  line1: "Little Steps.",
+  line2: "Big Dreams.",
+  line3: "Bright Futures.",
+  subtitle: "A nurturing place for young minds to learn, grow and achieve more.",
 };
 
 export const DEFAULT_NURSERY_PROGRAMS: Program[] = [
-  { title: "Phonics", description: "Letter sounds and early reading, taught step by step through songs and games." },
+  { title: "Phonics & Early Reading", description: "Letter sounds and early reading, taught step by step through songs and games." },
   { title: "Creative Activities", description: "Drawing, colouring, crafts and music that let imagination grow." },
-  { title: "Play Based Learning", description: "Learning through blocks, puzzles and guided play, at each child's pace." },
-  { title: "Social Skills", description: "Sharing, taking turns and making friends in a caring group." },
-  { title: "Confidence Building", description: "Speaking up, trying new things and feeling proud of small wins." },
+  { title: "Play-Based Learning", description: "Learning through blocks, puzzles and guided play, at each child's pace." },
+  { title: "Social & Emotional Skills", description: "Sharing, taking turns, understanding feelings and making friends in a caring group." },
 ];
 
 export const DEFAULT_CLASS_PROGRAMS: Program[] = [
-  { title: "English", description: "Reading, vocabulary and comprehension for confident everyday English." },
-  { title: "Grammar", description: "Clear, practical grammar lessons with plenty of examples and practice." },
-  { title: "Phonics", description: "Sound-based reading support for children who are building early literacy." },
   { title: "Spoken English", description: "Speaking practice that builds fluency and removes the fear of speaking." },
-  { title: "Writing Skills", description: "Sentences, paragraphs and creative writing, with friendly feedback." },
-  { title: "Small Groups", description: "Small classes so every student gets the teacher's attention." },
-  { title: "Exam Preparation", description: "Focused revision and exam technique for school English exams." },
+  { title: "English & Grammar", description: "Reading, vocabulary, clear grammar and writing, with focused help for school exams." },
+  { title: "Small Group Classes", description: "Small classes so every student gets the teacher's attention." },
+  { title: "Confidence & Communication", description: "Speaking up, sharing ideas and communicating clearly at school and beyond." },
 ];
 
 /** Safe, general answers only — no fees, timings or promises. Editable in /admin → Website Text. */
