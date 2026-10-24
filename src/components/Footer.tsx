@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { Clock, MapPin, Phone } from "lucide-react";
+import { Clock, MapPin, MessageCircle, Phone } from "lucide-react";
 import { fmt, getDict, localePath, type Lang } from "@/lib/i18n";
 import type { Branch, Social } from "@/lib/types";
-import { telLink } from "@/lib/utils";
+import { telLink, whatsAppLink } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { SocialLinks } from "./SocialLinks";
 
@@ -38,6 +38,18 @@ export function Footer({ branches, social, lang }: { branches: Branch[]; social:
                   <Phone className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                   {b.phones.map((p) => <a key={p} href={telLink(p)} className="hover:underline">{p}</a>)}
                 </p>
+                {b.whatsapp && (
+                  <a
+                    href={whatsAppLink(b.whatsapp, t.whatsapp.message)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={fmt(t.whatsapp.chatWith, { name: b.display_name ?? b.name })}
+                    className="mt-1 inline-flex items-center gap-2 rounded-full bg-[#25d366] px-4 py-2 text-sm font-bold text-white hover:brightness-110"
+                  >
+                    <MessageCircle className="h-4 w-4" aria-hidden />
+                    {t.branch.whatsapp}
+                  </a>
+                )}
               </li>
             ))}
           </ul>
