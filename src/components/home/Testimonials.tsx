@@ -9,7 +9,7 @@ export function Testimonials({ items, lang }: { items: Testimonial[]; lang: Lang
   if (!items.length) return null;
   return (
     <section className="bg-pink-50 py-8 sm:py-10" aria-labelledby="parents-title">
-      <div className="container-page grid gap-6 lg:grid-cols-[13rem_1fr] lg:items-center">
+      <div className="container-page grid gap-6 lg:grid-cols-[15rem_1fr] lg:items-center">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-pink">{t.testimonials.eyebrow}</p>
           <h2 id="parents-title" className="mt-1 text-2xl font-extrabold text-brand-navy-dark sm:text-3xl">{t.testimonials.title}</h2>

@@ -13,11 +13,11 @@ export function FeatureBar({ lang }: { lang: Lang }) {
   const t = getDict(lang);
   return (
     <section aria-label={t.features.aria} className="border-y border-gray-100 bg-white">
-      <ul className="container-page grid gap-x-6 gap-y-5 py-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-y-0">
+      <ul className="container-page grid gap-x-6 gap-y-5 py-5 sm:grid-cols-2 xl:grid-cols-4 xl:gap-y-0">
         {t.features.items.map(({ title, text }, i) => {
           const { icon: Icon, color } = ICONS[i % ICONS.length];
           return (
-            <li key={title} className="flex items-center gap-3 lg:justify-center">
+            <li key={title} className="flex items-center gap-3 xl:justify-center">
               <Icon className={`h-9 w-9 shrink-0 ${color}`} aria-hidden />
               <span className="min-w-0">
                 <span className="block text-sm font-bold text-brand-navy sm:text-base">{title}</span>

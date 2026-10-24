@@ -53,7 +53,19 @@
 [lang="ta"] .text-sm { font-size: 0.9375rem; }
 /* A little air between a heading and the text under it. */
 [lang="ta"] h1 + p, [lang="ta"] h2 + p, [lang="ta"] h3 + p { margin-top: 0.6rem; }
-/* Tamil words are longer, so big headings are scaled down on phones to avoid 4-line titles. */
+/* Tamil words are longer, so big headings are scaled down to avoid 4-line titles, and balanced so a line never ends with a lone word or full stop. */
+[lang="ta"] h1, [lang="ta"] h2 { text-wrap: balance; }
+[lang="ta"] .text-xs, [lang="ta"] .text-sm { line-height: 1.6; }
+@media (min-width: 640px) {
+  [lang="ta"] h1 { font-size: 2.6rem; }
+  [lang="ta"] h2:not(.text-lg):not(.text-xl) { font-size: 1.7rem; }
+  [lang="ta"] article h2 { font-size: 1.45rem; }
+}
+@media (min-width: 1024px) {
+  [lang="ta"] h1 { font-size: 2.7rem; }
+  [lang="ta"] h2:not(.text-lg):not(.text-xl) { font-size: 1.9rem; }
+  [lang="ta"] article h2 { font-size: 1.5rem; }
+}
 @media (max-width: 639px) {
   [lang="ta"] h1 { font-size: 1.95rem; }
   [lang="ta"] h2:not(.text-lg):not(.text-xl) { font-size: 1.6rem; }
