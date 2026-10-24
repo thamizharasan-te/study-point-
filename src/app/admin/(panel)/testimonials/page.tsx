@@ -34,9 +34,8 @@ function Fields({ t, tamil }: { t?: Testimonial; tamil: boolean }) {
 export default async function AdminTestimonials({ searchParams }: { searchParams: Promise<{ saved?: string; error?: string }> }) {
   const { saved, error } = await searchParams;
   const { supabase } = await requireAdmin();
-  const { data } = await supabase.from("testimonials").select("*").order("sort_order").order("created_at");
+  const [{ data }, tamilReady] = await Promise.all([supabase.from("testimonials").select("*").order("sort_order").order("created_at"), hasColumn(supabase, "testimonials", "quote_ta")]);
   const items = (data ?? []) as Testimonial[];
-  const tamilReady = await hasColumn(supabase, "testimonials", "quote_ta");
 
   return (
     <>

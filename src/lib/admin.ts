@@ -9,19 +9,26 @@ import { createServerSupabase } from "./supabase/server";
  * caller is signed in AND on the admin allow-list, even though the middleware
  * already did — so a mistake in one layer can't expose the admin tools.
  */
+/** Email inside a sign-in token, for display only (never used to decide access). */
+function emailInToken(token?: string): string {
+  try {
+    const payload = JSON.parse(Buffer.from(token?.split(".")[1] ?? "", "base64url").toString());
+    return typeof payload.email === "string" ? payload.email.toLowerCase() : "";
+  } catch {
+    return "";
+  }
+}
+
 export const requireAdmin = cache(async () => {
   const supabase = await createServerSupabase();
-  // getClaims() checks the sign-in token locally (no round trip to Supabase Auth) when the project uses
-  // signing keys, and falls back to asking Supabase otherwise. cache() lets the layout and the page of the
-  // same request share one check instead of each repeating it.
-  const { data } = await supabase.auth.getClaims();
-  const email = typeof data?.claims?.email === "string" ? data.claims.email.toLowerCase() : "";
-  if (!email) redirect("/admin/login");
+  // One round trip decides everything: is_admin() runs inside the database, which has already verified the
+  // sign-in token and checks the allow-list. (The old way asked Supabase Auth, then the allow-list: two trips.)
+  // cache() lets the layout and the page of one request share this single check.
+  const [{ data: session }, { data: allowed }] = await Promise.all([supabase.auth.getSession(), supabase.rpc("is_admin")]);
+  if (!session.session) redirect("/admin/login");
+  if (allowed !== true) redirect("/admin/login?error=not-allowed");
 
-  const { data: row } = await supabase.from("admin_users").select("email").eq("email", email).maybeSingle();
-  if (!row) redirect("/admin/login?error=not-allowed");
-
-  return { supabase, email };
+  return { supabase, email: emailInToken(session.session.access_token) };
 });
 
 /** Make public pages pick up admin changes immediately. */

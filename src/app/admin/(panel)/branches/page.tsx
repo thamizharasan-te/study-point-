@@ -11,9 +11,8 @@ export const metadata: Metadata = { title: "Branches" };
 export default async function AdminBranches({ searchParams }: { searchParams: Promise<{ saved?: string; error?: string }> }) {
   const { saved, error } = await searchParams;
   const { supabase } = await requireAdmin();
-  const { data } = await supabase.from("branches").select("*").order("sort_order");
+  const [{ data }, tamilReady] = await Promise.all([supabase.from("branches").select("*").order("sort_order"), hasColumn(supabase, "branches", "address_ta")]);
   const branches = (data ?? []) as Branch[];
-  const tamilReady = await hasColumn(supabase, "branches", "address_ta");
 
   return (
     <>
