@@ -8,14 +8,14 @@ const ICONS = {
 } as const;
 
 /** Round social icons; only the links the admin has filled in are shown. */
-export function SocialLinks({ social }: { social: Social }) {
+export function SocialLinks({ social, tone = "light" }: { social: Social; tone?: "light" | "dark" }) {
   const shown = (Object.keys(ICONS) as (keyof typeof ICONS)[]).filter((k) => social[k]);
   if (!shown.length) return null;
   return (
     <ul className="flex gap-3">
       {shown.map((k) => (
         <li key={k}>
-          <a href={social[k]} target="_blank" rel="noopener noreferrer" aria-label={`Study Point on ${k[0].toUpperCase()}${k.slice(1)}`} className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/25">
+          <a href={social[k]} target="_blank" rel="noopener noreferrer" aria-label={`Study Point on ${k[0].toUpperCase()}${k.slice(1)}`} className={`flex h-10 w-10 items-center justify-center rounded-full ${tone === "light" ? "bg-white/10 text-white hover:bg-white/25" : "bg-brand-navy text-white hover:bg-brand-navy-dark"}`}>
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">{ICONS[k]}</svg>
           </a>
         </li>

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { BranchCard } from "@/components/BranchCard";
 import { EnquiryForm } from "@/components/EnquiryForm";
 import { PageHero } from "@/components/PageHero";
+import { SocialLinks } from "@/components/SocialLinks";
 import { getSiteData } from "@/lib/data";
 import { getDict, isLang } from "@/lib/i18n";
 import { localize } from "@/lib/i18n/localize";
@@ -22,11 +23,19 @@ export default async function ContactPage({ params }: Props) {
   if (!isLang(lang)) notFound();
   const p = getDict(lang).pages.contact;
   const raw = await getSiteData();
-  const { branches } = localize(raw, lang);
+  const { branches, social } = localize(raw, lang);
+  const hasSocial = Boolean(social.facebook || social.instagram || social.youtube);
   const options = raw.branches.map((b, i) => ({ value: b.name, label: branches[i].display_name ?? b.name }));
   return (
     <>
-      <PageHero title={p.title} subtitle={p.subtitle} />
+      <PageHero title={p.title} subtitle={p.subtitle}>
+        {hasSocial && (
+          <div className="flex flex-col items-center gap-2">
+            <p className="text-sm font-bold text-brand-navy">{p.follow}</p>
+            <SocialLinks social={social} tone="dark" />
+          </div>
+        )}
+      </PageHero>
       <section className="container-page grid gap-6 py-10 lg:grid-cols-2">
         {branches.map((b) => <BranchCard key={b.id} branch={b} lang={lang} />)}
       </section>

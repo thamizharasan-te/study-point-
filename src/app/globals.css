@@ -37,6 +37,15 @@
   .label { @apply mb-1 block text-sm font-semibold text-brand-navy; }
 }
 
+/* Tamil typography.
+   - Extra letter-spacing splits Tamil letter clusters ("வ ர வே ற் …"), most visibly in
+     iPhone Safari, and UPPERCASE has no meaning in Tamil — both are switched off.
+   - Tamil letters are taller, so headings and text get more line height. */
+[lang="ta"], [lang="ta"] * { letter-spacing: normal !important; text-transform: none !important; }
+[lang="ta"] { overflow-wrap: break-word; }
+[lang="ta"] h1, [lang="ta"] h2, [lang="ta"] h3 { line-height: 1.3 !important; }
+[lang="ta"] p, [lang="ta"] li, [lang="ta"] label, [lang="ta"] dd, [lang="ta"] summary, [lang="ta"] figcaption, [lang="ta"] blockquote { line-height: 1.7 !important; }
+
 /* Gentle fade-up as sections scroll into view. Pure CSS, no JavaScript. Only
    browsers that support scroll-driven animations get it; everyone else just
    sees the content normally. Disabled for reduced-motion users. */
