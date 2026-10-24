@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { CtaBand } from "@/components/home/CtaBand";
 import { Faq } from "@/components/home/Faq";
 import { FeatureBar } from "@/components/home/FeatureBar";
 import { GalleryPreview } from "@/components/home/GalleryPreview";
@@ -9,7 +8,6 @@ import { HowToJoin } from "@/components/home/HowToJoin";
 import { ProgramCards } from "@/components/home/ProgramCards";
 import { StatsBand } from "@/components/home/StatsBand";
 import { Testimonials } from "@/components/home/Testimonials";
-import { WhyStudyPoint } from "@/components/home/WhyStudyPoint";
 import { getSiteData } from "@/lib/data";
 import { getDict, isLang } from "@/lib/i18n";
 import { localize } from "@/lib/i18n/localize";
@@ -61,13 +59,11 @@ export default async function HomePage({ params }: Props) {
       <Hero hero={site.hero} images={site.images} lang={lang} />
       <FeatureBar lang={lang} />
       <ProgramCards nursery={site.nurseryPrograms} classes={site.classPrograms} images={site.images} lang={lang} />
-      <WhyStudyPoint images={site.images} lang={lang} />
-      <StatsBand stats={site.stats} lang={lang} />
-      <HowToJoin lang={lang} />
       <GalleryPreview items={site.gallery} lang={lang} />
       <Testimonials items={site.testimonials} lang={lang} />
+      <StatsBand stats={site.stats} lang={lang} />
+      <HowToJoin lang={lang} />
       <Faq items={site.faq} lang={lang} />
-      <CtaBand branches={site.branches} lang={lang} />
     </>
   );
 }

@@ -7,22 +7,33 @@
 export const DEFAULT_TA: Record<string, string> = {
   // Home heading
   "Welcome to Study Point": "Study Point-க்கு வரவேற்கிறோம்",
+  "Little Steps.": "சிறு அடிகள்.",
+  "Big Dreams.": "பெரிய கனவுகள்.",
+  "Bright Futures.": "ஒளிமயமான எதிர்காலம்.",
+  "A nurturing place for young minds to learn, grow and achieve more.":
+    "இளம் மனங்கள் கற்று, வளர்ந்து, மேலும் சாதிக்க ஒரு அன்பான இடம்.",
+  // (earlier wording, kept so databases seeded before the redesign still show Tamil)
   "Little Learners.": "குட்டிக் கற்றோர்.",
   Brighter: "ஒளிமயமான",
   "Tomorrows.": "நாளைகள்.",
   "A nurturing early years program and quality English education — all under one roof.":
     "அன்பான மழலையர் பராமரிப்புத் திட்டமும் தரமான ஆங்கிலக் கல்வியும் — ஒரே கூரையின் கீழ்.",
 
-  // Nursery programmes
+  // Early Years (nursery) programmes
+  "Phonics & Early Reading": "ஒலிப்பியலும் ஆரம்ப வாசிப்பும்",
   Phonics: "ஒலிப்பியல் (Phonics)",
   "Letter sounds and early reading, taught step by step through songs and games.":
     "பாடல்கள், விளையாட்டுகள் மூலம் எழுத்தொலிகளையும் ஆரம்ப வாசிப்பையும் படிப்படியாகக் கற்பித்தல்.",
   "Creative Activities": "படைப்பாற்றல் செயல்பாடுகள்",
   "Drawing, colouring, crafts and music that let imagination grow.":
     "கற்பனை வளர உதவும் ஓவியம், வண்ணம் தீட்டுதல், கைவினை, இசை.",
+  "Play-Based Learning": "விளையாட்டு வழிக் கற்றல்",
   "Play Based Learning": "விளையாட்டு வழிக் கற்றல்",
   "Learning through blocks, puzzles and guided play, at each child's pace.":
     "ஒவ்வொரு பிள்ளையின் வேகத்துக்கும் ஏற்ப வண்ணத் துண்டுகள், புதிர்கள், வழிகாட்டப்பட்ட விளையாட்டு மூலம் கற்றல்.",
+  "Social & Emotional Skills": "சமூக, உணர்வுத் திறன்கள்",
+  "Sharing, taking turns, understanding feelings and making friends in a caring group.":
+    "அன்பான குழுவில் பகிர்தல், முறை வைத்தல், உணர்வுகளைப் புரிந்துகொள்ளுதல், நண்பர்களை உருவாக்குதல்.",
   "Social Skills": "சமூகத் திறன்கள்",
   "Sharing, taking turns and making friends in a caring group.":
     "அன்பான குழுவில் பகிர்தல், முறை வைத்தல், நண்பர்களை உருவாக்குதல்.",
@@ -31,6 +42,13 @@ export const DEFAULT_TA: Record<string, string> = {
     "தைரியமாகப் பேசுதல், புதியவற்றை முயலுதல், சிறு வெற்றிகளில் பெருமை கொள்ளுதல்.",
 
   // Class programmes
+  "English & Grammar": "ஆங்கிலமும் இலக்கணமும்",
+  "Reading, vocabulary, clear grammar and writing, with focused help for school exams.":
+    "வாசிப்பு, சொல்வளம், தெளிவான இலக்கணம், எழுத்து — பாடசாலைத் தேர்வுகளுக்கான கவனம் செலுத்திய உதவியுடன்.",
+  "Small Group Classes": "சிறிய குழு வகுப்புகள்",
+  "Confidence & Communication": "தன்னம்பிக்கையும் தொடர்பாடலும்",
+  "Speaking up, sharing ideas and communicating clearly at school and beyond.":
+    "பாடசாலையிலும் அதற்கு அப்பாலும் தைரியமாகப் பேசுதல், கருத்துகளைப் பகிர்தல், தெளிவாகத் தொடர்புகொள்ளுதல்.",
   English: "ஆங்கிலம்",
   "Reading, vocabulary and comprehension for confident everyday English.":
     "நம்பிக்கையான அன்றாட ஆங்கிலத்துக்கான வாசிப்பு, சொல்வளம், புரிதல்.",
