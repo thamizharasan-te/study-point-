@@ -1,9 +1,11 @@
 import { ArrowRight, MapPin, Phone, Send } from "lucide-react";
+import { getDict, type Lang } from "@/lib/i18n";
 import type { Branch } from "@/lib/types";
 import { telLink } from "@/lib/utils";
 import { EnquireButton } from "../EnquireButton";
 
-export function CtaBand({ branches }: { branches: Branch[] }) {
+export function CtaBand({ branches, lang }: { branches: Branch[]; lang: Lang }) {
+  const t = getDict(lang);
   const phones = Array.from(new Set(branches.flatMap((b) => b.phones)));
   return (
     <section className="mt-8 bg-gradient-to-r from-brand-green-dark to-brand-green text-white" aria-labelledby="cta-title">
@@ -11,18 +13,18 @@ export function CtaBand({ branches }: { branches: Branch[] }) {
         <div className="flex items-center gap-4">
           <Send className="hidden h-10 w-10 sm:block" aria-hidden />
           <div>
-            <h2 id="cta-title" className="text-2xl font-bold sm:text-3xl">Give Your Child the Best Start Today!</h2>
-            <p className="text-sm text-white/85">Join the Study Point family and be part of a brighter future.</p>
+            <h2 id="cta-title" className="text-2xl font-bold sm:text-3xl">{t.cta.title}</h2>
+            <p className="text-sm text-white/85">{t.cta.text}</p>
           </div>
         </div>
-        <EnquireButton className="btn-white">Enquire Now <ArrowRight className="h-4 w-4" aria-hidden /></EnquireButton>
+        <EnquireButton className="btn-white">{t.nav.enquire} <ArrowRight className="h-4 w-4" aria-hidden /></EnquireButton>
         <ul className="space-y-1 text-sm font-semibold">
           <li className="flex items-center justify-center gap-2 lg:justify-start">
             <Phone className="h-4 w-4" aria-hidden />
             {phones.map((p, i) => <span key={p}>{i > 0 && " / "}<a href={telLink(p)} className="hover:underline">{p}</a></span>)}
           </li>
           <li className="flex items-center justify-center gap-2 lg:justify-start">
-            <MapPin className="h-4 w-4" aria-hidden /> {branches.map((b) => b.name).join("  |  ")}
+            <MapPin className="h-4 w-4" aria-hidden /> {branches.map((b) => b.display_name ?? b.name).join("  |  ")}
           </li>
         </ul>
       </div>

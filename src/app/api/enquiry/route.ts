@@ -1,7 +1,8 @@
 import { createHash } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import { createServiceClient } from "@/lib/supabase/service";
-import { parseEnquiry } from "@/lib/validation";
+import { getDict } from "@/lib/i18n";
+import { langOf, parseEnquiry } from "@/lib/validation";
 
 // Spam limits: per visitor (hashed IP) — max 3 enquiries per hour, 8 per day.
 const LIMIT_PER_HOUR = 3;
@@ -12,8 +13,9 @@ export async function POST(request: NextRequest) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid request." }, { status: 400 });
+    return NextResponse.json({ error: getDict("en").form.errors.invalid }, { status: 400 });
   }
+  const errors = getDict(langOf(body)).form.errors;
 
   // Honeypot: real people never see/fill this hidden field, bots usually do.
   // Pretend success so bots get no signal that they were caught.
@@ -27,7 +29,7 @@ export async function POST(request: NextRequest) {
   const db = createServiceClient();
   if (!db) {
     return NextResponse.json(
-      { error: "Enquiries are not available right now. Please call or WhatsApp us." },
+      { error: errors.unavailable },
       { status: 503 },
     );
   }
@@ -44,7 +46,7 @@ export async function POST(request: NextRequest) {
   ]);
   if ((hour.count ?? 0) >= LIMIT_PER_HOUR || (day.count ?? 0) >= LIMIT_PER_DAY) {
     return NextResponse.json(
-      { error: "You have sent several enquiries already. Please try again later or call us." },
+      { error: errors.tooMany },
       { status: 429 },
     );
   }
@@ -52,7 +54,7 @@ export async function POST(request: NextRequest) {
   const { error } = await db.from("enquiries").insert({ ...parsed.value, ip_hash: ipHash });
   if (error) {
     console.error("enquiry insert failed", error.message);
-    return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
+    return NextResponse.json({ error: errors.generic }, { status: 500 });
   }
   return NextResponse.json({ ok: true });
 }

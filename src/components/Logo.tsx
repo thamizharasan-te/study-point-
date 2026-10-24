@@ -16,16 +16,16 @@ export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
   );
 }
 
-export function Logo({ light = false }: { light?: boolean }) {
+export function Logo({ light = false, href = "/", tagline = "We make great learners" }: { light?: boolean; href?: string; tagline?: string }) {
   return (
-    <Link href="/" className="flex items-center gap-2">
+    <Link href={href} className="flex items-center gap-2">
       <LogoMark />
       <span className="leading-none">
         <span className={`block font-script text-2xl sm:text-3xl ${light ? "text-white" : "text-brand-green"}`}>
           Study <span className={light ? "text-pink-200" : "text-brand-pink"}>Point</span>
         </span>
         <span className={`block text-[9px] font-bold uppercase tracking-[0.2em] sm:text-[10px] ${light ? "text-white/80" : "text-brand-navy"}`}>
-          We make great learners
+          {tagline}
         </span>
       </span>
     </Link>

@@ -6,6 +6,8 @@ const PATH = "/admin/testimonials";
 
 function read(fd: FormData) {
   return {
+    // Tamil box exists only after schema.sql was re-run.
+    ...(fd.has("quote_ta") ? { quote_ta: field(fd, "quote_ta").slice(0, 600) } : {}),
     quote: field(fd, "quote").slice(0, 600),
     author: field(fd, "author").slice(0, 80) || "Parent",
     is_visible: fd.get("is_visible") === "on",

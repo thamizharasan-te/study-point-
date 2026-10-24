@@ -107,3 +107,13 @@ as $$
   );
 $$;
 grant execute on function public.is_admin() to anon, authenticated;
+
+-- ----------------------------------------------------------------------------
+-- Tamil versions of owner-editable text (typed in /admin). Empty = the website
+-- falls back to standard Tamil for default text, otherwise to the English text.
+-- ----------------------------------------------------------------------------
+alter table public.branches      add column if not exists address_ta text not null default '';
+alter table public.branches      add column if not exists hours_ta   text not null default '';
+alter table public.site_stats    add column if not exists label_ta   text not null default '';
+alter table public.testimonials  add column if not exists quote_ta   text not null default '';
+alter table public.announcements add column if not exists text_ta    text not null default '';

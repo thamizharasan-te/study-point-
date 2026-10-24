@@ -3,12 +3,14 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { X } from "lucide-react";
 import { EnquiryForm } from "./EnquiryForm";
+import { useLang } from "./LangProvider";
 
 const Ctx = createContext<{ open: () => void }>({ open: () => {} });
 export const useEnquiry = () => useContext(Ctx);
 
 /** Holds the "Enquire Now" pop-up so any button on any page can open it. */
-export function EnquiryProvider({ branches, children }: { branches: string[]; children: ReactNode }) {
+export function EnquiryProvider({ branches, children }: { branches: { value: string; label: string }[]; children: ReactNode }) {
+  const { t } = useLang();
   const [isOpen, setOpen] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
@@ -52,10 +54,10 @@ export function EnquiryProvider({ branches, children }: { branches: string[]; ch
           <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="enquiry-title" className="max-h-[92dvh] w-full overflow-y-auto rounded-t-3xl bg-white p-5 shadow-card sm:max-w-xl sm:rounded-3xl sm:p-7">
             <div className="mb-4 flex items-start justify-between gap-3">
               <div>
-                <h2 id="enquiry-title" className="text-2xl font-bold text-brand-navy">Enquire Now</h2>
-                <p className="text-sm text-gray-600">Tell us a little and we&apos;ll get back to you.</p>
+                <h2 id="enquiry-title" className="text-2xl font-bold text-brand-navy">{t.form.modalTitle}</h2>
+                <p className="text-sm text-gray-600">{t.form.modalText}</p>
               </div>
-              <button type="button" onClick={close} aria-label="Close enquiry form" className="rounded-full p-2 hover:bg-gray-100">
+              <button type="button" onClick={close} aria-label={t.form.close} className="rounded-full p-2 hover:bg-gray-100">
                 <X className="h-6 w-6" aria-hidden />
               </button>
             </div>

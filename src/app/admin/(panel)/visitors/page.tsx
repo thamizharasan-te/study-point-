@@ -14,6 +14,13 @@ interface Summary {
 }
 
 const PAGE_NAMES: Record<string, string> = { "/": "Home", "/about": "About Us", "/nursery": "Nursery", "/classes": "Classes", "/gallery": "Gallery", "/contact": "Contact" };
+/** "/ta/about" → "About Us (Tamil)"; "/about" → "About Us". */
+function pageName(path: string) {
+  const ta = path === "/ta" || path.startsWith("/ta/");
+  const base = path.replace(/^\/(en|ta)(?=\/|$)/, "") || "/";
+  const name = PAGE_NAMES[base] ?? base;
+  return ta ? `${name} (Tamil)` : name;
+}
 const num = (n: number) => n.toLocaleString("en-US");
 const dayLabel = (d: string) => new Date(`${d}T00:00:00`).toLocaleDateString("en-GB", { day: "numeric", month: "short" });
 
@@ -81,7 +88,7 @@ export default async function VisitorsPage() {
           <ol className="mt-3 space-y-2 text-sm">
             {s.pages.length === 0 && <li className="text-gray-500">Nothing yet.</li>}
             {s.pages.map((p) => (
-              <li key={p.path} className="flex justify-between gap-3"><span className="truncate font-semibold">{PAGE_NAMES[p.path] ?? p.path}</span><span className="text-gray-600">{num(p.views)}</span></li>
+              <li key={p.path} className="flex justify-between gap-3"><span className="truncate font-semibold">{pageName(p.path)}</span><span className="text-gray-600">{num(p.views)}</span></li>
             ))}
           </ol>
         </Card>

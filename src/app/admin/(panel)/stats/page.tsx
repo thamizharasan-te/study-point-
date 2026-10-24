@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { AdminHeading, Card, Help, Notice } from "@/components/admin/Layout";
+import { AdminHeading, Card, Help, Notice, TamilField, TamilSetupHelp } from "@/components/admin/Layout";
 import { SubmitButton } from "@/components/admin/ui";
-import { requireAdmin } from "@/lib/admin";
+import { hasColumn, requireAdmin } from "@/lib/admin";
+import { taValue } from "@/lib/i18n/localize";
 import { DEFAULT_STATS } from "@/lib/defaults";
 import type { SiteStat } from "@/lib/types";
 import { saveStats } from "./actions";
@@ -20,11 +21,13 @@ export default async function AdminStats({ searchParams }: { searchParams: Promi
   const { supabase } = await requireAdmin();
   const { data } = await supabase.from("site_stats").select("*");
   const byKey = new Map(((data ?? []) as SiteStat[]).map((s) => [s.key, s]));
+  const tamilReady = await hasColumn(supabase, "site_stats", "label_ta");
 
   return (
     <>
       <AdminHeading title="Numbers" tamil="முகப்புப் பக்க எண்ணிக்கைகள்" />
       <Notice saved={saved} error={error} />
+      {!tamilReady && <TamilSetupHelp />}
       <Help>
         The numbers below are <strong>examples</strong> until you enter your real figures. Only tick “Confirmed” when the number is true —
         otherwise the website shows a “Sample” tag next to it.
@@ -44,6 +47,11 @@ export default async function AdminStats({ searchParams }: { searchParams: Promi
                   <input id={`label_${d.key}`} name={`label_${d.key}`} defaultValue={s.label} required maxLength={40} className="input" />
                 </div>
               </div>
+              {tamilReady && (
+                <div className="mt-3">
+                  <TamilField id={`label_ta_${d.key}`} name={`label_ta_${d.key}`} label="Label" defaultValue={taValue(s.label, s.label_ta)} maxLength={60} />
+                </div>
+              )}
               <label className="mt-3 flex items-center gap-3 text-sm font-semibold">
                 <input type="checkbox" name={`confirmed_${d.key}`} defaultChecked={!s.is_placeholder} className="h-5 w-5 accent-brand-green" /> Confirmed — this number is correct
               </label>

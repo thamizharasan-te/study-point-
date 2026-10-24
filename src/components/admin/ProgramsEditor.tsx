@@ -31,6 +31,12 @@ export function ProgramsEditor({ name, idPrefix, initial, titleLabel = "Title", 
           <input id={`${idPrefix}-t-${i}`} className="input" value={p.title} maxLength={maxDesc === 200 ? 40 : 120} onChange={(e) => update(i, { title: e.target.value })} />
           <label className="label mt-2" htmlFor={`${idPrefix}-d-${i}`}>{descLabel}</label>
           <textarea id={`${idPrefix}-d-${i}`} className="input" rows={maxDesc === 200 ? 2 : 3} value={p.description} maxLength={maxDesc} onChange={(e) => update(i, { description: e.target.value })} />
+          <div className="mt-3 border-t pt-3">
+            <label className="label" htmlFor={`${idPrefix}-tt-${i}`}>{titleLabel} <span className="font-normal text-gray-500">(தமிழ்)</span></label>
+            <input id={`${idPrefix}-tt-${i}`} lang="ta" className="input" value={p.title_ta ?? ""} maxLength={maxDesc === 200 ? 60 : 160} onChange={(e) => update(i, { title_ta: e.target.value })} />
+            <label className="label mt-2" htmlFor={`${idPrefix}-td-${i}`}>{descLabel} <span className="font-normal text-gray-500">(தமிழ்)</span></label>
+            <textarea id={`${idPrefix}-td-${i}`} lang="ta" className="input" rows={maxDesc === 200 ? 2 : 3} value={p.description_ta ?? ""} maxLength={maxDesc} onChange={(e) => update(i, { description_ta: e.target.value })} />
+          </div>
           <div className="mt-2 flex gap-2">
             <button type="button" onClick={() => move(i, -1)} disabled={i === 0} aria-label={`Move ${p.title || "item"} up`} className="btn border border-gray-300 !min-h-9 !px-3 !py-1 disabled:opacity-40"><ArrowUp className="h-4 w-4" aria-hidden /></button>
             <button type="button" onClick={() => move(i, 1)} disabled={i === items.length - 1} aria-label={`Move ${p.title || "item"} down`} className="btn border border-gray-300 !min-h-9 !px-3 !py-1 disabled:opacity-40"><ArrowDown className="h-4 w-4" aria-hidden /></button>

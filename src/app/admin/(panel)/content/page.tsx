@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { AdminHeading, Card, Notice } from "@/components/admin/Layout";
+import { AdminHeading, Card, Notice, TamilField } from "@/components/admin/Layout";
 import { ProgramsEditor } from "@/components/admin/ProgramsEditor";
 import { SubmitButton } from "@/components/admin/ui";
 import { requireAdmin } from "@/lib/admin";
+import { taValue } from "@/lib/i18n/localize";
 import { DEFAULT_CLASS_PROGRAMS, DEFAULT_FAQ, DEFAULT_HERO, DEFAULT_NURSERY_PROGRAMS, DEFAULT_SOCIAL } from "@/lib/defaults";
 import type { HeroContent, Program, Social } from "@/lib/types";
 import { saveHero, savePrograms, saveSocial } from "./actions";
@@ -18,6 +19,9 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
   const nursery = (byKey.get("nursery_programs") as Program[] | undefined) ?? DEFAULT_NURSERY_PROGRAMS;
   const classes = (byKey.get("class_programs") as Program[] | undefined) ?? DEFAULT_CLASS_PROGRAMS;
 
+  // Pre-fill each Tamil box with the Tamil the website currently shows, so it can be edited.
+  const withTa = (list: Program[]) => list.map((p) => ({ ...p, title_ta: taValue(p.title, p.title_ta), description_ta: taValue(p.description, p.description_ta) }));
+  const heroTa = hero.ta ?? {};
   const faq = (byKey.get("faq") as Program[] | undefined) ?? DEFAULT_FAQ;
   const social = { ...DEFAULT_SOCIAL, ...(byKey.get("social") as Partial<Social> | undefined) };
 
@@ -42,6 +46,16 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
             <label className="label" htmlFor="subtitle">Sentence under the heading</label>
             <textarea id="subtitle" name="subtitle" rows={2} defaultValue={hero.subtitle} className="input" maxLength={240} />
           </div>
+          <div className="space-y-3 border-t pt-3">
+            <p className="text-sm font-bold text-brand-navy">தமிழ் version (Tamil)</p>
+            <TamilField id="ta_eyebrow" name="ta_eyebrow" label="Small line" defaultValue={taValue(hero.eyebrow, heroTa.eyebrow)} maxLength={80} />
+            <div className="grid gap-3 sm:grid-cols-3">
+              <TamilField id="ta_line1" name="ta_line1" label="Line 1" defaultValue={taValue(hero.line1, heroTa.line1)} maxLength={60} />
+              <TamilField id="ta_line2" name="ta_line2" label="Line 2" defaultValue={taValue(hero.line2, heroTa.line2)} maxLength={60} />
+              <TamilField id="ta_line3" name="ta_line3" label="Line 3" defaultValue={taValue(hero.line3, heroTa.line3)} maxLength={60} />
+            </div>
+            <TamilField id="ta_subtitle" name="ta_subtitle" label="Sentence under the heading" rows={2} defaultValue={taValue(hero.subtitle, heroTa.subtitle)} maxLength={300} />
+          </div>
           <SubmitButton>Save heading</SubmitButton>
         </form>
       </Card>
@@ -51,7 +65,7 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
         <p className="mb-3 text-sm text-gray-600">Shown on the Nursery page and the home page.</p>
         <form action={savePrograms} className="space-y-3">
           <input type="hidden" name="key" value="nursery_programs" />
-          <ProgramsEditor name="programs" idPrefix="nursery" initial={nursery} />
+          <ProgramsEditor name="programs" idPrefix="nursery" initial={withTa(nursery)} />
           <SubmitButton>Save Nursery list</SubmitButton>
         </form>
       </Card>
@@ -61,7 +75,7 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
         <p className="mb-3 text-sm text-gray-600">Shown on the Classes page and the home page.</p>
         <form action={savePrograms} className="space-y-3">
           <input type="hidden" name="key" value="class_programs" />
-          <ProgramsEditor name="programs" idPrefix="classes" initial={classes} />
+          <ProgramsEditor name="programs" idPrefix="classes" initial={withTa(classes)} />
           <SubmitButton>Save Classes list</SubmitButton>
         </form>
       </Card>
@@ -71,7 +85,7 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
         <p className="mb-3 text-sm text-gray-600">Shown on the home page. Only write answers that are true — for example fees and timings.</p>
         <form action={savePrograms} className="space-y-3">
           <input type="hidden" name="key" value="faq" />
-          <ProgramsEditor name="programs" idPrefix="faq" initial={faq} titleLabel="Question" descLabel="Answer" maxDesc={600} />
+          <ProgramsEditor name="programs" idPrefix="faq" initial={withTa(faq)} titleLabel="Question" descLabel="Answer" maxDesc={600} />
           <SubmitButton>Save questions</SubmitButton>
         </form>
       </Card>

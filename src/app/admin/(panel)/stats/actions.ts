@@ -12,6 +12,8 @@ export async function saveStats(fd: FormData) {
     value: field(fd, `value_${key}`).slice(0, 20),
     sort_order: i + 1,
     is_placeholder: fd.get(`confirmed_${key}`) !== "on",
+    // Tamil label only when the box exists (after schema.sql was re-run).
+    ...(fd.has(`label_ta_${key}`) ? { label_ta: field(fd, `label_ta_${key}`).slice(0, 60) } : {}),
   }));
   if (rows.some((r) => !r.label || !r.value)) back("/admin/stats", { error: "Every number needs a label and a value." });
   const { error } = await supabase.from("site_stats").upsert(rows);

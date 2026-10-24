@@ -1,4 +1,5 @@
 import { Clock, ExternalLink, MapPin, MessageCircle, Phone } from "lucide-react";
+import { fmt, getDict, type Lang } from "@/lib/i18n";
 import type { Branch } from "@/lib/types";
 import { telLink, whatsAppLink } from "@/lib/utils";
 import { SampleTag } from "./SampleTag";
@@ -12,13 +13,15 @@ function mapEmbedSrc(b: Branch) {
   return `https://maps.google.com/maps?q=${encodeURIComponent(`Study Point ${b.name} Sri Lanka`)}&output=embed`;
 }
 
-export function BranchCard({ branch: b }: { branch: Branch }) {
+export function BranchCard({ branch: b, lang }: { branch: Branch; lang: Lang }) {
+  const t = getDict(lang);
+  const name = b.display_name ?? b.name;
   const linkToMap = b.map_url && /^https?:\/\//.test(b.map_url) ? b.map_url : `https://maps.google.com/?q=${encodeURIComponent(`Study Point ${b.name} Sri Lanka`)}`;
   return (
     <article className="overflow-hidden rounded-3xl bg-white shadow-card">
       <div className="space-y-3 p-5 sm:p-6">
         <div className="flex flex-wrap items-center gap-2">
-          <h2 className="text-2xl font-extrabold text-brand-navy">{b.name}</h2>
+          <h2 className="text-2xl font-extrabold text-brand-navy">{name}</h2>
           {b.is_placeholder && <SampleTag label="Details to be confirmed" />}
         </div>
         <p className="flex gap-2 text-gray-700"><MapPin className="mt-1 h-5 w-5 shrink-0 text-brand-pink" aria-hidden />{b.address}</p>
@@ -29,17 +32,17 @@ export function BranchCard({ branch: b }: { branch: Branch }) {
         </p>
         <div className="flex flex-wrap gap-2 pt-1">
           {b.whatsapp && (
-            <a href={whatsAppLink(b.whatsapp, "Hello Study Point, I would like to know more.")} target="_blank" rel="noopener noreferrer" className="btn-green">
-              <MessageCircle className="h-4 w-4" aria-hidden /> WhatsApp
+            <a href={whatsAppLink(b.whatsapp, t.whatsapp.message)} target="_blank" rel="noopener noreferrer" className="btn-green">
+              <MessageCircle className="h-4 w-4" aria-hidden /> {t.branch.whatsapp}
             </a>
           )}
           <a href={linkToMap} target="_blank" rel="noopener noreferrer" className="btn-outline">
-            <ExternalLink className="h-4 w-4" aria-hidden /> Open in Maps
+            <ExternalLink className="h-4 w-4" aria-hidden /> {t.branch.openMaps}
           </a>
         </div>
       </div>
       <iframe
-        title={`Map showing the ${b.name} branch`}
+        title={fmt(t.branch.mapTitle, { name })}
         src={mapEmbedSrc(b)}
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"

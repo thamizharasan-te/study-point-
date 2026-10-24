@@ -50,3 +50,27 @@ export function ConfirmedCheckbox({ defaultChecked, label }: { defaultChecked: b
     </label>
   );
 }
+
+/** Shown instead of the Tamil boxes until supabase/schema.sql has been run again. */
+export function TamilSetupHelp() {
+  return (
+    <Help>
+      To type Tamil versions here, run <strong>supabase/schema.sql</strong> once more in the Supabase SQL Editor (it is safe to re-run), then reload this page.
+      Until then the Tamil website uses standard Tamil or English.
+    </Help>
+  );
+}
+
+/** Small label + box for the Tamil version of a field. */
+export function TamilField({ id, name, label, defaultValue, rows, maxLength = 200 }: { id: string; name: string; label: string; defaultValue?: string; rows?: number; maxLength?: number }) {
+  return (
+    <div>
+      <label className="label" htmlFor={id}>{label} <span className="font-normal text-gray-500">(தமிழ்)</span></label>
+      {rows ? (
+        <textarea id={id} name={name} rows={rows} defaultValue={defaultValue} maxLength={maxLength} lang="ta" className="input" />
+      ) : (
+        <input id={id} name={name} defaultValue={defaultValue} maxLength={maxLength} lang="ta" className="input" />
+      )}
+    </div>
+  );
+}

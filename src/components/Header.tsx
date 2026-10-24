@@ -3,34 +3,59 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { ArrowRight, Globe, Menu, X } from "lucide-react";
 import clsx from "clsx";
-import { Logo } from "./Logo";
+import { localePath, stripLang } from "@/lib/i18n";
 import { EnquireButton } from "./EnquireButton";
-import { NAV } from "@/lib/nav";
+import { useLang } from "./LangProvider";
+import { Logo } from "./Logo";
+
+/**
+ * Language switch: on an English page it offers "தமிழ்", on a Tamil page
+ * "English", and keeps the visitor on the same page.
+ */
+function LanguageSwitch({ className = "" }: { className?: string }) {
+  const { lang, t } = useLang();
+  const pathname = usePathname();
+  const other = lang === "en" ? "ta" : "en";
+  return (
+    <Link
+      href={localePath(other, stripLang(pathname))}
+      hrefLang={other}
+      lang={other}
+      aria-label={t.switchTo.aria}
+      className={clsx("inline-flex min-h-10 items-center gap-1.5 rounded-full border-2 border-brand-navy/20 px-3 text-sm font-bold text-brand-navy hover:bg-brand-navy-soft", className)}
+    >
+      <Globe className="h-4 w-4" aria-hidden /> {t.switchTo.label}
+    </Link>
+  );
+}
 
 export function Header() {
-  const pathname = usePathname();
+  const { lang, t } = useLang();
+  const rawPath = usePathname();
+  const pathname = stripLang(rawPath); // "/ta/about" and "/about" both become "/about"
   const [menuOpen, setMenuOpen] = useState(false);
+  const ta = lang === "ta"; // Tamil labels are longer, so the inline menu starts one breakpoint later
 
   // Close the mobile menu after navigating.
-  useEffect(() => setMenuOpen(false), [pathname]);
+  useEffect(() => setMenuOpen(false), [rawPath]);
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 shadow-sm backdrop-blur">
-      <div className="container-page flex items-center justify-between gap-3 py-2.5">
-        <Logo />
+      <div className="container-page flex items-center justify-between gap-2 py-2.5">
+        <Logo href={localePath(lang, "/")} tagline={t.brand.tagline} />
 
-        <nav aria-label="Main" className="hidden items-center gap-6 lg:flex">
-          {NAV.map((n) => {
+        <nav aria-label={t.nav.main} className={clsx("hidden items-center gap-6", ta ? "xl:flex" : "lg:flex")}>
+          {t.nav.items.map((n) => {
             const active = n.href === "/" ? pathname === "/" : pathname.startsWith(n.href);
             return (
               <Link
                 key={n.href}
-                href={n.href}
+                href={localePath(lang, n.href)}
                 aria-current={active ? "page" : undefined}
                 className={clsx(
-                  "border-b-2 py-1 text-sm font-bold transition-colors",
+                  "whitespace-nowrap border-b-2 py-1 text-sm font-bold transition-colors",
                   active ? "border-brand-green text-brand-green" : "border-transparent text-brand-navy hover:text-brand-green",
                 )}
               >
@@ -41,13 +66,14 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitch />
           <EnquireButton className="btn-green hidden sm:inline-flex">
-            Enquire Now <ArrowRight className="h-4 w-4" aria-hidden />
+            {t.nav.enquire} <ArrowRight className="h-4 w-4" aria-hidden />
           </EnquireButton>
           <button
             type="button"
-            className="rounded-full p-2 text-brand-navy hover:bg-brand-green-soft lg:hidden"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className={clsx("rounded-full p-2 text-brand-navy hover:bg-brand-green-soft", ta ? "xl:hidden" : "lg:hidden")}
+            aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
             onClick={() => setMenuOpen((o) => !o)}
@@ -58,22 +84,22 @@ export function Header() {
       </div>
 
       {menuOpen && (
-        <nav id="mobile-menu" aria-label="Mobile" className="border-t bg-white lg:hidden">
+        <nav id="mobile-menu" aria-label={t.nav.mobile} className={clsx("border-t bg-white", ta ? "xl:hidden" : "lg:hidden")}>
           <ul className="container-page py-3">
-            {NAV.map((n) => (
-              <li key={n.href}>
-                <Link
-                  href={n.href}
-                  aria-current={pathname === n.href ? "page" : undefined}
-                  className={clsx(
-                    "block rounded-xl px-3 py-3 text-base font-bold",
-                    pathname === n.href ? "bg-brand-green-soft text-brand-green" : "text-brand-navy",
-                  )}
-                >
-                  {n.label}
-                </Link>
-              </li>
-            ))}
+            {t.nav.items.map((n) => {
+              const active = pathname === n.href;
+              return (
+                <li key={n.href}>
+                  <Link
+                    href={localePath(lang, n.href)}
+                    aria-current={active ? "page" : undefined}
+                    className={clsx("block rounded-xl px-3 py-3 text-base font-bold", active ? "bg-brand-green-soft text-brand-green" : "text-brand-navy")}
+                  >
+                    {n.label}
+                  </Link>
+                </li>
+              );
+            })}
             <li className="pt-2">
               <EnquireButton className="btn-green w-full" />
             </li>

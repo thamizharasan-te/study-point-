@@ -28,6 +28,8 @@ export interface GalleryItem {
 export interface Testimonial {
   id: string;
   quote: string;
+  /** Optional Tamil version of the quote. */
+  quote_ta?: string;
   author: string;
   is_visible: boolean;
   is_placeholder: boolean;
@@ -37,6 +39,7 @@ export interface Testimonial {
 export interface SiteStat {
   key: "children" | "years" | "branches" | "satisfaction";
   label: string;
+  label_ta?: string;
   value: string;
   sort_order: number;
   is_placeholder: boolean;
@@ -45,10 +48,14 @@ export interface SiteStat {
 export interface Branch {
   id: string;
   name: string;
+  /** Name shown to visitors in the current language (set by localize). */
+  display_name?: string;
   address: string;
+  address_ta?: string;
   phones: string[];
   whatsapp: string;
   hours: string;
+  hours_ta?: string;
   map_url: string;
   sort_order: number;
   is_placeholder: boolean;
@@ -57,6 +64,7 @@ export interface Branch {
 export interface Announcement {
   id: string;
   text: string;
+  text_ta?: string;
   is_active: boolean;
   created_at: string;
 }
@@ -64,6 +72,9 @@ export interface Announcement {
 export interface Program {
   title: string;
   description: string;
+  /** Optional Tamil version, typed in /admin. */
+  title_ta?: string;
+  description_ta?: string;
 }
 
 export interface HeroContent {
@@ -72,6 +83,8 @@ export interface HeroContent {
   line2: string;
   line3: string;
   subtitle: string;
+  /** Optional Tamil version of the five fields above. */
+  ta?: Partial<Omit<HeroContent, "ta">>;
 }
 
 /** The main pictures that can be replaced from /admin → Main Pictures. */

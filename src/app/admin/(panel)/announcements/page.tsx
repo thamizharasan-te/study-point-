@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Eye, EyeOff, Trash2 } from "lucide-react";
-import { AdminHeading, Card, Help, Notice } from "@/components/admin/Layout";
+import { AdminHeading, Card, Help, Notice, TamilField, TamilSetupHelp } from "@/components/admin/Layout";
 import { ConfirmButton, SubmitButton } from "@/components/admin/ui";
-import { requireAdmin } from "@/lib/admin";
+import { hasColumn, requireAdmin } from "@/lib/admin";
 import type { Announcement } from "@/lib/types";
 import { addAnnouncement, deleteAnnouncement, toggleAnnouncement } from "./actions";
 
@@ -13,17 +13,20 @@ export default async function AdminAnnouncements({ searchParams }: { searchParam
   const { supabase } = await requireAdmin();
   const { data } = await supabase.from("announcements").select("*").order("created_at", { ascending: false });
   const items = (data ?? []) as Announcement[];
+  const tamilReady = await hasColumn(supabase, "announcements", "text_ta");
 
   return (
     <>
       <AdminHeading title="Announcements" tamil="முகப்புப் பக்கத்தில் காட்டும் குறுகிய அறிவிப்புகள்" />
       <Notice saved={saved} error={error} />
+      {!tamilReady && <TamilSetupHelp />}
       <Help>Short notices (for example “Admissions open for 2027” or “Closed on Friday”) appear in a blue bar at the very top of every page.</Help>
 
       <Card className="mb-6">
         <form action={addAnnouncement} className="space-y-3">
           <label className="label" htmlFor="text">New announcement</label>
           <input id="text" name="text" required maxLength={200} className="input" placeholder="Type a short notice…" />
+          {tamilReady && <TamilField id="text_ta" name="text_ta" label="Notice" maxLength={200} />}
           <SubmitButton>Publish</SubmitButton>
         </form>
       </Card>
@@ -33,7 +36,7 @@ export default async function AdminAnnouncements({ searchParams }: { searchParam
         {items.map((a) => (
           <li key={a.id}>
             <Card className="flex flex-wrap items-center gap-3">
-              <p className="min-w-0 flex-1 font-semibold">{a.text}</p>
+              <p className="min-w-0 flex-1 font-semibold">{a.text}{a.text_ta && <span lang="ta" className="mt-1 block text-sm font-normal text-gray-600">{a.text_ta}</span>}</p>
               <span className={`rounded-full px-3 py-1 text-xs font-bold ${a.is_active ? "bg-brand-green-soft text-brand-green-dark" : "bg-gray-200 text-gray-700"}`}>{a.is_active ? "Live" : "Hidden"}</span>
               <form action={toggleAnnouncement}>
                 <input type="hidden" name="id" value={a.id} /><input type="hidden" name="active" value={String(!a.is_active)} />
