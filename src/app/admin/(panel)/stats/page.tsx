@@ -19,9 +19,8 @@ const HINTS: Record<string, string> = {
 export default async function AdminStats({ searchParams }: { searchParams: Promise<{ saved?: string; error?: string }> }) {
   const { saved, error } = await searchParams;
   const { supabase } = await requireAdmin();
-  const { data } = await supabase.from("site_stats").select("*");
+  const [{ data }, tamilReady] = await Promise.all([supabase.from("site_stats").select("*"), hasColumn(supabase, "site_stats", "label_ta")]);
   const byKey = new Map(((data ?? []) as SiteStat[]).map((s) => [s.key, s]));
-  const tamilReady = await hasColumn(supabase, "site_stats", "label_ta");
 
   return (
     <>

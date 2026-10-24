@@ -11,9 +11,8 @@ export const metadata: Metadata = { title: "Announcements" };
 export default async function AdminAnnouncements({ searchParams }: { searchParams: Promise<{ saved?: string; error?: string }> }) {
   const { saved, error } = await searchParams;
   const { supabase } = await requireAdmin();
-  const { data } = await supabase.from("announcements").select("*").order("created_at", { ascending: false });
+  const [{ data }, tamilReady] = await Promise.all([supabase.from("announcements").select("*").order("created_at", { ascending: false }), hasColumn(supabase, "announcements", "text_ta")]);
   const items = (data ?? []) as Announcement[];
-  const tamilReady = await hasColumn(supabase, "announcements", "text_ta");
 
   return (
     <>
