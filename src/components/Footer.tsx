@@ -9,7 +9,7 @@ import { SocialLinks } from "./SocialLinks";
 export function Footer({ branches, social, lang, logo }: { branches: Branch[]; social: Social; lang: Lang; logo?: { icon?: string; full?: string } }) {
   const t = getDict(lang);
   return (
-    <footer className="bg-brand-navy-dark text-white">
+    <footer className="bg-brand-navy-dark pb-[env(safe-area-inset-bottom)] text-white">
       <div className="container-page grid items-start gap-x-10 gap-y-8 pb-8 pt-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8">
         <div className="space-y-4 lg:col-span-4">
           <Logo light icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
