@@ -31,12 +31,12 @@ export default async function NurseryPage({ params }: Props) {
         <EnquireButton />
       </PageHero>
 
-      <section className="container-page py-10">
+      <section className="container-page py-8 sm:py-10">
         <h2 className="mb-6 text-center text-3xl font-extrabold text-brand-navy">{p.learnTitle}</h2>
         <ProgramList items={nurseryPrograms} accent="pink" />
       </section>
 
-      <section className="bg-white py-10">
+      <section className="bg-white py-8 sm:py-10">
         <div className="container-page grid items-center gap-8 lg:grid-cols-2">
           <div className="space-y-3 text-gray-700">
             <h2 className="text-3xl font-extrabold text-brand-navy">{p.gentleTitle}</h2>

@@ -25,7 +25,7 @@ export default async function GalleryPage({ params }: Props) {
   return (
     <>
       <PageHero title={p.title} subtitle={p.subtitle} />
-      <section className="container-page py-10">
+      <section className="container-page py-8 sm:py-10">
         {hasSamples && (
           <p className="mb-4 text-center"><SampleTag label={p.sample} /></p>
         )}

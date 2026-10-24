@@ -31,12 +31,12 @@ export default async function ClassesPage({ params }: Props) {
         <EnquireButton className="btn-navy" />
       </PageHero>
 
-      <section className="container-page py-10">
+      <section className="container-page py-8 sm:py-10">
         <h2 className="mb-6 text-center text-3xl font-extrabold text-brand-navy">{p.teachTitle}</h2>
         <ProgramList items={classPrograms} accent="navy" />
       </section>
 
-      <section className="bg-white py-10">
+      <section className="bg-white py-8 sm:py-10">
         <div className="container-page grid items-center gap-8 lg:grid-cols-2">
           <SmartImage src={pic.src} alt={p.imageAlt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 480px, 100vw" className="aspect-[8/7] w-full rounded-3xl object-cover shadow-card" />
           <div className="space-y-3 text-gray-700">

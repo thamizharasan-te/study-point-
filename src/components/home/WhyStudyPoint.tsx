@@ -15,7 +15,7 @@ export function WhyStudyPoint({ images, lang }: { images: SiteImages; lang: Lang
   const t = getDict(lang);
   const pic = slotImage(images, "why");
   return (
-    <section className="reveal bg-white py-12" aria-labelledby="why-title">
+    <section className="reveal bg-white py-10 sm:py-12" aria-labelledby="why-title">
       <div className="container-page grid items-center gap-8 lg:grid-cols-[1fr_2fr_1fr]">
         <SmartImage src={pic.src} alt={t.why.imageAlt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 280px, 100vw" className="hidden aspect-[8/7] w-full rounded-3xl object-cover lg:block" />
         <div>

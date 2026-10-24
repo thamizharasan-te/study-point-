@@ -12,7 +12,7 @@ export function ProgramCards({ nursery, classes, images, lang }: { nursery: Prog
   const nurseryPic = slotImage(images, "nursery");
   const classesPic = slotImage(images, "classes");
   return (
-    <section className="container-page reveal grid gap-5 py-10 lg:grid-cols-2" aria-label={t.cards.aria}>
+    <section className="container-page reveal grid gap-5 py-8 sm:py-10 lg:grid-cols-2" aria-label={t.cards.aria}>
       <article className="overflow-hidden rounded-3xl bg-gradient-to-br from-brand-pink-soft to-amber-50 shadow-card">
         <div className="grid items-center gap-4 p-5 sm:grid-cols-5 sm:gap-3 sm:p-7">
           <div className="sm:col-span-3">

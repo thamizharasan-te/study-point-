@@ -33,7 +33,7 @@ export default async function AboutPage({ params }: Props) {
     <>
       <PageHero title={p.title} subtitle={p.subtitle} />
 
-      <section className="container-page grid items-center gap-8 py-10 lg:grid-cols-2">
+      <section className="container-page grid items-center gap-8 py-8 sm:py-10 lg:grid-cols-2">
         <SmartImage src={pic.src} alt={p.imageAlt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 540px, 100vw" className="aspect-[10/7.6] w-full rounded-3xl object-cover shadow-card" />
         <div className="space-y-4 text-gray-700">
           <h2 className="text-3xl font-extrabold text-brand-navy">{p.storyTitle}</h2>
@@ -47,7 +47,7 @@ export default async function AboutPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="bg-white py-10" aria-labelledby="values-title">
+      <section className="bg-white py-8 sm:py-10" aria-labelledby="values-title">
         <div className="container-page">
           <h2 id="values-title" className="text-center text-3xl font-extrabold text-brand-navy">{p.valuesTitle}</h2>
           <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -65,7 +65,7 @@ export default async function AboutPage({ params }: Props) {
         </div>
       </section>
 
-      <section className="container-page py-10 text-center">
+      <section className="container-page py-8 sm:py-10 text-center">
         <h2 className="text-2xl font-extrabold text-brand-navy sm:text-3xl">{p.visitTitle}</h2>
         <p className="mt-2 text-gray-700">{p.visitText}</p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">

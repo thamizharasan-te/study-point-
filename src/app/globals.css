@@ -45,6 +45,17 @@
 [lang="ta"] { overflow-wrap: break-word; }
 [lang="ta"] h1, [lang="ta"] h2, [lang="ta"] h3 { line-height: 1.3 !important; }
 [lang="ta"] p, [lang="ta"] li, [lang="ta"] label, [lang="ta"] dd, [lang="ta"] summary, [lang="ta"] figcaption, [lang="ta"] blockquote { line-height: 1.7 !important; }
+[lang="ta"] .leading-tight, [lang="ta"] .leading-snug, [lang="ta"] .leading-none { line-height: 1.5 !important; }
+/* Tamil glyphs look smaller than Latin ones at the same size, so the smallest sizes are nudged up. */
+[lang="ta"] .text-xs { font-size: 0.8125rem; }
+[lang="ta"] .text-sm { font-size: 0.9375rem; }
+/* A little air between a heading and the text under it. */
+[lang="ta"] h1 + p, [lang="ta"] h2 + p, [lang="ta"] h3 + p { margin-top: 0.6rem; }
+/* Tamil words are longer, so big headings are scaled down on phones to avoid 4-line titles. */
+@media (max-width: 639px) {
+  [lang="ta"] h1 { font-size: 1.95rem; }
+  [lang="ta"] h2:not(.text-lg):not(.text-xl) { font-size: 1.6rem; }
+}
 
 /* Gentle fade-up as sections scroll into view. Pure CSS, no JavaScript. Only
    browsers that support scroll-driven animations get it; everyone else just
