@@ -36,7 +36,7 @@ export default async function ContactPage({ params }: Props) {
           </div>
         )}
       </PageHero>
-      <section className="container-page grid gap-6 py-10 lg:grid-cols-2">
+      <section className="container-page grid gap-6 py-8 sm:py-10 lg:grid-cols-2">
         {branches.map((b) => <BranchCard key={b.id} branch={b} lang={lang} />)}
       </section>
       <section className="container-page pb-12" aria-labelledby="enquiry-heading">

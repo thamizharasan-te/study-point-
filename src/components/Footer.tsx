@@ -44,7 +44,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={fmt(t.whatsapp.chatWith, { name: b.display_name ?? b.name })}
-                    className="mt-1 inline-flex items-center gap-2 rounded-full bg-[#25d366] px-4 py-2 text-sm font-bold text-white hover:brightness-110"
+                    className="mt-1 inline-flex items-center gap-2 rounded-full bg-brand-green px-4 py-2 text-sm font-bold text-white hover:bg-brand-green-dark"
                   >
                     <MessageCircle className="h-4 w-4" aria-hidden />
                     {t.branch.whatsapp}
