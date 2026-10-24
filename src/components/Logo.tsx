@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SmartImage } from "./SmartImage";
 
 /**
  * Temporary logo: a simple leaf-and-children mark plus the wordmark.
@@ -17,10 +18,18 @@ export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
 }
 
 /** `compact` hides the small tagline on very narrow phones (used in the header, where space is tight). */
-export function Logo({ light = false, href = "/", tagline = "We make great learners", compact = false }: { light?: boolean; href?: string; tagline?: string; compact?: boolean }) {
+export function Logo({ light = false, href = "/", tagline = "We make great learners", compact = false, icon, full }: { light?: boolean; href?: string; tagline?: string; compact?: boolean; icon?: string; full?: string }) {
+  // A full logo (name included) replaces everything; on the dark footer it sits on a white chip so it stays readable.
+  if (full) {
+    return (
+      <Link href={href} className={`inline-flex items-center ${light ? "rounded-xl bg-white px-3 py-2" : ""}`} aria-label="Study Point">
+        <SmartImage src={full} alt="Study Point" width={480} height={160} priority className="h-11 w-auto max-w-[12rem] object-contain sm:h-12" />
+      </Link>
+    );
+  }
   return (
     <Link href={href} className="flex items-center gap-2">
-      <LogoMark />
+      {icon ? <SmartImage src={icon} alt="" width={160} height={160} priority className="h-10 w-10 shrink-0 rounded-full object-contain" /> : <LogoMark />}
       <span className="leading-none">
         <span className={`block font-script text-2xl sm:text-3xl ${light ? "text-white" : "text-brand-green"}`}>
           Study <span className={light ? "text-pink-200" : "text-brand-pink"}>Point</span>

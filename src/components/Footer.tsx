@@ -6,13 +6,13 @@ import { telLink, whatsAppLink } from "@/lib/utils";
 import { Logo } from "./Logo";
 import { SocialLinks } from "./SocialLinks";
 
-export function Footer({ branches, social, lang }: { branches: Branch[]; social: Social; lang: Lang }) {
+export function Footer({ branches, social, lang, logo }: { branches: Branch[]; social: Social; lang: Lang; logo?: { icon?: string; full?: string } }) {
   const t = getDict(lang);
   return (
     <footer className="bg-brand-navy-dark text-white">
       <div className="container-page grid items-start gap-x-10 gap-y-8 py-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8">
         <div className="space-y-4 lg:col-span-4">
-          <Logo light href={localePath(lang, "/")} tagline={t.brand.tagline} />
+          <Logo light icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
           <p className="max-w-xs text-sm text-white/80">{t.footer.about}</p>
           <SocialLinks social={social} />
         </div>

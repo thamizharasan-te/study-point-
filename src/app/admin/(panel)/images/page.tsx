@@ -37,7 +37,7 @@ export default async function AdminImages({ searchParams }: { searchParams: Prom
                 <h2 className="text-lg font-bold text-brand-navy">{meta.label}</h2>
                 <p className="text-sm text-gray-600">{meta.where}</p>
               </div>
-              <SmartImage src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} sizes="(min-width:768px) 400px, 100vw" className="aspect-[4/3] w-full rounded-xl object-cover" />
+              <SmartImage src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} sizes="(min-width:768px) 400px, 100vw" className={`w-full rounded-xl ${slot.startsWith("logo") ? "h-40 border bg-white object-contain p-4" : "aspect-[4/3] object-cover"}`} />
               <p className="text-xs font-semibold text-gray-500">{custom ? "Your photo is showing." : "Temporary illustration is showing."}</p>
               <ImageSlotUploader slot={slot} />
               {custom && (

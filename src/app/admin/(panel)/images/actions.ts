@@ -3,7 +3,7 @@
 import { back, field, refreshSite, requireAdmin } from "@/lib/admin";
 import type { ImageSlot, SiteImages } from "@/lib/types";
 
-const SLOTS: ImageSlot[] = ["hero", "nursery", "classes", "why", "about"];
+const SLOTS: ImageSlot[] = ["hero", "nursery", "classes", "why", "about", "logo", "logoFull"];
 const BUCKET_MARK = "/storage/v1/object/public/gallery/";
 
 type Supabase = Awaited<ReturnType<typeof requireAdmin>>["supabase"];

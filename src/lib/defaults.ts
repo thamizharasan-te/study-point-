@@ -111,5 +111,7 @@ export const IMAGE_SLOTS: Record<ImageSlot, { label: string; where: string; fall
   nursery: { label: "Nursery picture", where: "Home page Nursery card and the Nursery page", fallback: "/placeholders/nursery.svg", alt: "A Study Point nursery child at play", width: 800, height: 700 },
   classes: { label: "Classes picture", where: "Home page Classes card and the Classes page", fallback: "/placeholders/classes.svg", alt: "A Study Point student learning in class", width: 800, height: 700 },
   why: { label: "“Why Study Point” picture", where: "Home page, beside “More Than Just Classes”", fallback: "/placeholders/why.svg", alt: "A Study Point child reading a book", width: 800, height: 700 },
+  logo: { label: "Logo — icon only", where: "Header and footer, next to the “Study Point” name (the name text stays). Square or round picture, transparent background works best.", fallback: "/placeholders/logo.svg", alt: "Study Point logo", width: 160, height: 160 },
+  logoFull: { label: "Logo — full (includes the name)", where: "Header and footer. Use this if your logo already has the name written in it; it replaces the icon AND the name text. Wide picture, transparent background works best.", fallback: "/placeholders/logo.svg", alt: "Study Point logo", width: 480, height: 160 },
   about: { label: "About Us picture", where: "About Us page", fallback: "/placeholders/about.svg", alt: "Study Point students in the classroom", width: 1000, height: 760 },
 };
