@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { SmartImage } from "./SmartImage";
 
-/**
- * Temporary logo: a simple leaf-and-children mark plus the wordmark.
- * Replace with the real logo file (e.g. public/logo.svg) when the client supplies it.
- */
+/** Study Point's own logo (transparent background). Admin → Main Pictures can override it. */
+const BUILTIN_LOGO = "/logo.png";
+
+/** Simple leaf mark, only used on the admin screens. */
 export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
   return (
     <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
@@ -19,11 +19,13 @@ export function LogoMark({ className = "h-10 w-10" }: { className?: string }) {
 
 /** `compact` hides the small tagline on very narrow phones (used in the header, where space is tight). */
 export function Logo({ light = false, href = "/", tagline = "We make great learners", compact = false, icon, full }: { light?: boolean; href?: string; tagline?: string; compact?: boolean; icon?: string; full?: string }) {
-  // A full logo (name included) replaces everything; on the dark footer it sits on a white chip so it stays readable.
-  if (full) {
+  // The logo to show: a full logo uploaded in admin, else the built-in one unless only an icon was uploaded.
+  const logo = full ?? (icon ? undefined : BUILTIN_LOGO);
+  if (logo) {
+    const own = logo === BUILTIN_LOGO; // our logo is made for dark and light backgrounds; an uploaded one gets a white chip on the dark footer
     return (
-      <Link href={href} className={`inline-flex items-center ${light ? "rounded-xl bg-white px-3 py-2" : ""}`} aria-label="Study Point">
-        <SmartImage src={full} alt="Study Point" width={480} height={160} priority className="h-11 w-auto max-w-[12rem] object-contain sm:h-12" />
+      <Link href={href} className={`inline-flex items-center ${light && !own ? "rounded-xl bg-white px-3 py-2" : ""}`} aria-label="Study Point">
+        <SmartImage src={logo} alt="Study Point — we make great learners" width={own ? 900 : 480} height={own ? 634 : 160} priority className={`${light ? "h-24" : "h-16 sm:h-20"} w-auto max-w-[14rem] object-contain`} />
       </Link>
     );
   }
