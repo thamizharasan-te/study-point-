@@ -11,8 +11,8 @@ export function TopBar({ branches, lang }: { branches: Branch[]; lang: Lang }) {
   return (
     <section aria-label={t.topbar.aria} className="hidden bg-brand-green-dark text-white md:block">
       <div className="container-page flex items-center justify-between py-1.5 text-sm">
-        <p className="font-semibold">{t.topbar.tagline} · {branches.map((b) => b.display_name ?? b.name).join(" · ")}</p>
-        <p className="flex items-center gap-5">
+        <p className="min-w-0 truncate pr-4 font-semibold">{t.topbar.tagline} · {branches.map((b) => b.display_name ?? b.name).join(" · ")}</p>
+        <p className="flex shrink-0 items-center gap-5">
           <span className="flex items-center gap-1.5">
             <Phone className="h-4 w-4" aria-hidden />
             {phones.map((p, i) => (<span key={p}>{i > 0 && " / "}<a href={telLink(p)} className="hover:underline">{p}</a></span>))}
