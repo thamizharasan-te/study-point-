@@ -44,7 +44,7 @@ export function Hero({ hero, images, lang }: { hero: HeroContent; images: SiteIm
           className="aspect-[11/8] w-full object-cover object-[50%_35%] lg:aspect-auto lg:h-full"
         />
         <div className="absolute inset-y-0 left-0 hidden w-2/5 bg-gradient-to-r from-white to-transparent lg:block" aria-hidden />
-        <p className="absolute right-3 top-3 -rotate-3 text-right font-script text-lg leading-snug sm:right-6 sm:top-5 sm:text-2xl" aria-hidden>
+        <p className="absolute right-3 top-3 -rotate-3 rounded-2xl bg-white/85 px-3 py-1.5 text-right font-script text-lg leading-snug shadow-md sm:right-6 sm:top-5 sm:text-2xl" aria-hidden>
           {t.hero.badge.map((w, i) => <span key={w} className={`block ${BADGE_COLORS[i % BADGE_COLORS.length]}`}>{w}</span>)}
         </p>
       </div>
