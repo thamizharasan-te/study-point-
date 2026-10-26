@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/playfair-display/wght.css";
 import "@fontsource-variable/nunito/wght.css";
 import "@fontsource-variable/noto-sans-tamil/wght.css";
+import "@fontsource-variable/baloo-thambi-2/wght.css";
 import "@fontsource/kaushan-script/400.css";
 import "./globals.css";
 import { SITE_NAME, SITE_URL } from "@/lib/utils";

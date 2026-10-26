@@ -8,6 +8,7 @@
   --font-body: "Nunito Variable";
   --font-script: "Kaushan Script";
   --font-tamil: "Noto Sans Tamil Variable";
+  --font-kid: "Baloo Thambi 2 Variable";
   /* Default (Classic) theme colours as "r g b" channels. A theme from Admin overrides these (src/lib/themes.ts). */
   --c-green: 46 125 50; --c-green-dark: 31 95 37; --c-green-soft: 232 243 228;
   --c-pink: 216 27 96; --c-pink-dark: 173 20 87; --c-pink-soft: 253 232 239;
@@ -43,6 +44,16 @@
   .input { @apply w-full rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-base text-brand-ink placeholder:text-gray-400 focus:border-brand-navy; }
   .label { @apply mb-1 block text-sm font-semibold text-brand-navy; }
 }
+
+/* Playful look of the public website (class "kid" on the site wrapper): rounded child-friendly headings and chunky buttons. */
+.kid { --font-display: "Baloo Thambi 2 Variable"; }
+.kid h1, .kid h2, .kid h3 { font-weight: 800; }
+.kid .btn:not(.btn-outline) { border-bottom: 4px solid rgb(0 0 0 / 0.18); transition: transform 0.1s, background-color 0.2s; }
+.kid .btn:not(.btn-outline):active { transform: translateY(2px); border-bottom-width: 2px; }
+.rainbow-bar { height: 6px; border-radius: 9999px; background: linear-gradient(90deg, #ff6f91, #ffc83d, #6fcf7a, #4fc3f7, #b07cf7); }
+/* Slow floating of the decorations (movement only, so it stays smooth; off for reduced-motion). */
+@keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-9px) rotate(var(--r, 0deg)); } }
+@media (prefers-reduced-motion: no-preference) { .bob { animation: bob 5s ease-in-out infinite; } .bob-slow { animation: bob 7s ease-in-out infinite; } }
 
 /* Tamil typography.
    - Extra letter-spacing splits Tamil letter clusters ("வ ர வே ற் …"), most visibly in

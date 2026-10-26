@@ -12,11 +12,11 @@ export function StatsBand({ stats, lang }: { stats: SiteStat[]; lang: Lang }) {
   if (!stats.length) return null;
   return (
     <section aria-label={t.stats.aria} className="container-page reveal py-8">
-      <ul className="flex flex-wrap justify-around gap-x-8 gap-y-5 rounded-3xl bg-brand-cream p-6 shadow-card">
-        {stats.map((s) => {
+      <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        {stats.map((s, n) => {
           const Icon = ICONS[s.key] ?? Star;
           return (
-            <li key={s.key} className="flex items-center gap-3">
+            <li key={s.key} className={`flex items-center gap-3 rounded-3xl p-4 shadow-sm ring-2 ring-white ${["bg-emerald-100", "bg-pink-100", "bg-sky-100", "bg-amber-100"][n % 4]}`}>
               <Icon className={`h-9 w-9 shrink-0 ${COLORS[s.key] ?? ""}`} aria-hidden />
               <span>
                 <span className="block font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">{s.value}</span>

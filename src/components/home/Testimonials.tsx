@@ -11,15 +11,15 @@ export function Testimonials({ items, lang }: { items: Testimonial[]; lang: Lang
     <section className="bg-brand-pink-soft py-8 sm:py-10" aria-labelledby="parents-title">
       <div className="container-page grid gap-6 lg:grid-cols-[15rem_1fr] lg:items-center">
         <div>
-          <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-pink">{t.testimonials.eyebrow}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-pink-dark">{t.testimonials.eyebrow}</p>
           <h2 id="parents-title" className="mt-1 text-2xl font-extrabold text-brand-navy-dark sm:text-3xl">{t.testimonials.title}</h2>
-          <span className="mt-2 block h-1 w-12 rounded-full bg-brand-pink" aria-hidden />
+          <span className="rainbow-bar mt-2 block w-20" aria-hidden />
         </div>
         <ul className="grid gap-4 md:grid-cols-3">
-          {items.map((item) => (
+          {items.map((item, i) => (
             <li key={item.id}>
-              <figure className="lift flex h-full gap-3 rounded-2xl bg-white p-4 shadow-card">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-green-soft text-lg font-bold text-brand-green" aria-hidden>
+              <figure className="lift flex h-full gap-3 rounded-3xl bg-white p-4 shadow-card ring-2 ring-white">
+                <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-lg font-extrabold ${["bg-pink-200 text-pink-700", "bg-sky-200 text-sky-800", "bg-yellow-200 text-yellow-800"][i % 3]}`} aria-hidden>
                   {item.author.charAt(0).toUpperCase()}
                 </span>
                 <div className="min-w-0">

@@ -31,7 +31,7 @@ export default async function SiteLayout({ children, params }: { children: React
   const branchOptions = raw.branches.map((b, i) => ({ value: b.name, label: site.branches[i].display_name ?? b.name }));
 
   return (
-    <div lang={lang}>
+    <div lang={lang} className="kid">
       {themeCss(theme.id) && <style dangerouslySetInnerHTML={{ __html: themeCss(theme.id) }} />}
       <LangProvider lang={lang} dict={dict}>
         <EnquiryProvider branches={branchOptions}>
