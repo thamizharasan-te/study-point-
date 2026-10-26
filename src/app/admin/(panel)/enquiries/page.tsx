@@ -57,7 +57,7 @@ export default async function EnquiriesPage({ searchParams }: { searchParams: Pr
           const msg = `Hello ${e.parent_name}, this is Study Point. Thank you for your enquiry${e.child_name ? ` about ${e.child_name}` : ""}.`;
           return (
             <li key={e.id}>
-              <Card>
+              <Card className="[overflow-wrap:anywhere]">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <h2 className="text-lg font-bold text-brand-navy">{e.parent_name}</h2>

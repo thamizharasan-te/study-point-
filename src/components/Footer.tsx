@@ -24,7 +24,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
               <MessageCircle className="h-6 w-6 text-[#25d366]" aria-hidden />{branches[0].phones[0]}
             </a>
           )}
-          <SocialLinks social={social} tone="color" />
+          <SocialLinks social={social} tone="color" lang={lang} />
         </div>
 
         <nav aria-label={t.footer.aria} className="lg:col-span-3">
@@ -53,7 +53,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
                     href={whatsAppLink(b.whatsapp, t.whatsapp.message)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={fmt(t.whatsapp.chatWith, { name: b.display_name ?? b.name })}
+                    aria-label={`${t.branch.whatsapp} — ${fmt(t.whatsapp.chatWith, { name: b.display_name ?? b.name })}`}
                     className="mt-1 inline-flex items-center gap-2 rounded-full bg-brand-green px-4 py-2 text-sm font-bold text-white hover:bg-brand-green-dark"
                   >
                     <MessageCircle className="h-4 w-4" aria-hidden />

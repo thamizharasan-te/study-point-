@@ -199,7 +199,7 @@ export const en = {
       metaTitle: "Nursery (Ages 3–5)",
       metaDescription:
         "Study Point Nursery for children aged 3 to 5 in Point Pedro and Vathiry: phonics, creative activities, play based learning, social skills and confidence building.",
-      title: "Nursery · 3 – 5 Years",
+      title: "Early Years · 3 – 5 Years",
       subtitle:
         "A happy place to learn, play and grow! A strong foundation through play-based learning, creativity and structured early years activities.",
       learnTitle: "What your child will learn",

@@ -24,7 +24,7 @@ function LanguageSwitch({ className = "", dark = false }: { className?: string; 
       href={localePath(other, stripLang(pathname))}
       hrefLang={other}
       lang={other}
-      aria-label={t.switchTo.aria}
+      aria-label={`${t.switchTo.label} — ${t.switchTo.aria}`}
       className={clsx("inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full border-2 px-3 text-sm font-bold", dark ? "border-white/50 text-white hover:bg-white/15" : "border-brand-navy/20 text-brand-navy hover:bg-brand-navy-soft", className)}
     >
       <Globe className="h-4 w-4" aria-hidden /> {t.switchTo.label}

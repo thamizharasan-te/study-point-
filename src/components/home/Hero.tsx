@@ -35,16 +35,16 @@ export function Hero({ hero, images, lang }: { hero: HeroContent; images: SiteIm
       </div>
 
       <div className="container-page relative z-10 -mt-12 sm:-mt-16 lg:mt-0 lg:flex lg:min-h-[32rem] lg:items-center">
-        <div className="max-w-xl pb-8 pt-2 sm:pb-10 lg:max-w-[50%] lg:py-14">
+        <div className="mx-auto max-w-xl pb-8 pt-2 text-center sm:pb-10 lg:mx-0 lg:max-w-[50%] lg:py-14 lg:text-left">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-brand-navy sm:text-sm">{hero.eyebrow}</p>
           <h1 className="mt-3 text-[2.4rem] font-extrabold leading-[1.1] text-brand-navy-dark sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08]">
             <span className="block">{hero.line1}</span>
             <span className="block">{hero.line2}</span>
             <span className="block">{hero.line3}</span>
           </h1>
-          <span className="mt-4 block h-1 w-14 rounded-full bg-brand-pink" aria-hidden />
-          <p className="mt-4 max-w-md text-base text-gray-700 sm:text-lg">{hero.subtitle}</p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          <span className="mx-auto mt-4 block h-1 w-14 rounded-full bg-brand-pink lg:mx-0" aria-hidden />
+          <p className="mx-auto mt-4 max-w-md text-base text-gray-700 sm:text-lg lg:mx-0">{hero.subtitle}</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center lg:justify-start">
             <Link href={localePath(lang, "/nursery")} className="btn-green !px-4 !text-sm sm:!text-sm">{t.hero.exploreEarly} <ArrowRight className="h-4 w-4 shrink-0" aria-hidden /></Link>
             <Link href={localePath(lang, "/classes")} className="btn-pink !px-4 !text-sm sm:!text-sm">{t.hero.discoverClasses} <ArrowRight className="h-4 w-4 shrink-0" aria-hidden /></Link>
           </div>
