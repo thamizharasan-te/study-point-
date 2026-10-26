@@ -15,7 +15,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
         <path d="M0 40V22C240-6 520 0 760 16S1200 34 1440 6V40Z" className="fill-brand-navy-dark" />
         <path d="M0 22C240-6 520 0 760 16S1200 34 1440 6" fill="none" className="stroke-brand-green" strokeWidth="5" />
       </svg>
-      <div className="container-page grid items-start gap-x-10 gap-y-8 pb-8 pt-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8">
+      <div className="container-page grid items-start gap-x-10 gap-y-8 pb-6 pt-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8">
         <div className="space-y-4 lg:col-span-4">
           <Logo light icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
           <p className="max-w-xs text-sm text-white/80">{t.footer.about}</p>
@@ -65,7 +65,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
           </ul>
         </div>
       </div>
-      <p className="border-t border-white/10 pb-16 pt-4 text-center text-xs text-white/60 sm:pb-4">
+      <p className="border-t border-white/10 py-4 text-center text-xs text-white/60">
         {fmt(t.footer.rights, { year: new Date().getFullYear() })}
       </p>
     </footer>
