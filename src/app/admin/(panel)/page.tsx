@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Eye, Inbox, Image as ImageIcon, MapPin, Megaphone, MessageSquareQuote, ChartColumn, FileText } from "lucide-react";
+import { Eye, Inbox, Image as ImageIcon, MapPin, Megaphone, MessageSquareQuote, ChartColumn, FileText, Palette } from "lucide-react";
 import { AdminHeading, Card } from "@/components/admin/Layout";
 import { requireAdmin } from "@/lib/admin";
 
@@ -12,6 +12,7 @@ const TILES = [
   { href: "/admin/stats", icon: ChartColumn, title: "Numbers", text: "Students, years, branches…" },
   { href: "/admin/branches", icon: MapPin, title: "Branches", text: "Address, phone, hours, map" },
   { href: "/admin/content", icon: FileText, title: "Website Text", text: "Home heading and course lists" },
+  { href: "/admin/theme", icon: Palette, title: "Theme", text: "Change all the website colours" },
   { href: "/admin/announcements", icon: Megaphone, title: "Announcements", text: "Short notices on the home page" },
 ];
 

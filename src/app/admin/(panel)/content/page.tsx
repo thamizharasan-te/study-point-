@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { AdminHeading, Card, Notice, TamilField } from "@/components/admin/Layout";
-import { ThemePicker } from "@/components/admin/ThemePicker";
 import { ProgramsEditor } from "@/components/admin/ProgramsEditor";
 import { SubmitButton } from "@/components/admin/ui";
 import { requireAdmin } from "@/lib/admin";
 import { taValue } from "@/lib/i18n/localize";
 import { DEFAULT_CLASS_PROGRAMS, DEFAULT_FAQ, DEFAULT_HERO, DEFAULT_NURSERY_PROGRAMS, DEFAULT_SOCIAL } from "@/lib/defaults";
-import type { HeroContent, Program, SiteImages, Social } from "@/lib/types";
-import { saveHero, savePrograms, saveSocial, saveTheme } from "./actions";
+import type { HeroContent, Program, Social } from "@/lib/types";
+import { saveHero, savePrograms, saveSocial } from "./actions";
 
 export const metadata: Metadata = { title: "Website Text" };
 
@@ -24,7 +23,6 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
   const withTa = (list: Program[]) => list.map((p) => ({ ...p, title_ta: taValue(p.title, p.title_ta), description_ta: taValue(p.description, p.description_ta) }));
   const heroTa = hero.ta ?? {};
   const faq = (byKey.get("faq") as Program[] | undefined) ?? DEFAULT_FAQ;
-  const theme = (byKey.get("images") as SiteImages | undefined)?.theme ?? "";
   const social = { ...DEFAULT_SOCIAL, ...(byKey.get("social") as Partial<Social> | undefined) };
 
   return (
@@ -89,15 +87,6 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
           <input type="hidden" name="key" value="faq" />
           <ProgramsEditor name="programs" idPrefix="faq" initial={withTa(faq)} titleLabel="Question" descLabel="Answer" maxDesc={600} />
           <SubmitButton>Save questions</SubmitButton>
-        </form>
-      </Card>
-
-      <Card className="mb-6">
-        <h2 className="mb-1 text-lg font-bold text-brand-navy">Website theme (colours)</h2>
-        <p className="mb-3 text-sm text-gray-600">Pick a theme and every colour on the website changes together: header, buttons, headings, cards and footer. You can change it any time.</p>
-        <form action={saveTheme} className="space-y-3">
-          <ThemePicker initial={theme} />
-          <SubmitButton>Save theme</SubmitButton>
         </form>
       </Card>
 

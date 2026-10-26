@@ -42,7 +42,7 @@ export function ThemePicker({ initial }: { initial: string }) {
               </span>
               <span className="flex items-start gap-2 p-3">
                 <span className="min-w-0 flex-1">
-                  <span className="block font-bold text-brand-navy">{t.label}{t.id === DEFAULT_THEME_ID && <span className="ml-1 text-xs font-semibold text-gray-500">(current default)</span>}</span>
+                  <span className="block font-bold text-brand-navy">{t.label}{t.id === DEFAULT_THEME_ID && <span className="ml-1 text-xs font-semibold text-gray-500">(original)</span>}</span>
                   <span className="block text-xs text-gray-600">{t.description}</span>
                 </span>
                 {active && <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-green text-white"><Check className="h-4 w-4" aria-hidden /></span>}

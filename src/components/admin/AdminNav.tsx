@@ -14,6 +14,7 @@ const ITEMS = [
   { href: "/admin/stats", label: "Numbers" },
   { href: "/admin/branches", label: "Branches" },
   { href: "/admin/content", label: "Website Text" },
+  { href: "/admin/theme", label: "Theme" },
   { href: "/admin/announcements", label: "Announcements" },
   { href: "/admin/password", label: "Password" },
 ];
