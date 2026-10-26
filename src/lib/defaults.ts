@@ -41,7 +41,7 @@ export const DEFAULT_FAQ: Program[] = [
   { title: "What about fees, timings and available places?", description: "These can differ by branch and class, so please contact your nearest branch and we will be happy to help." },
 ];
 
-export const DEFAULT_SOCIAL: Social = { facebook: "", instagram: "", youtube: "" };
+export const DEFAULT_SOCIAL: Social = { facebook: "", instagram: "", youtube: "", tiktok: "" };
 
 /** Figures confirmed by the owner (500+ students, 10+ years, 2 branches, 95% satisfaction); editable in admin → Stats. */
 export const DEFAULT_STATS: SiteStat[] = [

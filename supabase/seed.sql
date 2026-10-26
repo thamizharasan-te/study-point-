@@ -35,7 +35,7 @@ insert into public.site_content (key, value) values
     {"title":"How can I enquire or enrol my child?","description":"Press Enquire Now, call us or send a WhatsApp message. We will get back to you and answer your questions."},
     {"title":"What about fees, timings and available places?","description":"These can differ by branch and class, so please contact your nearest branch and we will be happy to help."}
   ]'),
-  ('social', '{"facebook":"","instagram":"","youtube":""}')
+  ('social', '{"facebook":"","instagram":"","youtube":"","tiktok":""}')
 on conflict (key) do nothing;
 
 -- SAMPLE numbers — the client must confirm real figures.

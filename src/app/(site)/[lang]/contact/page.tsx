@@ -24,7 +24,7 @@ export default async function ContactPage({ params }: Props) {
   const p = getDict(lang).pages.contact;
   const raw = await getSiteData();
   const { branches, social } = localize(raw, lang);
-  const hasSocial = Boolean(social.facebook || social.instagram || social.youtube);
+  const hasSocial = Boolean(social.facebook || social.instagram || social.youtube || social.tiktok);
   const options = raw.branches.map((b, i) => ({ value: b.name, label: branches[i].display_name ?? b.name }));
   return (
     <>

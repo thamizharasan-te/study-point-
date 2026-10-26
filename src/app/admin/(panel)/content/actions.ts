@@ -62,7 +62,7 @@ export async function savePrograms(fd: FormData) {
 export async function saveSocial(fd: FormData) {
   const { supabase } = await requireAdmin();
   const value: Record<string, string> = {};
-  for (const k of ["facebook", "instagram", "youtube"]) {
+  for (const k of ["facebook", "instagram", "youtube", "tiktok"]) {
     const url = field(fd, k).slice(0, 300);
     if (url && !/^https:\/\//i.test(url)) back(PATH, { error: "Social media links must start with https://" });
     value[k] = url;

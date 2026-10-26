@@ -95,6 +95,7 @@ export interface Social {
   facebook: string;
   instagram: string;
   youtube: string;
+  tiktok: string;
 }
 
 /** Everything the public pages need, loaded in one go. */
