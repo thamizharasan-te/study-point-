@@ -1,84 +1,192 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, type FormEvent } from "react";
-import { Loader2, Upload } from "lucide-react";
+import { useEffect, useRef, useState, type DragEvent } from "react";
+import { CheckCircle2, ImagePlus, Loader2, Upload, X, XCircle } from "lucide-react";
 import { GALLERY_ALBUMS } from "@/lib/defaults";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
-import { addGalleryItem } from "@/app/admin/(panel)/gallery/actions";
-
+import { addGalleryItems } from "@/app/admin/(panel)/gallery/actions";
 import { MAX_UPLOAD_BYTES, shrinkImage } from "@/lib/shrink-image";
 
+type Status = "waiting" | "uploading" | "done" | "error";
+type Entry = { id: string; file: File; preview: string; status: Status; error?: string; url?: string; path?: string };
+
+const MAX_FILES = 60; // per batch
+const PARALLEL = 3; // photos prepared and uploaded at the same time
+
+/**
+ * Bulk photo upload: choose or drag many photos at once, see them, and upload them together.
+ * Each photo is cropped to the gallery shape (4:3) and shrunk in the browser, then saved in one go.
+ */
 export function GalleryUploader() {
   const router = useRouter();
+  const input = useRef<HTMLInputElement>(null);
+  const [entries, setEntries] = useState<Entry[]>([]);
+  const [album, setAlbum] = useState("Activities");
+  const [alt, setAlt] = useState("");
   const [busy, setBusy] = useState(false);
+  const [drag, setDrag] = useState(false);
   const [message, setMessage] = useState<{ ok: boolean; text: string } | null>(null);
+  const previews = useRef<string[]>([]);
 
-  async function submit(e: FormEvent<HTMLFormElement>) {
+  useEffect(() => () => previews.current.forEach((u) => URL.revokeObjectURL(u)), []);
+
+  const patch = (id: string, change: Partial<Entry>) => setEntries((list) => list.map((e) => (e.id === id ? { ...e, ...change } : e)));
+
+  function addFiles(list: FileList | File[] | null) {
+    if (!list) return;
+    const picked = Array.from(list);
+    const images = picked.filter((f) => f.type.startsWith("image/"));
+    const skipped = picked.length - images.length;
+    const room = MAX_FILES - entries.length;
+    const take = images.slice(0, Math.max(0, room));
+    const fresh = take.map((file) => {
+      const preview = URL.createObjectURL(file);
+      previews.current.push(preview);
+      return { id: crypto.randomUUID(), file, preview, status: "waiting" as Status };
+    });
+    setEntries((cur) => [...cur, ...fresh]);
+    const notes = [skipped ? `${skipped} file${skipped > 1 ? "s were" : " was"} not a picture and skipped.` : "", images.length > take.length ? `Only ${MAX_FILES} photos can be uploaded at a time; the rest were left out.` : ""].filter(Boolean);
+    setMessage(notes.length ? { ok: false, text: notes.join(" ") } : null);
+  }
+
+  function onDrop(e: DragEvent) {
     e.preventDefault();
-    const form = e.currentTarget;
-    const fd = new FormData(form);
-    const files = (fd.getAll("photos") as File[]).filter((f) => f.size > 0);
-    const album = String(fd.get("album") || "General").trim() || "General";
-    const alt = String(fd.get("alt") || "").trim();
-    if (!files.length) return setMessage({ ok: false, text: "Please choose at least one photo." });
+    setDrag(false);
+    if (!busy) addFiles(e.dataTransfer.files);
+  }
 
+  async function upload() {
+    const todo = entries.filter((e) => e.status === "waiting" || e.status === "error");
+    if (!todo.length) return setMessage({ ok: false, text: "Please choose some photos first." });
+    const albumName = album.trim() || "General";
+    const folder = albumName.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "general";
     setBusy(true);
     setMessage(null);
     const supabase = createBrowserSupabase();
-    let done = 0;
-    try {
-      for (const file of files) {
-        if (!file.type.startsWith("image/")) throw new Error(`“${file.name}” is not a picture.`);
-        const { blob, ext } = await shrinkImage(file, 4 / 3);
-        if (blob.size > MAX_UPLOAD_BYTES) throw new Error(`“${file.name}” is too large (max 5 MB).`);
-        const path = `${album.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "general"}/${crypto.randomUUID()}.${ext}`;
-        const { error } = await supabase.storage.from("gallery").upload(path, blob, { contentType: blob.type || "image/jpeg", cacheControl: "31536000" });
-        if (error) throw new Error(error.message);
-        const url = supabase.storage.from("gallery").getPublicUrl(path).data.publicUrl;
-        const res = await addGalleryItem({ image_url: url, storage_path: path, album, alt: alt || `${album} photo at Study Point` });
-        if (!res.ok) {
-          await supabase.storage.from("gallery").remove([path]); // don't leave an orphan file
-          throw new Error(res.error);
+    const uploaded: Entry[] = [];
+
+    // 1. prepare + upload the files, a few at a time
+    let next = 0;
+    async function worker() {
+      while (next < todo.length) {
+        const entry = todo[next++];
+        patch(entry.id, { status: "uploading", error: undefined });
+        try {
+          const { blob, ext } = await shrinkImage(entry.file, 4 / 3);
+          if (blob.size > MAX_UPLOAD_BYTES) throw new Error("Too large (max 5 MB)");
+          const path = `${folder}/${crypto.randomUUID()}.${ext}`;
+          const { error } = await supabase.storage.from("gallery").upload(path, blob, { contentType: blob.type || "image/jpeg", cacheControl: "31536000" });
+          if (error) throw new Error(error.message);
+          const url = supabase.storage.from("gallery").getPublicUrl(path).data.publicUrl;
+          uploaded.push({ ...entry, url, path });
+        } catch (err) {
+          patch(entry.id, { status: "error", error: err instanceof Error ? err.message : "Upload failed" });
         }
-        done++;
       }
-      form.reset();
-      setMessage({ ok: true, text: `${done} photo${done > 1 ? "s" : ""} added.` });
-    } catch (err) {
-      setMessage({ ok: false, text: (err instanceof Error ? err.message : "Upload failed.") + (done ? ` (${done} uploaded before the problem.)` : "") });
-    } finally {
-      setBusy(false);
+    }
+    await Promise.all(Array.from({ length: Math.min(PARALLEL, todo.length) }, worker));
+
+    // 2. save all the details in one go (in groups of 50)
+    let saved = 0;
+    let failedSave = false;
+    for (let i = 0; i < uploaded.length; i += 50) {
+      const group = uploaded.slice(i, i + 50);
+      const res = await addGalleryItems({ items: group.map((g) => ({ image_url: g.url!, storage_path: g.path! })), album: albumName, alt: alt.trim() });
+      if (res.ok) {
+        saved += group.length;
+        group.forEach((g) => patch(g.id, { status: "done" }));
+      } else {
+        failedSave = true;
+        await supabase.storage.from("gallery").remove(group.map((g) => g.path!)); // don't leave orphan files
+        group.forEach((g) => patch(g.id, { status: "error", error: res.error }));
+      }
+    }
+
+    const failed = todo.length - saved;
+    setBusy(false);
+    setMessage(
+      failed === 0
+        ? { ok: true, text: `${saved} photo${saved > 1 ? "s" : ""} added to the gallery.` }
+        : { ok: false, text: `${saved} added, ${failed} failed${failedSave ? "" : ""}. Press Upload again to retry the failed ones.` },
+    );
+    if (saved) {
+      // Clear the finished photos, keep the failed ones for a retry.
+      setEntries((list) => list.filter((e) => e.status !== "done"));
       router.refresh();
     }
   }
 
+  const waiting = entries.filter((e) => e.status === "waiting" || e.status === "error").length;
+  const finished = entries.filter((e) => e.status === "done" || e.status === "error").length;
+  const pct = entries.length ? Math.round((finished / entries.length) * 100) : 0;
+
   return (
-    <form onSubmit={submit} className="space-y-4">
-      <div>
-        <label className="label" htmlFor="photos">Choose photos</label>
-        <input id="photos" name="photos" type="file" accept="image/*" multiple className="input !p-2" />
+    <div className="space-y-4">
+      <div
+        onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
+        onDragLeave={() => setDrag(false)}
+        onDrop={onDrop}
+        className={`rounded-2xl border-2 border-dashed p-6 text-center transition-colors ${drag ? "border-brand-green bg-brand-green-soft" : "border-gray-300 bg-white"}`}
+      >
+        <ImagePlus className="mx-auto h-9 w-9 text-brand-green" aria-hidden />
+        <p className="mt-2 font-bold text-brand-navy">Drag many photos here, or</p>
+        <button type="button" className="btn-outline mt-2" onClick={() => input.current?.click()} disabled={busy}>Choose photos</button>
+        <input ref={input} type="file" accept="image/*" multiple className="sr-only" aria-label="Choose photos" onChange={(e) => { addFiles(e.target.files); e.target.value = ""; }} />
+        <p className="mt-2 text-xs text-gray-500">Up to {MAX_FILES} photos at a time. Each one is cropped to a 4:3 picture and made smaller automatically.</p>
       </div>
+
+      {entries.length > 0 && (
+        <>
+          <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
+            {entries.map((e) => (
+              <li key={e.id} className="relative overflow-hidden rounded-xl bg-gray-100">
+                {/* eslint-disable-next-line @next/next/no-img-element -- local preview of a file the user just picked */}
+                <img src={e.preview} alt="" className="aspect-[4/3] w-full object-cover object-[50%_35%]" />
+                <span className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-1 bg-black/55 py-0.5 text-[11px] font-semibold text-white" title={e.error}>
+                  {e.status === "uploading" && <><Loader2 className="h-3 w-3 animate-spin" aria-hidden /> Uploading</>}
+                  {e.status === "done" && <><CheckCircle2 className="h-3 w-3" aria-hidden /> Done</>}
+                  {e.status === "error" && <><XCircle className="h-3 w-3 text-red-300" aria-hidden /> Failed</>}
+                  {e.status === "waiting" && "Ready"}
+                </span>
+                {!busy && (
+                  <button type="button" onClick={() => setEntries((l) => l.filter((x) => x.id !== e.id))} aria-label="Remove this photo" className="absolute right-1 top-1 rounded-full bg-black/60 p-1 text-white hover:bg-black/80">
+                    <X className="h-3.5 w-3.5" aria-hidden />
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+          {busy && (
+            <div role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100} aria-label="Upload progress" className="h-3 overflow-hidden rounded-full bg-gray-200">
+              <div className="h-full rounded-full bg-brand-green transition-all" style={{ width: `${pct}%` }} />
+            </div>
+          )}
+        </>
+      )}
+
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <label className="label" htmlFor="album">Album</label>
-          <input id="album" name="album" list="albums" defaultValue="Activities" className="input" maxLength={40} />
+          <label className="label" htmlFor="album">Album (for all these photos)</label>
+          <input id="album" value={album} onChange={(e) => setAlbum(e.target.value)} list="albums" className="input" maxLength={40} disabled={busy} />
           <datalist id="albums">{GALLERY_ALBUMS.map((a) => <option key={a} value={a} />)}</datalist>
           <p className="mt-1 text-xs text-gray-500">Pick one or type a new album name.</p>
         </div>
         <div>
-          <label className="label" htmlFor="alt">Short description</label>
-          <input id="alt" name="alt" className="input" maxLength={140} placeholder="e.g. Children painting handprints" />
-          <p className="mt-1 text-xs text-gray-500">Helps blind visitors and Google. You can change it later.</p>
+          <label className="label" htmlFor="alt">Short description (optional)</label>
+          <input id="alt" value={alt} onChange={(e) => setAlt(e.target.value)} className="input" maxLength={140} placeholder="e.g. Children painting handprints" disabled={busy} />
+          <p className="mt-1 text-xs text-gray-500">Helps blind visitors and Google. You can change each one later.</p>
         </div>
       </div>
+
       {message && (
         <p role={message.ok ? "status" : "alert"} className={`rounded-lg p-3 text-sm font-semibold ${message.ok ? "bg-brand-green-soft text-brand-green-dark" : "bg-red-50 text-red-700"}`}>{message.text}</p>
       )}
-      <button type="submit" className="btn-green" disabled={busy}>
+
+      <button type="button" onClick={upload} className="btn-green" disabled={busy || waiting === 0}>
         {busy ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Upload className="h-4 w-4" aria-hidden />}
-        {busy ? "Uploading…" : "Upload photos"}
+        {busy ? `Uploading… ${finished} / ${entries.length}` : waiting ? `Upload ${waiting} photo${waiting > 1 ? "s" : ""}` : "Upload photos"}
       </button>
-    </form>
+    </div>
   );
 }

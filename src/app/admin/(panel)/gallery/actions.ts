@@ -19,6 +19,29 @@ export async function addGalleryItem(input: { image_url: string; storage_path: s
   return { ok: true };
 }
 
+/** Bulk upload: called once per group of photos after their files are already in Storage. */
+export async function addGalleryItems(input: { items: { image_url: string; storage_path: string }[]; album: string; alt: string }): Promise<{ ok: true } | { ok: false; error: string }> {
+  const { supabase } = await requireAdmin();
+  if (!input.items.length || input.items.length > 100) return { ok: false, error: "Please add between 1 and 100 photos at a time." };
+  if (input.items.some((i) => !/^https?:\/\//.test(i.image_url))) return { ok: false, error: "Invalid picture address." };
+  const { data: last } = await supabase.from("gallery_items").select("sort_order").order("sort_order", { ascending: false }).limit(1).maybeSingle();
+  const start = (last?.sort_order ?? 0) + 1;
+  const album = input.album.slice(0, 40) || "General";
+  const { error } = await supabase.from("gallery_items").insert(
+    input.items.map((i, n) => ({
+      image_url: i.image_url,
+      storage_path: i.storage_path,
+      album,
+      alt: input.alt.slice(0, 140) || `${album} photo at Study Point`,
+      sort_order: start + n,
+      is_sample: false,
+    })),
+  );
+  if (error) return { ok: false, error: "Could not save the photo details." };
+  refreshSite();
+  return { ok: true };
+}
+
 export async function updateGalleryItem(fd: FormData) {
   const { supabase } = await requireAdmin();
   const { error } = await supabase
