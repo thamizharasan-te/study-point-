@@ -1,7 +1,8 @@
 "use server";
 
 import { back, field, refreshSite, requireAdmin } from "@/lib/admin";
-import type { Program } from "@/lib/types";
+import { DEFAULT_HEADER_COLOR, isHex } from "@/lib/color";
+import type { Program, SiteImages } from "@/lib/types";
 
 const PATH = "/admin/content";
 
@@ -71,4 +72,19 @@ export async function saveSocial(fd: FormData) {
   if (error) back(PATH, { error: "Could not save. Please try again." });
   refreshSite();
   back(PATH, { saved: "Social media links saved." });
+}
+
+/** Header colour. Stored with the picture addresses (same block), keeping everything else in it. */
+export async function saveHeaderColor(fd: FormData) {
+  const { supabase } = await requireAdmin();
+  const color = field(fd, "color").toLowerCase();
+  if (!isHex(color)) back(PATH, { error: "Please pick a valid colour." });
+  const { data } = await supabase.from("site_content").select("value").eq("key", "images").maybeSingle();
+  const images = { ...((data?.value as SiteImages | undefined) ?? {}) };
+  if (color === DEFAULT_HEADER_COLOR) delete images.headerColor;
+  else images.headerColor = color;
+  const { error } = await supabase.from("site_content").upsert({ key: "images", value: images });
+  if (error) back(PATH, { error: "Could not save. Please try again." });
+  refreshSite();
+  back(PATH, { saved: "Header colour saved." });
 }
