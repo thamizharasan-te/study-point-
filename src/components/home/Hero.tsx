@@ -5,7 +5,7 @@ import { slotImage } from "@/lib/images";
 import type { HeroContent, SiteImages } from "@/lib/types";
 import { SmartImage } from "../SmartImage";
 
-const BADGE_COLORS = ["text-sky-600", "text-brand-green", "text-brand-green-dark", "text-brand-navy"];
+const BADGE_COLORS = ["text-brand-navy", "text-brand-green", "text-brand-green-dark", "text-brand-pink"];
 
 /**
  * Home hero. On large screens the picture fills the right side and fades into

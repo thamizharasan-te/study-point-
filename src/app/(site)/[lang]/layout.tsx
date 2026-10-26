@@ -11,7 +11,7 @@ import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { getSiteData } from "@/lib/data";
 import { getDict, isLang, LANGS } from "@/lib/i18n";
 import { localize } from "@/lib/i18n/localize";
-import { DEFAULT_HEADER_COLOR, isHex } from "@/lib/color";
+import { getTheme, themeCss } from "@/lib/themes";
 
 // Public pages are cached and refreshed at most once a minute.
 export const revalidate = 60;
@@ -26,11 +26,13 @@ export default async function SiteLayout({ children, params }: { children: React
   const dict = getDict(lang);
   const raw = await getSiteData();
   const site = localize(raw, lang);
+  const theme = getTheme(site.images.theme);
   // Form option values stay English (what the admin sees); labels follow the language.
   const branchOptions = raw.branches.map((b, i) => ({ value: b.name, label: site.branches[i].display_name ?? b.name }));
 
   return (
     <div lang={lang}>
+      {themeCss(theme.id) && <style dangerouslySetInnerHTML={{ __html: themeCss(theme.id) }} />}
       <LangProvider lang={lang} dict={dict}>
         <EnquiryProvider branches={branchOptions}>
           <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-2 focus:top-2 focus:z-[70] focus:rounded focus:bg-white focus:p-3">
@@ -38,7 +40,7 @@ export default async function SiteLayout({ children, params }: { children: React
           </a>
           <Announcements items={site.announcements} label={dict.announcements.aria} />
           <TopBar branches={site.branches} lang={lang} />
-          <Header logo={{ icon: site.images.logo, full: site.images.logoFull }} color={isHex(site.images.headerColor) ? site.images.headerColor : DEFAULT_HEADER_COLOR} />
+          <Header logo={{ icon: site.images.logo, full: site.images.logoFull }} color={theme.header} />
           <main id="main">{children}</main>
           <Footer branches={site.branches} social={site.social} lang={lang} logo={{ icon: site.images.logo, full: site.images.logoFull }} />
           <WhatsAppFab options={site.branches.map((b) => ({ name: b.display_name ?? b.name, whatsapp: b.whatsapp }))} />

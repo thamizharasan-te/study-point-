@@ -117,3 +117,6 @@ alter table public.branches      add column if not exists hours_ta   text not nu
 alter table public.site_stats    add column if not exists label_ta   text not null default '';
 alter table public.testimonials  add column if not exists quote_ta   text not null default '';
 alter table public.announcements add column if not exists text_ta    text not null default '';
+
+-- Make the API notice the new columns straight away.
+notify pgrst, 'reload schema';

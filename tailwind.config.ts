@@ -6,17 +6,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Colours come from CSS variables so a theme can change them all at once (see src/lib/themes.ts).
         brand: {
-          green: "#2e7d32",
-          "green-dark": "#1f5f25",
-          "green-soft": "#e8f3e4",
-          pink: "#d81b60",
-          "pink-dark": "#ad1457",
-          "pink-soft": "#fde8ef",
-          navy: "#14306b",
-          "navy-dark": "#0e2250",
-          "navy-soft": "#e7eefb",
-          cream: "#fffaf3",
+          green: "rgb(var(--c-green) / <alpha-value>)",
+          "green-dark": "rgb(var(--c-green-dark) / <alpha-value>)",
+          "green-soft": "rgb(var(--c-green-soft) / <alpha-value>)",
+          pink: "rgb(var(--c-pink) / <alpha-value>)",
+          "pink-dark": "rgb(var(--c-pink-dark) / <alpha-value>)",
+          "pink-soft": "rgb(var(--c-pink-soft) / <alpha-value>)",
+          navy: "rgb(var(--c-navy) / <alpha-value>)",
+          "navy-dark": "rgb(var(--c-navy-dark) / <alpha-value>)",
+          "navy-soft": "rgb(var(--c-navy-soft) / <alpha-value>)",
+          cream: "rgb(var(--c-cream) / <alpha-value>)",
           ink: "#1f2937",
         },
       },

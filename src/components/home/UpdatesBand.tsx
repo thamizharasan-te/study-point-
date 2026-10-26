@@ -12,7 +12,7 @@ export function UpdatesBand({ social, lang }: { social: Social; lang: Lang }) {
   return (
     <section className="container-page py-8" aria-labelledby="updates-title">
       <div className="rounded-3xl bg-gradient-to-br from-brand-navy to-brand-navy-dark px-5 py-8 text-center text-white shadow-card sm:px-10">
-        <p className="text-xs font-bold uppercase tracking-[0.15em] text-pink-200">{t.updates.eyebrow}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-pink-soft">{t.updates.eyebrow}</p>
         <h2 id="updates-title" className="mt-1 text-2xl font-extrabold sm:text-3xl">{t.updates.title}</h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-white/85 sm:text-base">{t.updates.text}</p>
         <ul className="mt-5 flex flex-wrap justify-center gap-3">

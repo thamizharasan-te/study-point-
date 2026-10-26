@@ -8,12 +8,17 @@
   --font-body: "Nunito Variable";
   --font-script: "Kaushan Script";
   --font-tamil: "Noto Sans Tamil Variable";
+  /* Default (Classic) theme colours as "r g b" channels. A theme from Admin overrides these (src/lib/themes.ts). */
+  --c-green: 46 125 50; --c-green-dark: 31 95 37; --c-green-soft: 232 243 228;
+  --c-pink: 216 27 96; --c-pink-dark: 173 20 87; --c-pink-soft: 253 232 239;
+  --c-navy: 20 48 107; --c-navy-dark: 14 34 80; --c-navy-soft: 231 238 251;
+  --c-cream: 255 250 243;
 }
 
 @layer base {
   /* The page behind/below the content is the footer colour, so on phones (where Safari's toolbar can sit
      over an area beyond the page) the footer appears to run to the very bottom of the screen. */
-  html { scroll-behavior: smooth; background-color: #0e2250; }
+  html { scroll-behavior: smooth; background-color: rgb(var(--c-navy-dark)); }
   body { @apply bg-brand-cream text-brand-ink font-sans antialiased; min-height: 100vh; min-height: 100dvh; }
   h1, h2, h3 { @apply font-display; font-family: var(--font-display), var(--font-tamil), Georgia, serif; }
   /* Clear, visible keyboard focus everywhere (accessibility). */

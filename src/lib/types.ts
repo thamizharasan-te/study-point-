@@ -89,8 +89,8 @@ export interface HeroContent {
 
 /** The main pictures that can be replaced from /admin → Main Pictures. */
 export type ImageSlot = "hero" | "nursery" | "classes" | "why" | "about" | "logo" | "logoFull";
-/** Picture addresses per slot. `headerColor` (a #rrggbb colour) is kept in the same stored block so no database change is needed. */
-export type SiteImages = Partial<Record<ImageSlot, string>> & { headerColor?: string };
+/** Picture addresses per slot. `theme` (the colour theme id) is kept in the same stored block so no database change is needed. */
+export type SiteImages = Partial<Record<ImageSlot, string>> & { theme?: string };
 
 export interface Social {
   facebook: string;

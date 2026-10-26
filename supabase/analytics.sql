@@ -78,3 +78,6 @@ $$;
 
 revoke all on function public.analytics_summary() from public, anon;
 grant execute on function public.analytics_summary() to authenticated;
+
+-- Make the API notice the new columns straight away.
+notify pgrst, 'reload schema';
