@@ -41,7 +41,7 @@ export function ProgramCards({ nursery, classes, images, lang }: { nursery: Prog
             <Link href={localePath(lang, "/nursery")} className="btn-green mt-4">{t.cards.nursery.learnMore}<span className="sr-only">{t.cards.nursery.about}</span> <ArrowRight className="h-4 w-4" aria-hidden /></Link>
           </div>
           <div className="order-first sm:order-none">
-            <SmartImage src={nurseryPic.src} alt={t.cards.nursery.imageAlt} width={nurseryPic.width} height={nurseryPic.height} sizes="(min-width:1024px) 230px, (min-width:640px) 30vw, 90vw" className="aspect-[3/2] w-full rounded-2xl object-cover sm:aspect-[4/5]" />
+            <SmartImage src={nurseryPic.src} alt={t.cards.nursery.imageAlt} width={nurseryPic.width} height={nurseryPic.height} sizes="(min-width:1024px) 230px, (min-width:640px) 30vw, 90vw" className="aspect-[8/7] w-full rounded-2xl object-cover object-[50%_35%]" />
           </div>
         </div>
         <Skills items={nursery} tones={NURSERY_TONES} />
@@ -57,7 +57,7 @@ export function ProgramCards({ nursery, classes, images, lang }: { nursery: Prog
             <Link href={localePath(lang, "/classes")} className="btn-navy mt-4">{t.cards.classes.learnMore}<span className="sr-only">{t.cards.classes.about}</span> <ArrowRight className="h-4 w-4" aria-hidden /></Link>
           </div>
           <div className="order-first sm:order-none">
-            <SmartImage src={classesPic.src} alt={t.cards.classes.imageAlt} width={classesPic.width} height={classesPic.height} sizes="(min-width:1024px) 230px, (min-width:640px) 30vw, 90vw" className="aspect-[3/2] w-full rounded-2xl object-cover sm:aspect-[4/5]" />
+            <SmartImage src={classesPic.src} alt={t.cards.classes.imageAlt} width={classesPic.width} height={classesPic.height} sizes="(min-width:1024px) 230px, (min-width:640px) 30vw, 90vw" className="aspect-[8/7] w-full rounded-2xl object-cover object-[50%_35%]" />
           </div>
         </div>
         <Skills items={classes} tones={CLASS_TONES} />

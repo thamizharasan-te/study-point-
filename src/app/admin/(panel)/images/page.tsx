@@ -24,7 +24,7 @@ export default async function AdminImages({ searchParams }: { searchParams: Prom
       <Notice saved={saved} error={error} />
       <Help>
         The pictures below are temporary illustrations until you upload real photos. Use clear, bright photos of your own
-        children and classrooms (with parents&apos; permission). Landscape photos work best. They are resized automatically.
+        children and classrooms (with parents&apos; permission). Any photo can be used: each one is automatically cropped to the right shape and resized, so the website layout never changes. Keep the people in the middle or upper part of the photo.
       </Help>
       <div className="grid gap-4 md:grid-cols-2">
         {(Object.keys(IMAGE_SLOTS) as ImageSlot[]).map((slot) => {
@@ -36,6 +36,7 @@ export default async function AdminImages({ searchParams }: { searchParams: Prom
               <div>
                 <h2 className="text-lg font-bold text-brand-navy">{meta.label}</h2>
                 <p className="text-sm text-gray-600">{meta.where}</p>
+                {!slot.startsWith("logo") && <p className="mt-1 text-xs font-semibold text-brand-green-dark">Any photo works: it is automatically cropped to this shape ({meta.width}:{meta.height}) and resized.</p>}
               </div>
               <SmartImage src={pic.src} alt={pic.alt} width={pic.width} height={pic.height} sizes="(min-width:768px) 400px, 100vw" className={`w-full rounded-xl ${slot.startsWith("logo") ? "h-40 border bg-white object-contain p-4" : "aspect-[4/3] object-cover"}`} />
               <p className="text-xs font-semibold text-gray-500">{custom ? "Your photo is showing." : "Temporary illustration is showing."}</p>
