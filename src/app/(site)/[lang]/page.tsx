@@ -6,6 +6,7 @@ import { GalleryPreview } from "@/components/home/GalleryPreview";
 import { Hero } from "@/components/home/Hero";
 import { HowToJoin } from "@/components/home/HowToJoin";
 import { ProgramCards } from "@/components/home/ProgramCards";
+import { UpdatesBand } from "@/components/home/UpdatesBand";
 import { StatsBand } from "@/components/home/StatsBand";
 import { Testimonials } from "@/components/home/Testimonials";
 import { getSiteData } from "@/lib/data";
@@ -60,6 +61,7 @@ export default async function HomePage({ params }: Props) {
       <FeatureBar lang={lang} />
       <ProgramCards nursery={site.nurseryPrograms} classes={site.classPrograms} images={site.images} lang={lang} />
       <GalleryPreview items={site.gallery} lang={lang} />
+      <UpdatesBand social={site.social} lang={lang} />
       <Testimonials items={site.testimonials} lang={lang} />
       <StatsBand stats={site.stats} lang={lang} />
       <HowToJoin lang={lang} />

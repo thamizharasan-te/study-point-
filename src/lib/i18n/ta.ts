@@ -93,6 +93,7 @@ export const ta: Dict = {
   },
 
   stats: { aria: "எண்களில் Study Point" },
+  updates: { eyebrow: "இணைந்திருங்கள்", title: "எங்கள் புதிய தகவல்களைப் பாருங்கள்", text: "செய்திகள், படங்கள், அறிவிப்புகளுக்கு Study Point-ஐப் பின்தொடருங்கள்.", on: "{name}-ல் Study Point" },
   preview: { eyebrow: "எங்கள் படக்காட்சி", title: "கற்றல், மகிழ்ச்சி, வளர்ச்சியின் தருணங்கள்", viewGallery: "மேலும் படங்களைப் பார்க்க" },
   testimonials: { eyebrow: "பெற்றோரின் அன்பு", title: "பெற்றோர் எங்களைப் பற்றி சொல்வது" },
   faq: { title: "அடிக்கடி கேட்கப்படும் கேள்விகள்" },
