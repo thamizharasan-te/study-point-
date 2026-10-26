@@ -8,7 +8,7 @@ export function Testimonials({ items, lang }: { items: Testimonial[]; lang: Lang
   const t = getDict(lang);
   if (!items.length) return null;
   return (
-    <section className="bg-pink-50 py-8 sm:py-10" aria-labelledby="parents-title">
+    <section className="bg-brand-pink-soft py-8 sm:py-10" aria-labelledby="parents-title">
       <div className="container-page grid gap-6 lg:grid-cols-[15rem_1fr] lg:items-center">
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-pink">{t.testimonials.eyebrow}</p>

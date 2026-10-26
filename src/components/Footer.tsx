@@ -12,8 +12,8 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
     <footer className="relative bg-brand-navy-dark pb-[env(safe-area-inset-bottom)] text-white">
       {/* Green wave along the top edge */}
       <svg viewBox="0 0 1440 40" preserveAspectRatio="none" className="absolute inset-x-0 top-0 h-5 w-full -translate-y-full sm:h-8" aria-hidden="true">
-        <path d="M0 40V22C240-6 520 0 760 16S1200 34 1440 6V40Z" fill="#0e2250" />
-        <path d="M0 22C240-6 520 0 760 16S1200 34 1440 6" fill="none" stroke="#2e7d32" strokeWidth="5" />
+        <path d="M0 40V22C240-6 520 0 760 16S1200 34 1440 6V40Z" className="fill-brand-navy-dark" />
+        <path d="M0 22C240-6 520 0 760 16S1200 34 1440 6" fill="none" className="stroke-brand-green" strokeWidth="5" />
       </svg>
       <div className="container-page grid items-start gap-x-10 gap-y-8 pb-8 pt-10 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-8">
         <div className="space-y-4 lg:col-span-4">

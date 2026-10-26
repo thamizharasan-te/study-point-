@@ -6,8 +6,8 @@ import type { Program, SiteImages } from "@/lib/types";
 import { ProgramIcon } from "../ProgramIcon";
 import { SmartImage } from "../SmartImage";
 
-const NURSERY_TONES = ["bg-pink-100 text-brand-pink", "bg-green-100 text-brand-green", "bg-orange-100 text-orange-500", "bg-sky-100 text-sky-600"];
-const CLASS_TONES = ["bg-sky-100 text-sky-600", "bg-blue-100 text-blue-700", "bg-pink-100 text-brand-pink", "bg-sky-100 text-sky-700"];
+const NURSERY_TONES = ["bg-brand-pink-soft text-brand-pink", "bg-brand-green-soft text-brand-green", "bg-amber-100 text-amber-600", "bg-brand-navy-soft text-brand-navy"];
+const CLASS_TONES = ["bg-brand-navy-soft text-brand-navy", "bg-brand-green-soft text-brand-green", "bg-brand-pink-soft text-brand-pink", "bg-amber-100 text-amber-600"];
 
 function Skills({ items, tones }: { items: Program[]; tones: string[] }) {
   return (
@@ -31,7 +31,7 @@ export function ProgramCards({ nursery, classes, images, lang }: { nursery: Prog
   const classesPic = slotImage(images, "classes");
   return (
     <section className="container-page grid gap-5 py-8 sm:py-10 xl:grid-cols-2" aria-label={t.cards.aria}>
-      <article className="rounded-3xl bg-gradient-to-br from-green-50 to-white p-5 shadow-card ring-1 ring-green-100 sm:p-7">
+      <article className="rounded-3xl bg-gradient-to-br from-brand-green-soft to-white p-5 shadow-card ring-1 ring-brand-green/15 sm:p-7">
         <div className="grid items-center gap-4 sm:grid-cols-[1fr_11rem] lg:grid-cols-[1fr_16rem] xl:grid-cols-[1fr_10.5rem]">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-green">{t.cards.nursery.eyebrow}</p>
@@ -47,10 +47,10 @@ export function ProgramCards({ nursery, classes, images, lang }: { nursery: Prog
         <Skills items={nursery} tones={NURSERY_TONES} />
       </article>
 
-      <article className="rounded-3xl bg-gradient-to-br from-sky-50 to-white p-5 shadow-card ring-1 ring-sky-100 sm:p-7">
+      <article className="rounded-3xl bg-gradient-to-br from-brand-navy-soft to-white p-5 shadow-card ring-1 ring-brand-navy/10 sm:p-7">
         <div className="grid items-center gap-4 sm:grid-cols-[1fr_11rem] lg:grid-cols-[1fr_16rem] xl:grid-cols-[1fr_10.5rem]">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.15em] text-sky-700">{t.cards.classes.eyebrow}</p>
+            <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-navy">{t.cards.classes.eyebrow}</p>
             <h2 className="mt-2 whitespace-pre-line text-2xl font-extrabold leading-tight text-brand-navy-dark sm:text-[1.75rem]">{t.cards.classes.title.replace(/([.।]) /, "$1\n")}</h2>
             <p className="mt-2 font-bold text-brand-navy">{t.cards.classes.tagline}</p>
             <p className="mt-2 text-sm text-gray-700">{t.cards.classes.text}</p>

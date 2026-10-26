@@ -4,7 +4,7 @@ import { getDict, type Lang } from "@/lib/i18n";
 const ICONS = [
   { icon: GraduationCap, color: "text-brand-pink" },
   { icon: Heart, color: "text-brand-green" },
-  { icon: Users, color: "text-sky-600" },
+  { icon: Users, color: "text-brand-navy" },
   { icon: Star, color: "text-amber-500" },
 ];
 
