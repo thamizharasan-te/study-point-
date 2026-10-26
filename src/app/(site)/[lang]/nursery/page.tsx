@@ -44,7 +44,7 @@ export default async function NurseryPage({ params }: Props) {
             <p>{p.gentle2}</p>
             <div className="pt-2"><EnquireButton /></div>
           </div>
-          <SmartImage src={pic.src} alt={p.imageAlt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 480px, 100vw" className="aspect-[8/7] w-full rounded-3xl object-cover shadow-card" />
+          <SmartImage src={pic.src} alt={p.imageAlt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 480px, 100vw" className="aspect-[8/7] w-full rounded-3xl object-cover object-[50%_35%] shadow-card" />
         </div>
       </section>
     </>

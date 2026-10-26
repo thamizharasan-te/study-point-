@@ -5,6 +5,8 @@ import { useState } from "react";
 import { Loader2, Upload } from "lucide-react";
 import { MAX_UPLOAD_BYTES, shrinkImage } from "@/lib/shrink-image";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
+import { IMAGE_SLOTS } from "@/lib/defaults";
+import type { ImageSlot } from "@/lib/types";
 import { setSiteImage } from "@/app/admin/(panel)/images/actions";
 
 /** Choose a photo → it is shrunk in the browser, uploaded, and replaces the picture on the website. */
@@ -19,7 +21,7 @@ export function ImageSlotUploader({ slot }: { slot: string }) {
     setMessage(null);
     try {
       if (!file.type.startsWith("image/")) throw new Error("Please choose a picture file.");
-      const { blob, ext } = await shrinkImage(file);
+      const { blob, ext } = await shrinkImage(file, slot.startsWith("logo") ? undefined : IMAGE_SLOTS[slot as ImageSlot].width / IMAGE_SLOTS[slot as ImageSlot].height);
       if (blob.size > MAX_UPLOAD_BYTES) throw new Error("That picture is too large (max 5 MB).");
       const supabase = createBrowserSupabase();
       const path = `site/${slot}-${crypto.randomUUID()}.${ext}`;

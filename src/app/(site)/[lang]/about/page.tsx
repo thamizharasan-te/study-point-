@@ -34,7 +34,7 @@ export default async function AboutPage({ params }: Props) {
       <PageHero title={p.title} subtitle={p.subtitle} />
 
       <section className="container-page grid items-center gap-8 py-8 sm:py-10 lg:grid-cols-2">
-        <SmartImage src={pic.src} alt={p.imageAlt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 540px, 100vw" className="aspect-[10/7.6] w-full rounded-3xl object-cover shadow-card" />
+        <SmartImage src={pic.src} alt={p.imageAlt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 540px, 100vw" className="aspect-[10/7.6] w-full rounded-3xl object-cover object-[50%_35%] shadow-card" />
         <div className="space-y-4 text-gray-700">
           <h2 className="text-3xl font-extrabold text-brand-navy">{p.storyTitle}</h2>
           <p>{fmt(p.story1, { branches: branches.map((b) => b.display_name ?? b.name).join(p.and) })}</p>

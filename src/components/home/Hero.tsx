@@ -41,7 +41,7 @@ export function Hero({ hero, images, lang }: { hero: HeroContent; images: SiteIm
           height={pic.height}
           priority
           sizes="(min-width: 1024px) 60vw, 100vw"
-          className="aspect-[11/8] w-full object-cover lg:aspect-auto lg:h-full"
+          className="aspect-[11/8] w-full object-cover object-[50%_35%] lg:aspect-auto lg:h-full"
         />
         <div className="absolute inset-y-0 left-0 hidden w-2/5 bg-gradient-to-r from-white to-transparent lg:block" aria-hidden />
         <p className="absolute right-3 top-3 -rotate-3 text-right font-script text-lg leading-snug sm:right-6 sm:top-5 sm:text-2xl" aria-hidden>

@@ -80,7 +80,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
                 aria-label={`${t.gallery.open}${g.alt}`}
                 onClick={(e) => { lastFocus.current = e.currentTarget; setIndex(i); }}
               >
-                <SmartImage src={g.image_url} alt={g.alt} width={600} height={450} sizes="(min-width:1024px) 280px, (min-width:640px) 33vw, 50vw" className="aspect-[4/3] w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                <SmartImage src={g.image_url} alt={g.alt} width={600} height={450} sizes="(min-width:1024px) 280px, (min-width:640px) 33vw, 50vw" className="aspect-[4/3] w-full object-cover object-[50%_35%] transition-transform duration-300 group-hover:scale-105" />
               </button>
             </li>
           ))}

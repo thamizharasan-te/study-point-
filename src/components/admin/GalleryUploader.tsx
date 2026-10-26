@@ -30,7 +30,7 @@ export function GalleryUploader() {
     try {
       for (const file of files) {
         if (!file.type.startsWith("image/")) throw new Error(`“${file.name}” is not a picture.`);
-        const { blob, ext } = await shrinkImage(file);
+        const { blob, ext } = await shrinkImage(file, 4 / 3);
         if (blob.size > MAX_UPLOAD_BYTES) throw new Error(`“${file.name}” is too large (max 5 MB).`);
         const path = `${album.toLowerCase().replace(/[^a-z0-9]+/g, "-") || "general"}/${crypto.randomUUID()}.${ext}`;
         const { error } = await supabase.storage.from("gallery").upload(path, blob, { contentType: blob.type || "image/jpeg", cacheControl: "31536000" });

@@ -20,7 +20,7 @@ export function GalleryPreview({ items, lang }: { items: GalleryItem[]; lang: La
       <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
         {items.slice(0, 5).map((g, i) => (
           <li key={g.id} className={i === 4 ? "hidden lg:block" : ""}>
-            <SmartImage src={g.image_url} alt={g.alt} width={400} height={300} sizes="(min-width:1024px) 200px, 33vw" className="aspect-[4/3] w-full rounded-2xl object-cover shadow-md" />
+            <SmartImage src={g.image_url} alt={g.alt} width={400} height={300} sizes="(min-width:1024px) 200px, 33vw" className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_35%] shadow-md" />
           </li>
         ))}
       </ul>
