@@ -2,7 +2,7 @@ import { getDict, fmt, type Lang } from "@/lib/i18n";
 import type { Social } from "@/lib/types";
 import { BRAND, ICONS } from "../SocialLinks";
 
-const NAMES = { facebook: "Facebook", instagram: "Instagram", youtube: "YouTube" } as const;
+const NAMES = { facebook: "Facebook", instagram: "Instagram", youtube: "YouTube", tiktok: "TikTok" } as const;
 
 /** "Visit Our Updates": one big button per social page the owner has filled in (Admin → Website Text). */
 export function UpdatesBand({ social, lang }: { social: Social; lang: Lang }) {

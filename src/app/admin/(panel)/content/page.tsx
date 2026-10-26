@@ -94,9 +94,9 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
         <h2 className="mb-1 text-lg font-bold text-brand-navy">Social media links</h2>
         <p className="mb-3 text-sm text-gray-600">Paste the full page address (starting with https://). Leave empty to hide an icon.</p>
         <form action={saveSocial} className="space-y-3">
-          {(["facebook", "instagram", "youtube"] as const).map((k) => (
+          {(["facebook", "instagram", "youtube", "tiktok"] as const).map((k) => (
             <div key={k}>
-              <label className="label capitalize" htmlFor={`social-${k}`}>{k}</label>
+              <label className="label" htmlFor={`social-${k}`}>{{ facebook: "Facebook", instagram: "Instagram", youtube: "YouTube", tiktok: "TikTok" }[k]}</label>
               <input id={`social-${k}`} name={k} defaultValue={social[k]} inputMode="url" maxLength={300} placeholder="https://…" className="input" />
             </div>
           ))}
