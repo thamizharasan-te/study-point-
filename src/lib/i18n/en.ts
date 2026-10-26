@@ -96,7 +96,7 @@ export const en = {
 
   stats: { aria: "Study Point in numbers" },
   updates: { eyebrow: "Stay connected", title: "Visit Our Updates", text: "Follow Study Point for news, photos and announcements.", on: "Study Point on {name}" },
-  preview: { eyebrow: "Our Gallery", title: "Moments of Learning, Joy and Growth", viewGallery: "View More Photos" },
+  preview: { eyebrow: "Our Gallery", title: "Moments of Learning, Joy and Growth", viewGallery: "See All Photos" },
   testimonials: { eyebrow: "Parents' Love", title: "What Parents Say About Us" },
   faq: { title: "Frequently Asked Questions" },
   cta: {
