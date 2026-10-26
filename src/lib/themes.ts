@@ -22,11 +22,11 @@ export const THEMES: Theme[] = [
     primary: "#2e7d32", accent: "#d81b60", navy: "#14306b", cream: "#fffaf3", header: "#ffffff",
     exact: { "green-dark": "#1f5f25", "green-soft": "#e8f3e4", "pink-dark": "#ad1457", "pink-soft": "#fde8ef", "navy-dark": "#0e2250", "navy-soft": "#e7eefb" },
   },
-  { id: "ocean", label: "Ocean Blue", description: "Fresh blue with a warm orange highlight.", primary: "#0b7bb5", accent: "#f57c00", navy: "#0b2e5b", cream: "#f6fafd", header: "#ffffff" },
-  { id: "royal", label: "Royal Purple", description: "Rich purple with a golden highlight.", primary: "#7b3fa0", accent: "#e8a010", navy: "#2d1b54", cream: "#fbf8fe", header: "#ffffff" },
-  { id: "sunny", label: "Sunny Orange", description: "Warm and cheerful orange with teal.", primary: "#e8710a", accent: "#0e7490", navy: "#4a2511", cream: "#fff8ef", header: "#fff4e0" },
+  { id: "ocean", label: "Ocean Blue", description: "Fresh blue with a warm amber highlight.", primary: "#0b6fa4", accent: "#b45309", navy: "#0b2e5b", cream: "#f6fafd", header: "#ffffff" },
+  { id: "royal", label: "Royal Purple", description: "Rich purple with a golden-brown highlight.", primary: "#7b3fa0", accent: "#b45309", navy: "#2d1b54", cream: "#fbf8fe", header: "#ffffff" },
+  { id: "sunny", label: "Sunny Orange", description: "Warm and cheerful orange with teal.", primary: "#c2410c", accent: "#0e7490", navy: "#4a2511", cream: "#fff8ef", header: "#fff4e0" },
   { id: "rose", label: "Rose Garden", description: "Soft rose with leafy green.", primary: "#c2185b", accent: "#2e7d32", navy: "#4a1233", cream: "#fff8fa", header: "#fff0f5" },
-  { id: "forest", label: "Forest Green", description: "Calm deep green with a gold highlight.", primary: "#1b6b3a", accent: "#d98a00", navy: "#0f3d2a", cream: "#f8fbf6", header: "#1b6b3a" },
+  { id: "forest", label: "Forest Green", description: "Calm deep green with an amber highlight.", primary: "#1b6b3a", accent: "#b45309", navy: "#0f3d2a", cream: "#f8fbf6", header: "#1b6b3a" },
   { id: "midnight", label: "Midnight Navy", description: "Bold navy header with the classic colours.", primary: "#2e7d32", accent: "#d81b60", navy: "#14306b", cream: "#fffaf3", header: "#14306b", exact: { "green-dark": "#1f5f25", "green-soft": "#e8f3e4", "pink-dark": "#ad1457", "pink-soft": "#fde8ef", "navy-dark": "#0e2250", "navy-soft": "#e7eefb" } },
 ];
 

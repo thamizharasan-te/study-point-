@@ -4,9 +4,9 @@ import { createServiceClient } from "@/lib/supabase/service";
 import { getDict } from "@/lib/i18n";
 import { langOf, parseEnquiry } from "@/lib/validation";
 
-// Spam limits: per visitor (hashed IP) — max 3 enquiries per hour, 8 per day.
-const LIMIT_PER_HOUR = 3;
-const LIMIT_PER_DAY = 8;
+// Spam limits: per visitor (hashed IP) — max 8 enquiries per hour, 25 per day (generous, because many phones on one mobile network share an address).
+const LIMIT_PER_HOUR = 8;
+const LIMIT_PER_DAY = 25;
 
 export async function POST(request: NextRequest) {
   let body: Record<string, unknown>;

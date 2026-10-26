@@ -58,7 +58,7 @@ export function ProgramCards({ nursery, classes, images, lang }: { nursery: Prog
   return (
     <section className="container-page grid gap-5 py-8 sm:py-10 xl:grid-cols-2" aria-label={t.cards.aria}>
       <Card tone="green" img={nurseryPic} alt={t.cards.nursery.imageAlt} skills={<Skills items={nursery} tones={NURSERY_TONES} />}>
-        <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-green">{t.cards.nursery.eyebrow}</p>
+        <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-green-dark">{t.cards.nursery.eyebrow}</p>
         <h2 className="mt-2 text-2xl font-extrabold leading-tight text-brand-navy-dark sm:text-[1.75rem]">{t.cards.nursery.title}</h2>
         <p className="mt-2 font-bold text-brand-green-dark">{t.cards.nursery.age}</p>
         <p className="mt-2 text-sm text-gray-700">{t.cards.nursery.text}</p>

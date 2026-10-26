@@ -16,9 +16,9 @@ export function StatsBand({ stats, lang }: { stats: SiteStat[]; lang: Lang }) {
         {stats.map((s, n) => {
           const Icon = ICONS[s.key] ?? Star;
           return (
-            <li key={s.key} className={`flex items-center gap-3 rounded-3xl p-4 shadow-sm ring-2 ring-white ${["bg-emerald-100", "bg-pink-100", "bg-sky-100", "bg-amber-100"][n % 4]}`}>
+            <li key={s.key} className={`flex min-w-0 items-center gap-3 rounded-3xl p-4 shadow-sm ring-2 ring-white ${["bg-emerald-100", "bg-pink-100", "bg-sky-100", "bg-amber-100"][n % 4]}`}>
               <Icon className={`h-9 w-9 shrink-0 ${COLORS[s.key] ?? ""}`} aria-hidden />
-              <span>
+              <span className="min-w-0 break-words">
                 <span className="block font-display text-2xl font-extrabold text-brand-navy sm:text-3xl">{s.value}</span>
                 <span className="block text-xs font-semibold text-gray-700 sm:text-sm">{s.label}</span>
                 {s.is_placeholder && <SampleTag />}

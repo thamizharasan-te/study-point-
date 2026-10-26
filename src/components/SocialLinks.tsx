@@ -1,3 +1,4 @@
+import { fmt, getDict, type Lang } from "@/lib/i18n";
 import type { Social } from "@/lib/types";
 
 // Simple inline icons (lucide no longer ships brand logos).
@@ -16,14 +17,17 @@ const TONES = {
 } as const;
 
 /** Round social icons; only the links the admin has filled in are shown. */
-export function SocialLinks({ social, tone = "light" }: { social: Social; tone?: "light" | "dark" | "color" }) {
+export const SOCIAL_NAMES = { facebook: "Facebook", instagram: "Instagram", tiktok: "TikTok", youtube: "YouTube" } as const;
+
+export function SocialLinks({ social, tone = "light", lang = "en" }: { social: Social; tone?: "light" | "dark" | "color"; lang?: Lang }) {
+  const on = getDict(lang).updates.on;
   const shown = (Object.keys(ICONS) as (keyof typeof ICONS)[]).filter((k) => social[k]);
   if (!shown.length) return null;
   return (
     <ul className="flex gap-3">
       {shown.map((k) => (
         <li key={k}>
-          <a href={social[k]} target="_blank" rel="noopener noreferrer" aria-label={`Study Point on ${k[0].toUpperCase()}${k.slice(1)}`} className={`flex h-10 w-10 items-center justify-center rounded-full ${TONES[tone][k]}`}>
+          <a href={social[k]} target="_blank" rel="noopener noreferrer" aria-label={fmt(on, { name: SOCIAL_NAMES[k] })} className={`flex h-10 w-10 items-center justify-center rounded-full text-white ${TONES[tone][k]}`}>
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">{ICONS[k]}</svg>
           </a>
         </li>
