@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { MessageCircle, X } from "lucide-react";
+import { X } from "lucide-react";
+import { WhatsAppIcon } from "./BrandIcons";
 import { fmt } from "@/lib/i18n";
 import { whatsAppLink } from "@/lib/utils";
 import { useLang } from "./LangProvider";
@@ -40,7 +41,7 @@ export function WhatsAppFab({ options }: { options: { name: string; whatsapp: st
       )}
       {list.length === 1 ? (
         <a href={whatsAppLink(list[0].whatsapp, msg)} target="_blank" rel="noopener noreferrer" className={circle} aria-label={t.whatsapp.chat}>
-          <MessageCircle className="h-7 w-7" aria-hidden />
+          <WhatsAppIcon className="h-8 w-8" />
         </a>
       ) : (
         <button
@@ -50,7 +51,7 @@ export function WhatsAppFab({ options }: { options: { name: string; whatsapp: st
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
         >
-          {open ? <X className="h-7 w-7" aria-hidden /> : <MessageCircle className="h-7 w-7" aria-hidden />}
+          {open ? <X className="h-7 w-7" aria-hidden /> : <WhatsAppIcon className="h-8 w-8" />}
         </button>
       )}
     </div>
