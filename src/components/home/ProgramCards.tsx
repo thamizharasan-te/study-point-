@@ -35,13 +35,13 @@ function Card({ tone, img, alt, children, skills }: { tone: "green" | "blue"; im
     <article className={`relative flex flex-col overflow-hidden rounded-3xl shadow-card ${bg}`}>
       <div className="relative flex-1 sm:min-h-[19rem]">
         {/* photo: top of the card on phones, the right side from tablets up. It stays sharp; only its edge blends into the card colour. */}
-        <div className="relative aspect-[16/10] sm:absolute sm:inset-y-0 sm:right-0 sm:aspect-auto sm:w-[58%]">
+        <div className="relative aspect-[16/10] sm:absolute sm:inset-y-0 sm:right-0 sm:aspect-auto sm:w-[52%]">
           <SmartImage src={img.src} alt={alt} width={img.width} height={img.height} sizes="(min-width:1280px) 330px, (min-width:640px) 55vw, 100vw" className="h-full w-full object-cover object-[50%_30%]" />
           <div className="absolute inset-0 sm:hidden" style={{ backgroundImage: `linear-gradient(to top, rgb(${c}) 0%, rgb(${c} / 0) 30%)` }} aria-hidden />
           <div className="absolute inset-0 hidden sm:block" style={{ backgroundImage: `linear-gradient(to right, rgb(${c}) 0%, rgb(${c} / 0.6) 12%, rgb(${c} / 0) 34%)` }} aria-hidden />
         </div>
         {/* words on the left, over the plain card colour (the fade only just touches them) */}
-        <div className="relative z-10 -mt-8 px-5 pb-5 sm:mt-0 sm:w-[56%] sm:p-7">{children}</div>
+        <div className="relative z-10 -mt-8 px-5 pb-5 sm:mt-0 sm:w-[50%] sm:p-7">{children}</div>
       </div>
       {skills}
     </article>
@@ -53,7 +53,7 @@ export function ProgramCards({ nursery, classes, images, lang }: { nursery: Prog
   const nurseryPic = slotImage(images, "nursery");
   const classesPic = slotImage(images, "classes");
   return (
-    <section className="container-page grid gap-5 py-8 sm:py-10 xl:grid-cols-2" aria-label={t.cards.aria}>
+    <section className={`container-page grid gap-5 py-8 sm:py-10 ${lang === "ta" ? "" : "xl:grid-cols-2"}`} aria-label={t.cards.aria}>
       <Card tone="green" img={nurseryPic} alt={t.cards.nursery.imageAlt} skills={<Skills items={nursery} tones={NURSERY_TONES} />}>
         <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-green-dark">{t.cards.nursery.eyebrow}</p>
         <h2 className="mt-2 text-2xl font-extrabold leading-tight text-brand-navy-dark sm:text-[1.75rem]">{t.cards.nursery.title}</h2>
