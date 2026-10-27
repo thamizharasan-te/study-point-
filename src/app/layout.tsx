@@ -10,15 +10,15 @@ import { SITE_NAME, SITE_URL } from "@/lib/utils";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: { default: "Study Point — Nursery & English Classes in Point Pedro and Vathiry", template: "%s | Study Point" },
+  title: { default: "Study Point — Kindergarten & English Classes in Point Pedro and Vathiry", template: "%s | Study Point" },
   description:
-    "Study Point is a nursery (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka. Phonics, spoken English, grammar, writing and exam preparation in small, caring groups.",
+    "Study Point is a kindergarten (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka. Phonics, spoken English, grammar, writing and exam preparation in small, caring groups.",
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
     locale: "en_LK",
     title: "Study Point — Little Learners. Brighter Tomorrows.",
-    description: "Nursery for ages 3–5 and English classes in Point Pedro and Vathiry, Sri Lanka.",
+    description: "Kindergarten for ages 3–5 and English classes in Point Pedro and Vathiry, Sri Lanka.",
   },
   twitter: { card: "summary_large_image" },
 };

@@ -2,7 +2,7 @@ import { getDict, isLang, type Lang } from "./i18n";
 
 /** Shared enquiry validation (used by the API route; mirrored by the form's HTML attributes). */
 
-export const INTERESTS = ["Nursery (3–5 years)", "Study Point Classes", "Not sure yet"] as const;
+export const INTERESTS = ["Kindergarten (3–5 years)", "Study Point Classes", "Not sure yet"] as const;
 
 export interface EnquiryInput {
   parent_name: string;

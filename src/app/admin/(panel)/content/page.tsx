@@ -61,12 +61,12 @@ export default async function AdminContent({ searchParams }: { searchParams: Pro
       </Card>
 
       <Card className="mb-6">
-        <h2 className="mb-1 text-lg font-bold text-brand-navy">Nursery — what children learn</h2>
-        <p className="mb-3 text-sm text-gray-600">Shown on the Nursery page and the home page.</p>
+        <h2 className="mb-1 text-lg font-bold text-brand-navy">Kindergarten — what children learn</h2>
+        <p className="mb-3 text-sm text-gray-600">Shown on the Kindergarten page and the home page.</p>
         <form action={savePrograms} className="space-y-3">
           <input type="hidden" name="key" value="nursery_programs" />
           <ProgramsEditor name="programs" idPrefix="nursery" initial={withTa(nursery)} />
-          <SubmitButton>Save Nursery list</SubmitButton>
+          <SubmitButton>Save Kindergarten list</SubmitButton>
         </form>
       </Card>
 

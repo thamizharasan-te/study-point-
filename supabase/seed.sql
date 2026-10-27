@@ -28,7 +28,7 @@ insert into public.site_content (key, value) values
     {"title":"Exam Preparation","description":"Focused revision and exam technique for school English exams."}
   ]'),
   ('faq', '[
-    {"title":"What age group is the Nursery for?","description":"Our Nursery is for children aged 3 to 5 years, with phonics, creative activities, play based learning, social skills and confidence building."},
+    {"title":"What age group is the Kindergarten for?","description":"Our Kindergarten is for children aged 3 to 5 years, with phonics, creative activities, play based learning, social skills and confidence building."},
     {"title":"What do Study Point Classes teach?","description":"English, grammar, phonics, spoken English, writing skills and exam preparation, taught in small groups."},
     {"title":"Are the groups small?","description":"Yes. We keep groups small so that teachers can give every child proper attention."},
     {"title":"Where are your branches?","description":"We have two branches, in Point Pedro and Vathiry. Addresses, phone numbers and maps are on the Contact page."},

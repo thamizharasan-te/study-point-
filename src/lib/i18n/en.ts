@@ -26,7 +26,7 @@ export const en = {
   },
 
   brand: { tagline: "We make great learners" },
-  topbar: { aria: "Quick contact", tagline: "Nursery & English Classes", whatsapp: "WhatsApp us" },
+  topbar: { aria: "Quick contact", tagline: "Kindergarten & English Classes", whatsapp: "WhatsApp us" },
   announcements: { aria: "Announcements" },
 
   hero: {
@@ -49,13 +49,13 @@ export const en = {
   cards: {
     aria: "Our programs",
     nursery: {
-      eyebrow: "Nursery / Early Years",
+      eyebrow: "Kindergarten / Early Years",
       title: "A Happy Place to Learn & Grow",
       age: "Ages 3 – 5 Years",
       text: "Through play, creativity and guided learning, we help children build confidence, curiosity and essential skills for a bright future.",
       learnMore: "Learn More",
       about: " about our Early Years programme",
-      imageAlt: "A Study Point nursery child at play",
+      imageAlt: "A Study Point kindergarten child at play",
     },
     classes: {
       eyebrow: "Study Point Classes",
@@ -105,7 +105,7 @@ export const en = {
   },
 
   footer: {
-    about: "A nurturing nursery and English tuition centre in Point Pedro and Vathiry, Sri Lanka.",
+    about: "A nurturing kindergarten and English tuition centre in Point Pedro and Vathiry, Sri Lanka.",
     quickLinks: "Quick links",
     branches: "Our branches",
     rights: "© {year} Study Point. All rights reserved.",
@@ -127,7 +127,7 @@ export const en = {
     age: "Child's age",
     agePlaceholder: "e.g. 4 years",
     interest: "Interested in",
-    interests: ["Nursery (3–5 years)", "Study Point Classes", "Not sure yet"],
+    interests: ["Kindergarten (3–5 years)", "Study Point Classes", "Not sure yet"],
     branch: "Preferred branch",
     anyBranch: "Either branch",
     message: "Message (optional)",
@@ -158,7 +158,7 @@ export const en = {
     prev: "Previous photo",
     next: "Next photo",
     none: "No photos yet — please check back soon.",
-    albums: { Nursery: "Nursery", Classes: "Classes", Activities: "Activities", Events: "Events", Campus: "Campus", General: "General" } as Record<string, string>,
+    albums: { Nursery: "Kindergarten", Kindergarten: "Kindergarten", Classes: "Classes", Activities: "Activities", Events: "Events", Campus: "Campus", General: "General" } as Record<string, string>,
   },
 
   branch: {
@@ -171,16 +171,16 @@ export const en = {
     about: {
       metaTitle: "About Us",
       metaDescription:
-        "Learn about Study Point — a caring nursery and English tuition centre serving families in Point Pedro and Vathiry, Sri Lanka.",
+        "Learn about Study Point — a caring kindergarten and English tuition centre serving families in Point Pedro and Vathiry, Sri Lanka.",
       title: "About Study Point",
-      subtitle: "A nursery and English learning centre where little learners grow into confident, capable students.",
+      subtitle: "A kindergarten and English learning centre where little learners grow into confident, capable students.",
       storyTitle: "Our story",
       story1:
-        "Study Point brings an early years nursery and quality English education together under one roof, so families in {branches} can find caring, well-structured learning close to home.",
+        "Study Point brings an early years kindergarten and quality English education together under one roof, so families in {branches} can find caring, well-structured learning close to home.",
       story2:
-        "Our Nursery (ages 3 to 5) builds a strong foundation through phonics, creative activities and play-based learning. Study Point Classes help older children grow in English — grammar, spoken English, writing skills and exam preparation — in small groups.",
+        "Our Kindergarten (ages 3 to 5) builds a strong foundation through phonics, creative activities and play-based learning. Study Point Classes help older children grow in English — grammar, spoken English, writing skills and exam preparation — in small groups.",
       story3: "We believe every child is a story waiting to be a success, and we are here to help write it.",
-      ourNursery: "Our Nursery",
+      ourKindergarten: "Our Kindergarten",
       ourClasses: "Our Classes",
       and: " and ",
       valuesTitle: "What we stand for",
@@ -196,19 +196,19 @@ export const en = {
       imageAlt: "Study Point students in the classroom",
     },
     nursery: {
-      metaTitle: "Nursery (Ages 3–5)",
+      metaTitle: "Kindergarten (Ages 3–5)",
       metaDescription:
-        "Study Point Nursery for children aged 3 to 5 in Point Pedro and Vathiry: phonics, creative activities, play based learning, social skills and confidence building.",
+        "Study Point Kindergarten for children aged 3 to 5 in Point Pedro and Vathiry: phonics, creative activities, play based learning, social skills and confidence building.",
       title: "Early Years · 3 – 5 Years",
       subtitle:
         "A happy place to learn, play and grow! A strong foundation through play-based learning, creativity and structured early years activities.",
       learnTitle: "What your child will learn",
       gentleTitle: "A gentle start to school life",
       gentle1:
-        "Young children learn best when they feel safe and happy. Our nursery days mix songs, stories, hands-on play and simple early literacy activities.",
+        "Young children learn best when they feel safe and happy. Our kindergarten days mix songs, stories, hands-on play and simple early literacy activities.",
       gentle2:
         "Teachers keep groups small, celebrate every small step and keep parents informed about how their child is growing.",
-      imageAlt: "Nursery children playing with colourful blocks",
+      imageAlt: "Kindergarten children playing with colourful blocks",
     },
     classes: {
       metaTitle: "Study Point Classes — English, Spoken English & Exam Preparation",
@@ -226,7 +226,7 @@ export const en = {
     },
     gallery: {
       metaTitle: "Gallery",
-      metaDescription: "Photos of learning, play and activities at Study Point nursery and classes in Point Pedro and Vathiry.",
+      metaDescription: "Photos of learning, play and activities at Study Point kindergarten and classes in Point Pedro and Vathiry.",
       title: "Our Learning Moments",
       subtitle: "A look at everyday learning, play and fun at Study Point.",
       sample: "Placeholder photos — real photos coming soon",
@@ -242,11 +242,11 @@ export const en = {
       formText: "Fill in the form and we will contact you.",
     },
     home: {
-      metaTitle: "Study Point — Nursery & English Classes in Point Pedro and Vathiry",
+      metaTitle: "Study Point — Kindergarten & English Classes in Point Pedro and Vathiry",
       metaDescription:
-        "Study Point is a nursery (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka. Phonics, spoken English, grammar, writing and exam preparation in small, caring groups.",
+        "Study Point is a kindergarten (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka. Phonics, spoken English, grammar, writing and exam preparation in small, caring groups.",
       ogTitle: "Study Point — Little Learners. Brighter Tomorrows.",
-      ogDescription: "Nursery for ages 3–5 and English classes in Point Pedro and Vathiry, Sri Lanka.",
+      ogDescription: "Kindergarten for ages 3–5 and English classes in Point Pedro and Vathiry, Sri Lanka.",
     },
   },
 

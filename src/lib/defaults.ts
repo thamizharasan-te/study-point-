@@ -33,7 +33,7 @@ export const DEFAULT_CLASS_PROGRAMS: Program[] = [
 
 /** Safe, general answers only — no fees, timings or promises. Editable in /admin → Website Text. */
 export const DEFAULT_FAQ: Program[] = [
-  { title: "What age group is the Nursery for?", description: "Our Nursery is for children aged 3 to 5 years, with phonics, creative activities, play based learning, social skills and confidence building." },
+  { title: "What age group is the Kindergarten for?", description: "Our Kindergarten is for children aged 3 to 5 years, with phonics, creative activities, play based learning, social skills and confidence building." },
   { title: "What do Study Point Classes teach?", description: "English, grammar, phonics, spoken English, writing skills and exam preparation, taught in small groups." },
   { title: "Are the groups small?", description: "Yes. We keep groups small so that teachers can give every child proper attention." },
   { title: "Where are your branches?", description: "We have two branches, in Point Pedro and Vathiry. Addresses, phone numbers and maps are on the Contact page." },
@@ -84,7 +84,7 @@ export const DEFAULT_BRANCHES: Branch[] = [
   },
 ];
 
-export const GALLERY_ALBUMS = ["Nursery", "Classes", "Activities", "Events", "Campus"];
+export const GALLERY_ALBUMS = ["Kindergarten", "Classes", "Activities", "Events", "Campus"];
 
 const albumFor = ["Classes", "Nursery", "Activities", "Classes", "Campus", "Nursery", "Activities", "Campus"];
 export const DEFAULT_GALLERY: GalleryItem[] = albumFor.map((album, i) => ({
@@ -103,7 +103,7 @@ export const DEFAULT_GALLERY: GalleryItem[] = albumFor.map((album, i) => ({
  */
 export const IMAGE_SLOTS: Record<ImageSlot, { label: string; where: string; fallback: string; alt: string; width: number; height: number }> = {
   hero: { label: "Home page — main picture", where: "Top of the home page", fallback: "/placeholders/hero.svg", alt: "Smiling Study Point children learning together", width: 1100, height: 800 },
-  nursery: { label: "Nursery picture", where: "Home page Nursery card and the Nursery page", fallback: "/placeholders/nursery.svg", alt: "A Study Point nursery child at play", width: 800, height: 700 },
+  nursery: { label: "Kindergarten picture", where: "Home page Kindergarten card and the Kindergarten page", fallback: "/placeholders/nursery.svg", alt: "A Study Point nursery child at play", width: 800, height: 700 },
   classes: { label: "Classes picture", where: "Home page Classes card and the Classes page", fallback: "/placeholders/classes.svg", alt: "A Study Point student learning in class", width: 800, height: 700 },
   why: { label: "“Why Study Point” picture", where: "Home page, beside “More Than Just Classes”", fallback: "/placeholders/why.svg", alt: "A Study Point child reading a book", width: 800, height: 700 },
   logo: { label: "Logo — icon only", where: "Header and footer, next to the “Study Point” name (the name text stays). Square or round picture, transparent background works best.", fallback: "/placeholders/logo.svg", alt: "Study Point logo", width: 160, height: 160 },

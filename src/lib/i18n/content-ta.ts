@@ -72,7 +72,10 @@ export const DEFAULT_TA: Record<string, string> = {
 
   // FAQ
   "What age group is the Nursery for?": "மழலையர் பள்ளி எந்த வயதினருக்கானது?",
+  "What age group is the Kindergarten for?": "மழலையர் பள்ளி எந்த வயதினருக்கானது?",
   "Our Nursery is for children aged 3 to 5 years, with phonics, creative activities, play based learning, social skills and confidence building.":
+    "எங்கள் மழலையர் பள்ளி 3 முதல் 5 வயதுப் பிள்ளைகளுக்கானது; ஒலிப்பியல், படைப்பாற்றல் செயல்பாடுகள், விளையாட்டு வழிக் கற்றல், சமூகத் திறன்கள், தன்னம்பிக்கை வளர்ப்பு ஆகியவை உள்ளன.",
+  "Our Kindergarten is for children aged 3 to 5 years, with phonics, creative activities, play based learning, social skills and confidence building.":
     "எங்கள் மழலையர் பள்ளி 3 முதல் 5 வயதுப் பிள்ளைகளுக்கானது; ஒலிப்பியல், படைப்பாற்றல் செயல்பாடுகள், விளையாட்டு வழிக் கற்றல், சமூகத் திறன்கள், தன்னம்பிக்கை வளர்ப்பு ஆகியவை உள்ளன.",
   "What do Study Point Classes teach?": "Study Point வகுப்புகளில் என்ன கற்பிக்கப்படுகிறது?",
   "English, grammar, phonics, spoken English, writing skills and exam preparation, taught in small groups.":
