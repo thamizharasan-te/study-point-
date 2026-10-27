@@ -13,7 +13,7 @@ interface Summary {
   sources: { source: string; views: number }[];
 }
 
-const PAGE_NAMES: Record<string, string> = { "/": "Home", "/about": "About Us", "/nursery": "Nursery", "/classes": "Classes", "/gallery": "Gallery", "/contact": "Contact" };
+const PAGE_NAMES: Record<string, string> = { "/": "Home", "/about": "About Us", "/nursery": "Kindergarten", "/classes": "Classes", "/gallery": "Gallery", "/contact": "Contact" };
 /** "/ta/about" → "About Us (Tamil)"; "/about" → "About Us". */
 function pageName(path: string) {
   const ta = path === "/ta" || path.startsWith("/ta/");

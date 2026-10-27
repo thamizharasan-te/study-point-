@@ -13,7 +13,7 @@ export default function OgImage() {
         <div style={{ fontSize: 84, fontWeight: 800, marginTop: 20, lineHeight: 1.05 }}>Little Learners.</div>
         <div style={{ fontSize: 84, fontWeight: 800, color: "#2e7d32", lineHeight: 1.05 }}>Brighter</div>
         <div style={{ fontSize: 84, fontWeight: 800, color: "#d81b60", lineHeight: 1.05 }}>Tomorrows.</div>
-        <div style={{ fontSize: 30, marginTop: 28 }}>Nursery & English Classes · Point Pedro · Vathiry</div>
+        <div style={{ fontSize: 30, marginTop: 28 }}>Kindergarten & English Classes · Point Pedro · Vathiry</div>
       </div>
     ),
     size,

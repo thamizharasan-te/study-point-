@@ -41,7 +41,7 @@ export default async function AboutPage({ params }: Props) {
           <p>{p.story2}</p>
           <p>{p.story3}</p>
           <div className="flex flex-wrap gap-3 pt-2">
-            <Link href={localePath(lang, "/nursery")} className="btn-pink">{p.ourNursery}</Link>
+            <Link href={localePath(lang, "/nursery")} className="btn-pink">{p.ourKindergarten}</Link>
             <Link href={localePath(lang, "/classes")} className="btn-navy">{p.ourClasses}</Link>
           </div>
         </div>

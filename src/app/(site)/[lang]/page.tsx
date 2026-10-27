@@ -36,7 +36,7 @@ export default async function HomePage({ params }: Props) {
     "@type": "EducationalOrganization",
     name: "Study Point",
     url: SITE_URL,
-    description: "Nursery (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka.",
+    description: "Kindergarten (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka.",
     department: site.branches.map((b) => ({
       "@type": "School",
       name: `Study Point — ${b.name}`,

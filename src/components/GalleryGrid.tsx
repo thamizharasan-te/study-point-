@@ -11,7 +11,9 @@ import { SmartImage } from "./SmartImage";
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   const { t } = useLang();
   // "All" is an internal key; labels are translated for display only.
-  const albums = ["All", ...Array.from(new Set(items.map((i) => i.album)))];
+  // Photos saved in the old "Nursery" album belong with "Kindergarten".
+  const albumOf = (i: GalleryItem) => (i.album === "Nursery" ? "Kindergarten" : i.album);
+  const albums = ["All", ...Array.from(new Set(items.map(albumOf)))];
   const label = (a: string) => (a === "All" ? t.gallery.all : t.gallery.albums[a] ?? a);
   const [album, setAlbum] = useState("All");
   const [index, setIndex] = useState<number | null>(null);
@@ -19,7 +21,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   const closeBtn = useRef<HTMLButtonElement>(null);
   const touchX = useRef<number | null>(null);
 
-  const shown = album === "All" ? items : items.filter((i) => i.album === album);
+  const shown = album === "All" ? items : items.filter((i) => albumOf(i) === album);
 
   const close = useCallback(() => {
     setIndex(null);
@@ -118,7 +120,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
           <figure className="max-h-full max-w-5xl">
             <SmartImage src={current.image_url} alt={current.alt} width={1600} height={1200} sizes="100vw" className="max-h-[80dvh] w-auto rounded-xl object-contain" />
             <figcaption className="mt-2 text-center text-sm text-white/85">
-              {label(current.album)} · {index! + 1} / {shown.length}
+              {label(albumOf(current))} · {index! + 1} / {shown.length}
             </figcaption>
           </figure>
         </div>
