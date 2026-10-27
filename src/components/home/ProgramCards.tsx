@@ -30,21 +30,18 @@ function Skills({ items, tones }: { items: Program[]; tones: string[] }) {
  */
 function Card({ tone, img, alt, children, skills }: { tone: "green" | "blue"; img: { src: string; width: number; height: number }; alt: string; children: React.ReactNode; skills: React.ReactNode }) {
   const bg = tone === "green" ? "bg-brand-green-soft" : "bg-brand-navy-soft";
-  const from = tone === "green" ? "from-brand-green-soft" : "from-brand-navy-soft";
-  const via = tone === "green" ? "via-brand-green-soft/85" : "via-brand-navy-soft/85";
-  const mid = tone === "green" ? "via-brand-green-soft/60" : "via-brand-navy-soft/60";
-  const toT = tone === "green" ? "to-brand-green-soft/0" : "to-brand-navy-soft/0";
+  const c = tone === "green" ? "var(--c-green-soft)" : "var(--c-navy-soft)";
   return (
     <article className={`relative flex flex-col overflow-hidden rounded-3xl shadow-card ${bg}`}>
       <div className="relative flex-1 sm:min-h-[19rem]">
-        {/* photo: top of the card on phones, the right side from tablets up */}
-        <div className="relative aspect-[16/10] sm:absolute sm:inset-y-0 sm:right-0 sm:aspect-auto sm:w-[66%]">
-          <SmartImage src={img.src} alt={alt} width={img.width} height={img.height} sizes="(min-width:1280px) 360px, (min-width:640px) 60vw, 100vw" className="h-full w-full object-cover object-[50%_30%]" />
-          <div className={`absolute inset-0 bg-gradient-to-t ${from} ${mid} to-transparent sm:hidden`} aria-hidden />
-          <div className={`absolute inset-0 hidden bg-gradient-to-r ${from} ${via} ${toT} sm:block`} style={{ backgroundSize: "78% 100%", backgroundRepeat: "no-repeat" }} aria-hidden />
+        {/* photo: top of the card on phones, the right side from tablets up. It stays sharp; only its edge blends into the card colour. */}
+        <div className="relative aspect-[16/10] sm:absolute sm:inset-y-0 sm:right-0 sm:aspect-auto sm:w-[58%]">
+          <SmartImage src={img.src} alt={alt} width={img.width} height={img.height} sizes="(min-width:1280px) 330px, (min-width:640px) 55vw, 100vw" className="h-full w-full object-cover object-[50%_30%]" />
+          <div className="absolute inset-0 sm:hidden" style={{ backgroundImage: `linear-gradient(to top, rgb(${c}) 0%, rgb(${c} / 0) 30%)` }} aria-hidden />
+          <div className="absolute inset-0 hidden sm:block" style={{ backgroundImage: `linear-gradient(to right, rgb(${c}) 0%, rgb(${c} / 0.6) 12%, rgb(${c} / 0) 34%)` }} aria-hidden />
         </div>
-        {/* words on top of the photo */}
-        <div className="relative z-10 -mt-10 px-5 pb-5 sm:mt-0 sm:w-[62%] sm:p-7 xl:w-[64%]">{children}</div>
+        {/* words on the left, over the plain card colour (the fade only just touches them) */}
+        <div className="relative z-10 -mt-8 px-5 pb-5 sm:mt-0 sm:w-[56%] sm:p-7">{children}</div>
       </div>
       {skills}
     </article>
