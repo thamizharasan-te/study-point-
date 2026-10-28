@@ -45,10 +45,10 @@ export function Header({ logo, color = "#ffffff" }: { logo?: { icon?: string; fu
 
   return (
     <header className="sticky top-0 z-40 transform-gpu shadow-sm" style={{ backgroundColor: color }}>
-      <div className="container-page flex items-center justify-between gap-2 py-2.5">
+      <div className="mx-auto flex w-full max-w-[88rem] items-center justify-between gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
         <Logo compact chip={dark} icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
 
-        <nav aria-label={t.nav.main} className={clsx("hidden items-center", ta ? "gap-4 min-[1380px]:flex" : "gap-6 lg:flex")}>
+        <nav aria-label={t.nav.main} className={clsx("hidden items-center", ta ? "gap-3 min-[1500px]:flex" : "gap-5 lg:flex xl:gap-6")}>
           {t.nav.items.map((n) => {
             const active = n.href === "/" ? pathname === "/" : pathname.startsWith(n.href);
             return (
@@ -74,7 +74,7 @@ export function Header({ logo, color = "#ffffff" }: { logo?: { icon?: string; fu
           </EnquireButton>
           <button
             type="button"
-            className={clsx("rounded-full p-2", dark ? "text-white hover:bg-white/15" : "text-brand-navy hover:bg-brand-green-soft", ta ? "min-[1380px]:hidden" : "lg:hidden")}
+            className={clsx("rounded-full p-2", dark ? "text-white hover:bg-white/15" : "text-brand-navy hover:bg-brand-green-soft", ta ? "min-[1500px]:hidden" : "lg:hidden")}
             aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -86,7 +86,7 @@ export function Header({ logo, color = "#ffffff" }: { logo?: { icon?: string; fu
       </div>
 
       {menuOpen && (
-        <nav id="mobile-menu" aria-label={t.nav.mobile} className={clsx("border-t", dark ? "border-white/20" : "", ta ? "min-[1380px]:hidden" : "lg:hidden")} style={{ backgroundColor: color }}>
+        <nav id="mobile-menu" aria-label={t.nav.mobile} className={clsx("border-t", dark ? "border-white/20" : "", ta ? "min-[1500px]:hidden" : "lg:hidden")} style={{ backgroundColor: color }}>
           <ul className="container-page py-3">
             {t.nav.items.map((n) => {
               const active = pathname === n.href;

@@ -31,7 +31,7 @@ export const requireAdmin = cache(async () => {
   return { supabase, email: emailInToken(session.session.access_token) };
 });
 
-/** Make public pages pick up admin changes immediately. */
+/** Make public pages pick up admin changes immediately (every page, both languages). */
 export const refreshSite = () => revalidatePath("/", "layout");
 
 /** Redirect back to an admin page with a "Saved" or error banner. */
