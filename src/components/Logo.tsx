@@ -25,7 +25,7 @@ export function Logo({ light = false, href = "/", tagline = "We make great learn
     const own = logo === BUILTIN_LOGO; // our logo is made for dark and light backgrounds; an uploaded one gets a white chip on the dark footer
     return (
       <Link href={href} className={`inline-flex items-center ${(light && !own) || chip ? "rounded-xl bg-white px-2 py-1" : ""}`} aria-label="Study Point">
-        <SmartImage src={logo} alt={`Study Point — ${tagline}`} width={own ? 900 : 480} height={own ? 634 : 160} sizes={light ? "140px" : "(min-width:640px) 120px, 100px"} priority className={`${light ? "h-20" : "h-14 sm:h-20"} w-auto max-w-[14rem] object-contain`} />
+        <SmartImage src={logo} alt={`Study Point — ${tagline}`} width={own ? 900 : 480} height={own ? 634 : 160} sizes={light ? "140px" : "(min-width:640px) 120px, 100px"} priority={!light} className={`${light ? "h-20" : "h-14 sm:h-20"} w-auto max-w-[14rem] object-contain`} />
       </Link>
     );
   }
