@@ -23,6 +23,38 @@ const Section = ({ title, children }: { title: string; children: React.ReactNode
   </fieldset>
 );
 
+/** Date of birth as three drop-downs (day, month, year): much easier than a calendar when the year is far back. */
+function DateOfBirth({ label, day, month, year, months }: { label: string; day: string; month: string; year: string; months: string[] }) {
+  const [d, setD] = useState("");
+  const [m, setM] = useState("");
+  const [y, setY] = useState("");
+  const now = new Date().getFullYear();
+  const years = Array.from({ length: 21 }, (_, i) => String(now - i)); // children up to 20 years old, newest first
+  const daysIn = m && y ? new Date(Number(y), Number(m), 0).getDate() : 31;
+  const value = d && m && y ? `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}` : "";
+  const sel = "input !px-3";
+  return (
+    <div>
+      <span className="label" id="dob-label">{label}</span>
+      <input type="hidden" name="dob" value={value} />
+      <div role="group" aria-labelledby="dob-label" className="grid grid-cols-[1fr_1.6fr_1.2fr] gap-2">
+        <select aria-label={day} className={sel} required value={d} onChange={(e) => setD(e.target.value)}>
+          <option value="" disabled>{day}</option>
+          {Array.from({ length: daysIn }, (_, i) => String(i + 1)).map((v) => <option key={v} value={v}>{v}</option>)}
+        </select>
+        <select aria-label={month} className={sel} required value={m} onChange={(e) => { setM(e.target.value); if (Number(d) > new Date(Number(y || 2000), Number(e.target.value), 0).getDate()) setD(""); }}>
+          <option value="" disabled>{month}</option>
+          {months.map((name, i) => <option key={name} value={String(i + 1)}>{name}</option>)}
+        </select>
+        <select aria-label={year} className={sel} required value={y} onChange={(e) => { setY(e.target.value); if (m && Number(d) > new Date(Number(e.target.value), Number(m), 0).getDate()) setD(""); }}>
+          <option value="" disabled>{year}</option>
+          {years.map((v) => <option key={v} value={v}>{v}</option>)}
+        </select>
+      </div>
+    </div>
+  );
+}
+
 /** A file picker that shows the chosen file's name. */
 function FilePick({ name, label, accept, required, hint }: { name: string; label: string; accept: string; required?: boolean; hint?: string }) {
   const [picked, setPicked] = useState("");
@@ -47,7 +79,6 @@ export function ApplicationForm({ branches }: { branches: { value: string; label
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [child, setChild] = useState("");
-  const today = new Date().toISOString().slice(0, 10);
 
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -138,7 +169,7 @@ export function ApplicationForm({ branches }: { branches: { value: string; label
         <div className="grid gap-4 sm:grid-cols-2">
           <Field id="first_name" label={a.labels.firstName}><input className="input" id="first_name" name="first_name" required maxLength={60} autoComplete="off" /></Field>
           <Field id="last_name" label={a.labels.lastName}><input className="input" id="last_name" name="last_name" maxLength={60} autoComplete="off" /></Field>
-          <Field id="dob" label={a.labels.dob}><input className="input" id="dob" name="dob" type="date" required max={today} /></Field>
+          <DateOfBirth label={a.labels.dob} day={a.labels.day} month={a.labels.month} year={a.labels.year} months={a.months} />
           <div>
             <span className="label" id="gender-label">{a.labels.gender}</span>
             <div role="radiogroup" aria-labelledby="gender-label" className="flex gap-3">
