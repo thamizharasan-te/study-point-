@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Eye, Inbox, Image as ImageIcon, MapPin, Megaphone, MessageSquareQuote, ChartColumn, FileText, Palette } from "lucide-react";
+import { Eye, Inbox, Image as ImageIcon, MapPin, Megaphone, MessageSquareQuote, ChartColumn, FileText, Palette, ClipboardList } from "lucide-react";
 import { AdminHeading, Card } from "@/components/admin/Layout";
 import { requireAdmin } from "@/lib/admin";
 
 const TILES = [
   { href: "/admin/enquiries", icon: Inbox, title: "Enquiries", text: "See who has contacted you" },
+  { href: "/admin/applications", icon: ClipboardList, title: "Applications", text: "Child admission applications" },
   { href: "/admin/visitors", icon: Eye, title: "Visitors", text: "How many people visit the website" },
   { href: "/admin/gallery", icon: ImageIcon, title: "Gallery", text: "Add or remove photos" },
   { href: "/admin/images", icon: ImageIcon, title: "Main Pictures", text: "Replace the big pictures on the pages" },
