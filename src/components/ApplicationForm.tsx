@@ -4,7 +4,7 @@ import { useRef, useState, type FormEvent } from "react";
 import { FileCheck2, Loader2, Send, Upload } from "lucide-react";
 import { MAX_FILE_BYTES, MAX_TOTAL_BYTES } from "@/lib/application";
 import { fmt } from "@/lib/i18n";
-import { shrinkImage } from "@/lib/shrink-image";
+import { compressToFit } from "@/lib/shrink-image";
 import { useLang } from "./LangProvider";
 
 type Status = "idle" | "sending" | "done" | "error";
@@ -41,7 +41,8 @@ function FilePick({ name, label, accept, required, hint }: { name: string; label
 /** Admission application with the child's photo and birth certificate. Photos are shrunk in the browser first. */
 export function ApplicationForm({ branches }: { branches: { value: string; label: string }[] }) {
   const { lang, t } = useLang();
-  const a = t.apply;
+  const a_ = t.apply;
+  const a = a_;
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
@@ -56,26 +57,27 @@ export function ApplicationForm({ branches }: { branches: { value: string; label
     try {
       const fd = new FormData(form);
       fd.set("lang", lang);
-      // Shrink pictures here so the upload is small and quick (PDFs are sent as they are).
+      // Pictures of ANY size are squeezed here until they fit (about 700 KB each), so the upload is small and
+      // quick. PDFs are sent as they are (they cannot be shrunk in the browser), up to 2 MB.
       let total = 0;
-      for (const key of ["photo", "birth_cert", "other_doc"]) {
+      for (const key of ["photo", "birth_cert"]) {
         const f = fd.get(key);
         if (!(f instanceof File) || f.size === 0) { fd.delete(key); continue; }
-        if (f.type.startsWith("image/")) {
-          const { blob, ext } = await shrinkImage(f);
-          fd.set(key, blob, `${key}.${ext}`);
-          total += blob.size;
-          if (blob.size > MAX_FILE_BYTES) throw new Error(a.errors.tooBig);
-        } else {
+        if (f.type === "application/pdf") {
+          if (f.size > MAX_FILE_BYTES) throw new Error(a_.errors.pdfTooBig);
           total += f.size;
-          if (f.size > MAX_FILE_BYTES) throw new Error(a.errors.tooBig);
+        } else {
+          const out = await compressToFit(f, 700 * 1024);
+          if (!out) throw new Error(a_.errors.notPicture);
+          fd.set(key, out.blob, `${key}.${out.ext}`);
+          total += out.blob.size;
         }
       }
-      if (total > MAX_TOTAL_BYTES) throw new Error(a.errors.tooBig);
+      if (total > MAX_TOTAL_BYTES) throw new Error(a_.errors.tooBig);
       const res = await fetch("/api/application", { method: "POST", body: fd });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json.error || a.errors.generic);
-      setChild(String(fd.get("child_name") ?? ""));
+      setChild(`${fd.get("first_name") ?? ""} ${fd.get("last_name") ?? ""}`.trim());
       form.reset();
       setStatus("done");
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -95,27 +97,25 @@ export function ApplicationForm({ branches }: { branches: { value: string; label
     );
   }
 
+  const parentFields = (who: "mother" | "father") => (
+    <>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field id={`${who}_name`} label={a.labels.name}><input className="input" id={`${who}_name`} name={`${who}_name`} maxLength={100} autoComplete="off" /></Field>
+        <Field id={`${who}_phone`} label={a.labels.phone}><input className="input" id={`${who}_phone`} name={`${who}_phone`} type="tel" inputMode="tel" maxLength={30} placeholder="07X XXX XXXX" /></Field>
+        <Field id={`${who}_occupation`} label={a.labels.occupation}><input className="input" id={`${who}_occupation`} name={`${who}_occupation`} maxLength={100} /></Field>
+        <Field id={`${who}_office_phone`} label={a.labels.officePhone}><input className="input" id={`${who}_office_phone`} name={`${who}_office_phone`} type="tel" inputMode="tel" maxLength={30} /></Field>
+        <Field id={`${who}_email`} label={a.labels.email}><input className="input" id={`${who}_email`} name={`${who}_email`} type="email" maxLength={120} /></Field>
+      </div>
+      <Field id={`${who}_address`} label={a.labels.address}><textarea className="input" id={`${who}_address`} name={`${who}_address`} rows={2} maxLength={300} /></Field>
+    </>
+  );
+
   return (
     <form ref={formRef} onSubmit={submit} className="space-y-5" encType="multipart/form-data">
       {/* Honeypot: hidden from people, tempting to bots. Must stay empty. */}
       <div className="sr-only-field" aria-hidden="true">
         <label>Website<input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
       </div>
-
-      <Section title={a.sections.child}>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field id="child_name" label={a.labels.childName}><input className="input" id="child_name" name="child_name" required minLength={2} maxLength={100} autoComplete="off" /></Field>
-          <Field id="child_dob" label={a.labels.dob}><input className="input" id="child_dob" name="child_dob" type="date" required max={today} /></Field>
-          <Field id="child_gender" label={a.labels.gender}>
-            <select className="input" id="child_gender" name="child_gender" defaultValue="">
-              <option value="">{a.labels.choose}</option>
-              {["Boy", "Girl", "Prefer not to say"].map((v, i) => <option key={v} value={v}>{a.genders[i]}</option>)}
-            </select>
-          </Field>
-          <Field id="previous_school" label={a.labels.previousSchool}><input className="input" id="previous_school" name="previous_school" maxLength={120} /></Field>
-        </div>
-        <Field id="health_notes" label={a.labels.health}><textarea className="input" id="health_notes" name="health_notes" rows={2} maxLength={1000} /></Field>
-      </Section>
 
       <Section title={a.sections.programme}>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -134,45 +134,44 @@ export function ApplicationForm({ branches }: { branches: { value: string; label
         </div>
       </Section>
 
-      <Section title={a.sections.parent}>
+      <Section title={a.sections.child}>
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field id="parent_name" label={a.labels.parentName}><input className="input" id="parent_name" name="parent_name" required minLength={2} maxLength={100} autoComplete="name" /></Field>
-          <Field id="relationship" label={a.labels.relationship}>
-            <select className="input" id="relationship" name="relationship" defaultValue="">
-              <option value="">{a.labels.choose}</option>
-              {["Mother", "Father", "Guardian", "Other"].map((v, i) => <option key={v} value={v}>{a.relationships[i]}</option>)}
-            </select>
-          </Field>
-          <Field id="phone" label={a.labels.phone}><input className="input" id="phone" name="phone" type="tel" inputMode="tel" required maxLength={30} autoComplete="tel" placeholder="07X XXX XXXX" /></Field>
-          <Field id="whatsapp" label={a.labels.whatsapp}><input className="input" id="whatsapp" name="whatsapp" type="tel" inputMode="tel" maxLength={30} placeholder="07X XXX XXXX" /></Field>
-          <Field id="email" label={a.labels.email}><input className="input" id="email" name="email" type="email" maxLength={120} autoComplete="email" /></Field>
+          <Field id="first_name" label={a.labels.firstName}><input className="input" id="first_name" name="first_name" required maxLength={60} autoComplete="off" /></Field>
+          <Field id="last_name" label={a.labels.lastName}><input className="input" id="last_name" name="last_name" maxLength={60} autoComplete="off" /></Field>
+          <Field id="dob" label={a.labels.dob}><input className="input" id="dob" name="dob" type="date" required max={today} /></Field>
+          <div>
+            <span className="label" id="gender-label">{a.labels.gender}</span>
+            <div role="radiogroup" aria-labelledby="gender-label" className="flex gap-3">
+              {["Male", "Female"].map((v, i) => (
+                <label key={v} className="flex min-h-12 flex-1 cursor-pointer items-center gap-2 rounded-xl border border-gray-300 bg-white px-4 font-semibold text-brand-navy has-[:checked]:border-brand-green has-[:checked]:bg-brand-green-soft">
+                  <input type="radio" name="gender" value={v} required className="h-5 w-5 accent-brand-green" /> {a.genders[i]}
+                </label>
+              ))}
+            </div>
+          </div>
+          <Field id="gs_division" label={a.labels.gs}><input className="input" id="gs_division" name="gs_division" maxLength={100} /></Field>
+          <Field id="school" label={a.labels.school}><input className="input" id="school" name="school" maxLength={120} /></Field>
         </div>
-        <Field id="address" label={a.labels.address}><textarea className="input" id="address" name="address" rows={2} maxLength={300} autoComplete="street-address" /></Field>
       </Section>
 
+      <p className="rounded-xl bg-brand-navy-soft px-4 py-2 text-sm font-semibold text-brand-navy">{a.parentsNote}</p>
+      <Section title={a.sections.mother}>{parentFields("mother")}</Section>
+      <Section title={a.sections.father}>{parentFields("father")}</Section>
+
       <Section title={a.sections.emergency}>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field id="emergency_name" label={a.labels.emergencyName}><input className="input" id="emergency_name" name="emergency_name" maxLength={100} /></Field>
-          <Field id="emergency_phone" label={a.labels.emergencyPhone}><input className="input" id="emergency_phone" name="emergency_phone" type="tel" inputMode="tel" maxLength={30} /></Field>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field id="emergency_name" label={a.labels.emergencyName}><input className="input" id="emergency_name" name="emergency_name" required maxLength={100} /></Field>
+          <Field id="emergency_relationship" label={a.labels.relationship}><input className="input" id="emergency_relationship" name="emergency_relationship" maxLength={60} /></Field>
+          <Field id="emergency_phone" label={a.labels.emergencyPhone}><input className="input" id="emergency_phone" name="emergency_phone" type="tel" inputMode="tel" required maxLength={30} /></Field>
         </div>
       </Section>
 
       <Section title={a.sections.documents}>
         <p className="text-sm text-gray-600">{a.fileHelp}</p>
         <div className="grid gap-4 sm:grid-cols-2">
-          <FilePick name="photo" label={a.labels.photo} accept="image/jpeg,image/png,image/webp" required hint={a.labels.choose} />
-          <FilePick name="birth_cert" label={a.labels.birthCert} accept="image/jpeg,image/png,image/webp,application/pdf" required hint={a.labels.choose} />
-          <FilePick name="other_doc" label={a.labels.otherDoc} accept="image/jpeg,image/png,image/webp,application/pdf" hint={a.labels.choose} />
+          <FilePick name="photo" label={a.labels.photo} accept="image/*" required hint={a.labels.choose} />
+          <FilePick name="birth_cert" label={a.labels.birthCert} accept="image/*,application/pdf" hint={a.labels.choose} />
         </div>
-      </Section>
-
-      <Section title={a.sections.more}>
-        <Field id="how_heard" label={a.labels.howHeard}>
-          <select className="input" id="how_heard" name="how_heard" defaultValue="">
-            <option value="">{a.labels.choose}</option>
-            {["Facebook", "Instagram", "TikTok", "Friend or family", "Passing by", "Other"].map((v, i) => <option key={v} value={v}>{a.heardOptions[i]}</option>)}
-          </select>
-        </Field>
         <label className="flex items-start gap-3 rounded-xl bg-brand-cream p-3 text-sm text-brand-ink">
           <input type="checkbox" name="consent" required className="mt-0.5 h-5 w-5 shrink-0 accent-brand-green" />
           <span>{a.consent}</span>

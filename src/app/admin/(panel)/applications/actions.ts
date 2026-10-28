@@ -23,12 +23,22 @@ export async function saveApplicationNote(fd: FormData) {
   back(PATH, { saved: "Note saved." });
 }
 
+/** Office-use boxes from the paper form: date of admission and admission number. */
+export async function saveOfficeUse(fd: FormData) {
+  const { supabase } = await requireAdmin();
+  const date = field(fd, "admission_date");
+  if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) back(PATH, { error: "Please enter a valid date." });
+  const { error } = await supabase.from("applications").update({ admission_date: date || null, admission_no: field(fd, "admission_no").slice(0, 40) || null }).eq("id", field(fd, "id"));
+  if (error) back(PATH, { error: "Could not save. Please try again." });
+  back(PATH, { saved: "Admission details saved." });
+}
+
 /** Deletes the application and its documents. */
 export async function deleteApplication(fd: FormData) {
   const { supabase } = await requireAdmin();
   const id = field(fd, "id");
-  const { data } = await supabase.from("applications").select("photo_path,birth_cert_path,other_doc_path").eq("id", id).maybeSingle();
-  const files = [data?.photo_path, data?.birth_cert_path, data?.other_doc_path].filter((p): p is string => Boolean(p));
+  const { data } = await supabase.from("applications").select("photo_path,birth_cert_path").eq("id", id).maybeSingle();
+  const files = [data?.photo_path, data?.birth_cert_path].filter((p): p is string => Boolean(p));
   if (files.length) await supabase.storage.from("applications").remove(files);
   const { error } = await supabase.from("applications").delete().eq("id", id);
   if (error) back(PATH, { error: "Could not delete. Please try again." });
