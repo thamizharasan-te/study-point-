@@ -4,7 +4,7 @@ import { useRef, useState, type FormEvent } from "react";
 import { FileCheck2, Loader2, Send, Upload } from "lucide-react";
 import { MAX_FILE_BYTES, MAX_TOTAL_BYTES } from "@/lib/application";
 import { fmt } from "@/lib/i18n";
-import { shrinkImage } from "@/lib/shrink-image";
+import { compressToFit } from "@/lib/shrink-image";
 import { useLang } from "./LangProvider";
 
 type Status = "idle" | "sending" | "done" | "error";
@@ -41,7 +41,8 @@ function FilePick({ name, label, accept, required, hint }: { name: string; label
 /** Admission application with the child's photo and birth certificate. Photos are shrunk in the browser first. */
 export function ApplicationForm({ branches }: { branches: { value: string; label: string }[] }) {
   const { lang, t } = useLang();
-  const a = t.apply;
+  const a_ = t.apply;
+  const a = a_;
   const formRef = useRef<HTMLFormElement>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
@@ -56,22 +57,23 @@ export function ApplicationForm({ branches }: { branches: { value: string; label
     try {
       const fd = new FormData(form);
       fd.set("lang", lang);
-      // Shrink pictures here so the upload is small and quick (PDFs are sent as they are).
+      // Pictures of ANY size are squeezed here until they fit (about 700 KB each), so the upload is small and
+      // quick. PDFs are sent as they are (they cannot be shrunk in the browser), up to 2 MB.
       let total = 0;
       for (const key of ["photo", "birth_cert"]) {
         const f = fd.get(key);
         if (!(f instanceof File) || f.size === 0) { fd.delete(key); continue; }
-        if (f.type.startsWith("image/")) {
-          const { blob, ext } = await shrinkImage(f);
-          fd.set(key, blob, `${key}.${ext}`);
-          total += blob.size;
-          if (blob.size > MAX_FILE_BYTES) throw new Error(a.errors.tooBig);
-        } else {
+        if (f.type === "application/pdf") {
+          if (f.size > MAX_FILE_BYTES) throw new Error(a_.errors.pdfTooBig);
           total += f.size;
-          if (f.size > MAX_FILE_BYTES) throw new Error(a.errors.tooBig);
+        } else {
+          const out = await compressToFit(f, 700 * 1024);
+          if (!out) throw new Error(a_.errors.notPicture);
+          fd.set(key, out.blob, `${key}.${out.ext}`);
+          total += out.blob.size;
         }
       }
-      if (total > MAX_TOTAL_BYTES) throw new Error(a.errors.tooBig);
+      if (total > MAX_TOTAL_BYTES) throw new Error(a_.errors.tooBig);
       const res = await fetch("/api/application", { method: "POST", body: fd });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json.error || a.errors.generic);
@@ -167,8 +169,8 @@ export function ApplicationForm({ branches }: { branches: { value: string; label
       <Section title={a.sections.documents}>
         <p className="text-sm text-gray-600">{a.fileHelp}</p>
         <div className="grid gap-4 sm:grid-cols-2">
-          <FilePick name="photo" label={a.labels.photo} accept="image/jpeg,image/png,image/webp" required hint={a.labels.choose} />
-          <FilePick name="birth_cert" label={a.labels.birthCert} accept="image/jpeg,image/png,image/webp,application/pdf" hint={a.labels.choose} />
+          <FilePick name="photo" label={a.labels.photo} accept="image/*" required hint={a.labels.choose} />
+          <FilePick name="birth_cert" label={a.labels.birthCert} accept="image/*,application/pdf" hint={a.labels.choose} />
         </div>
         <label className="flex items-start gap-3 rounded-xl bg-brand-cream p-3 text-sm text-brand-ink">
           <input type="checkbox" name="consent" required className="mt-0.5 h-5 w-5 shrink-0 accent-brand-green" />
