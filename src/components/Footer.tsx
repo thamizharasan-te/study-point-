@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Clock, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, MapPin, Phone } from "lucide-react";
+import { WhatsAppIcon } from "./BrandIcons";
 import { fmt, getDict, localePath, type Lang } from "@/lib/i18n";
 import type { Branch, Social } from "@/lib/types";
 import { telLink, whatsAppLink } from "@/lib/utils";
@@ -21,7 +22,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
           <p className="max-w-xs text-sm text-white/80">{t.footer.about}</p>
           {branches[0]?.phones[0] && (
             <a href={telLink(branches[0].phones[0])} className="flex items-center gap-2 text-xl font-bold hover:underline">
-              <MessageCircle className="h-6 w-6 text-[#25d366]" aria-hidden />{branches[0].phones[0]}
+              <WhatsAppIcon className="h-6 w-6 text-[#25d366]" />{branches[0].phones[0]}
             </a>
           )}
           <SocialLinks social={social} tone="color" lang={lang} />
@@ -60,7 +61,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
                     aria-label={`${t.branch.whatsapp} — ${fmt(t.whatsapp.chatWith, { name: b.display_name ?? b.name })}`}
                     className="mt-1 inline-flex items-center gap-2 rounded-full bg-brand-green px-4 py-2 text-sm font-bold text-white hover:bg-brand-green-dark"
                   >
-                    <MessageCircle className="h-4 w-4" aria-hidden />
+                    <WhatsAppIcon className="h-4 w-4" />
                     {t.branch.whatsapp}
                   </a>
                 )}

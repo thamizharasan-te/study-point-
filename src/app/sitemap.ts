@@ -4,7 +4,7 @@ import { SITE_URL } from "@/lib/utils";
 
 /** Every page in English and Tamil, each pointing at its translation (hreflang). */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const paths = ["/", "/about", "/nursery", "/classes", "/gallery", "/contact"];
+  const paths = ["/", "/about", "/nursery", "/classes", "/gallery", "/contact", "/apply"];
   return paths.flatMap((p) =>
     (["en", "ta"] as const).map((lang) => ({
       url: `${SITE_URL}${localePath(lang, p) === "/" ? "" : localePath(lang, p)}`,

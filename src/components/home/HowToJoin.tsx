@@ -1,5 +1,6 @@
+import Link from "next/link";
 import { ClipboardList, GraduationCap, MessageCircle, School } from "lucide-react";
-import { fmt, getDict, type Lang } from "@/lib/i18n";
+import { fmt, getDict, localePath, type Lang } from "@/lib/i18n";
 import { EnquireButton } from "../EnquireButton";
 
 // General steps only — no fees, dates or promises. Review wording with the client.
@@ -34,7 +35,10 @@ export function HowToJoin({ lang }: { lang: Lang }) {
           );
         })}
       </ol>
-      <div className="mt-7 text-center"><EnquireButton /></div>
+      <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+        <Link href={localePath(lang, "/apply")} className="btn-green">{t.join.applyNow}</Link>
+        <EnquireButton />
+      </div>
     </section>
   );
 }

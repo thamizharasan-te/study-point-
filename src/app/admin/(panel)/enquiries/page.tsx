@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MessageCircle, Phone, Trash2 } from "lucide-react";
+import { Phone, Trash2 } from "lucide-react";
+import { WhatsAppIcon } from "@/components/BrandIcons";
 import clsx from "clsx";
 import { AdminHeading, Card, Notice } from "@/components/admin/Layout";
 import { ConfirmButton, SubmitButton } from "@/components/admin/ui";
@@ -76,7 +77,7 @@ export default async function EnquiriesPage({ searchParams }: { searchParams: Pr
 
                 <div className="mt-4 flex flex-wrap items-center gap-2">
                   <a href={whatsAppLink(e.phone, msg)} target="_blank" rel="noopener noreferrer" className="btn-green">
-                    <MessageCircle className="h-4 w-4" aria-hidden /> Open WhatsApp chat
+                    <WhatsAppIcon className="h-4 w-4" /> Open WhatsApp chat
                   </a>
                   <a href={telLink(e.phone)} className="btn-outline"><Phone className="h-4 w-4" aria-hidden /> Call</a>
                 </div>

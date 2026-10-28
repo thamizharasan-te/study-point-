@@ -1,4 +1,5 @@
-import { Clock, ExternalLink, MapPin, MessageCircle, Phone } from "lucide-react";
+import { Clock, ExternalLink, MapPin, Phone } from "lucide-react";
+import { WhatsAppIcon } from "./BrandIcons";
 import { fmt, getDict, type Lang } from "@/lib/i18n";
 import type { Branch } from "@/lib/types";
 import { telLink, whatsAppLink } from "@/lib/utils";
@@ -33,7 +34,7 @@ export function BranchCard({ branch: b, lang }: { branch: Branch; lang: Lang }) 
         <div className="flex flex-wrap gap-2 pt-1">
           {b.whatsapp && (
             <a href={whatsAppLink(b.whatsapp, t.whatsapp.message)} target="_blank" rel="noopener noreferrer" className="btn-green">
-              <MessageCircle className="h-4 w-4" aria-hidden /> {t.branch.whatsapp}
+              <WhatsAppIcon className="h-4 w-4" /> {t.branch.whatsapp}
             </a>
           )}
           <a href={linkToMap} target="_blank" rel="noopener noreferrer" className="btn-outline">

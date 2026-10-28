@@ -16,7 +16,7 @@ import { getTheme, themeCss } from "@/lib/themes";
 // Public pages are cached and refreshed at most once a minute.
 export const revalidate = 60;
 // Only /en (shown without a prefix) and /ta exist.
-export const dynamicParams = false;
+export const dynamicParams = true; // unknown languages are rejected by isLang() / notFound() in the layout and pages
 export const generateStaticParams = () => LANGS.map((lang) => ({ lang }));
 
 /** Frame shared by every public page: announcements, header, footer, WhatsApp button. */

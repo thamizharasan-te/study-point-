@@ -27,6 +27,38 @@ create table if not exists public.enquiries (
 create index if not exists enquiries_status_created_idx on public.enquiries (status, created_at desc);
 create index if not exists enquiries_ip_created_idx on public.enquiries (ip_hash, created_at);
 
+-- Admission applications (the "Apply" form). Contains children's details, so only admins can read it
+-- (policies.sql) and the documents live in a PRIVATE storage bucket (storage.sql).
+create table if not exists public.applications (
+  id              uuid primary key default gen_random_uuid(),
+  created_at      timestamptz not null default now(),
+  status          text not null default 'new' check (status in ('new', 'contacted', 'accepted', 'declined')),
+  program         text not null default '',
+  branch          text,
+  child_name      text not null check (char_length(child_name) between 2 and 100),
+  child_dob       date,
+  child_gender    text,
+  previous_school text,
+  health_notes    text check (char_length(health_notes) <= 1000),
+  parent_name     text not null check (char_length(parent_name) between 2 and 100),
+  relationship    text,
+  phone           text not null check (char_length(phone) between 7 and 30),
+  whatsapp        text,
+  email           text,
+  address         text,
+  emergency_name  text,
+  emergency_phone text,
+  how_heard       text,
+  photo_path      text,  -- file in the private "applications" bucket
+  birth_cert_path text,
+  other_doc_path  text,
+  consent         boolean not null default false,
+  admin_note      text check (char_length(admin_note) <= 1000),
+  ip_hash         text   -- salted hash of the sender's IP, used only for rate limiting
+);
+create index if not exists applications_status_created_idx on public.applications (status, created_at desc);
+create index if not exists applications_ip_created_idx on public.applications (ip_hash, created_at);
+
 -- Gallery photos. image_url is the public URL; storage_path is the file in the
 -- "gallery" bucket (null for built-in sample images).
 create table if not exists public.gallery_items (

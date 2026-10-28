@@ -1,5 +1,6 @@
 import { getDict, fmt, type Lang } from "@/lib/i18n";
 import type { Social } from "@/lib/types";
+import { BrandIcon } from "../BrandIcons";
 import { BRAND, ICONS } from "../SocialLinks";
 
 const NAMES = { facebook: "Facebook", instagram: "Instagram", youtube: "YouTube", tiktok: "TikTok" } as const;
@@ -26,7 +27,7 @@ export function UpdatesBand({ social, lang }: { social: Social; lang: Lang }) {
                 className="flex min-h-12 items-center gap-3 rounded-full bg-white py-2 pl-2 pr-5 font-bold text-brand-navy shadow-md transition-transform hover:-translate-y-0.5"
               >
                 <span className={`flex h-9 w-9 items-center justify-center rounded-full text-white ${BRAND[k]}`}>
-                  <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden="true">{ICONS[k]}</svg>
+                  <BrandIcon name={k} className="h-5 w-5" />
                 </span>
                 {NAMES[k]}
               </a>

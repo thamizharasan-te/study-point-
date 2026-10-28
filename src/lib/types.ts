@@ -90,7 +90,7 @@ export interface HeroContent {
 /** The main pictures that can be replaced from /admin → Main Pictures. */
 export type ImageSlot = "hero" | "nursery" | "classes" | "why" | "about" | "logo" | "logoFull";
 /** Picture addresses per slot. `theme` (the colour theme id) is kept in the same stored block so no database change is needed. */
-export type SiteImages = Partial<Record<ImageSlot, string>> & { theme?: string };
+export type SiteImages = Partial<Record<ImageSlot, string>> & { theme?: string; applicationPdf?: string };
 
 export interface Social {
   facebook: string;
@@ -113,4 +113,33 @@ export interface SiteData {
   gallery: GalleryItem[];
   branches: Branch[];
   announcements: Announcement[];
+}
+
+export type ApplicationStatus = "new" | "contacted" | "accepted" | "declined";
+
+export interface Application {
+  id: string;
+  created_at: string;
+  status: ApplicationStatus;
+  program: string;
+  branch: string | null;
+  child_name: string;
+  child_dob: string | null;
+  child_gender: string | null;
+  previous_school: string | null;
+  health_notes: string | null;
+  parent_name: string;
+  relationship: string | null;
+  phone: string;
+  whatsapp: string | null;
+  email: string | null;
+  address: string | null;
+  emergency_name: string | null;
+  emergency_phone: string | null;
+  how_heard: string | null;
+  photo_path: string | null;
+  birth_cert_path: string | null;
+  other_doc_path: string | null;
+  consent: boolean;
+  admin_note: string | null;
 }

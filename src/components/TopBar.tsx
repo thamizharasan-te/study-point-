@@ -1,4 +1,5 @@
-import { MessageCircle, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
+import { WhatsAppIcon } from "./BrandIcons";
 import { getDict, type Lang } from "@/lib/i18n";
 import type { Branch } from "@/lib/types";
 import { telLink, whatsAppLink } from "@/lib/utils";
@@ -19,7 +20,7 @@ export function TopBar({ branches, lang }: { branches: Branch[]; lang: Lang }) {
           </span>
           {wa && (
             <a href={whatsAppLink(wa, t.whatsapp.message)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:underline">
-              <MessageCircle className="h-4 w-4" aria-hidden /> {t.topbar.whatsapp}
+              <WhatsAppIcon className="h-4 w-4" /> {t.topbar.whatsapp}
             </a>
           )}
         </p>

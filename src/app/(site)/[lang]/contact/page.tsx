@@ -32,7 +32,7 @@ export default async function ContactPage({ params }: Props) {
         {hasSocial && (
           <div className="flex flex-col items-center gap-2">
             <p className="text-sm font-bold text-brand-navy">{p.follow}</p>
-            <SocialLinks social={social} tone="dark" lang={lang} />
+            <SocialLinks social={social} tone="color" lang={lang} />
           </div>
         )}
       </PageHero>

@@ -32,6 +32,14 @@ create policy "admin enquiries" on public.enquiries
   using (public.is_admin()) with check (public.is_admin());
 revoke all on public.enquiries from anon;
 
+-- applications: admins only (children's details). No anon policy = no public access.
+alter table public.applications enable row level security;
+drop policy if exists "admin applications" on public.applications;
+create policy "admin applications" on public.applications
+  for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());
+revoke all on public.applications from anon;
+
 -- Public read + admin write, one table at a time.
 drop policy if exists "public read" on public.gallery_items;
 create policy "public read" on public.gallery_items for select to anon, authenticated using (true);
