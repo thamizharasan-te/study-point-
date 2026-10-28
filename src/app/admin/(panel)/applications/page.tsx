@@ -9,7 +9,7 @@ import { ConfirmButton, SubmitButton } from "@/components/admin/ui";
 import { requireAdmin } from "@/lib/admin";
 import type { Application, ApplicationStatus, SiteImages } from "@/lib/types";
 import { telLink, whatsAppLink } from "@/lib/utils";
-import { deleteApplication, removeApplicationPdf, saveApplicationNote, setApplicationStatus } from "./actions";
+import { deleteApplication, removeApplicationPdf, saveApplicationNote, saveOfficeUse, setApplicationStatus } from "./actions";
 
 export const metadata: Metadata = { title: "Applications" };
 
@@ -94,45 +94,53 @@ export default async function ApplicationsPage({ searchParams }: { searchParams:
 
       <ul className="space-y-3">
         {rows.map((a) => {
-          const wa = a.whatsapp || a.phone;
-          const msg = `Hello ${a.parent_name}, this is Study Point. Thank you for the application for ${a.child_name}.`;
+          const contact = a.mother_phone || a.father_phone || a.emergency_phone || "";
+          const who = a.mother_name || a.father_name || "parent";
+          const msg = `Hello ${who}, this is Study Point. Thank you for the application for ${a.child_name}.`;
           const docs = [
-            { label: "Child’s photo", href: fileLink(a.photo_path) },
+            { label: "Student’s photo", href: fileLink(a.photo_path) },
             { label: "Birth certificate", href: fileLink(a.birth_cert_path) },
-            { label: "Other document", href: fileLink(a.other_doc_path) },
           ].filter((d) => d.href);
+          const parentBox = (title: string, p: { name: string | null; address: string | null; phone: string | null; occupation: string | null; office: string | null; email: string | null }) => (
+            <dl className="space-y-1">
+              <h3 className="font-bold text-brand-green-dark">{title}</h3>
+              <Row k="Name" v={p.name} />
+              {p.phone && <div><dt className="inline font-semibold">Contact no.: </dt><dd className="inline"><a href={telLink(p.phone)} className="text-brand-navy underline">{p.phone}</a></dd></div>}
+              <Row k="Occupation" v={p.occupation} />
+              <Row k="Office contact no." v={p.office} />
+              <Row k="Email" v={p.email} />
+              <Row k="Address" v={p.address} />
+            </dl>
+          );
           return (
             <li key={a.id}>
               <Card className="[overflow-wrap:anywhere]">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <h2 className="text-lg font-bold text-brand-navy">{a.child_name}</h2>
-                    <p className="text-xs text-gray-500">{new Date(a.created_at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Colombo" })}</p>
+                    <p className="text-xs text-gray-500">{new Date(a.created_at).toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short", timeZone: "Asia/Colombo" })}{a.admission_no ? ` · Admission No ${a.admission_no}` : ""}</p>
                   </div>
                   <span className={clsx("rounded-full px-3 py-1 text-xs font-bold uppercase", BADGE[a.status])}>{LABEL[a.status]}</span>
                 </div>
 
                 <div className="mt-3 grid gap-4 text-sm sm:grid-cols-2">
                   <dl className="space-y-1">
-                    <h3 className="font-bold text-brand-green-dark">Child</h3>
+                    <h3 className="font-bold text-brand-green-dark">Student</h3>
+                    <Row k="Course name" v={a.program} />
+                    <Row k="Branch" v={a.branch} />
                     <Row k="Date of birth" v={a.child_dob ? `${a.child_dob} (${age(a.child_dob)})` : null} />
                     <Row k="Gender" v={a.child_gender} />
-                    <Row k="Applying for" v={a.program} />
-                    <Row k="Branch" v={a.branch} />
-                    <Row k="Previous school" v={a.previous_school} />
-                    <Row k="Health notes" v={a.health_notes} />
+                    <Row k="G.S. Division" v={a.gs_division} />
+                    <Row k="School name" v={a.previous_school} />
                   </dl>
                   <dl className="space-y-1">
-                    <h3 className="font-bold text-brand-green-dark">Parent / guardian</h3>
-                    <Row k="Name" v={a.parent_name} />
-                    <Row k="Relationship" v={a.relationship} />
-                    <div><dt className="inline font-semibold">Phone: </dt><dd className="inline"><a href={telLink(a.phone)} className="text-brand-navy underline">{a.phone}</a></dd></div>
-                    <Row k="WhatsApp" v={a.whatsapp} />
-                    <Row k="Email" v={a.email} />
-                    <Row k="Address" v={a.address} />
-                    <Row k="Emergency contact" v={[a.emergency_name, a.emergency_phone].filter(Boolean).join(" · ")} />
-                    <Row k="Heard about us" v={a.how_heard} />
+                    <h3 className="font-bold text-brand-green-dark">Emergency contact</h3>
+                    <Row k="Name" v={a.emergency_name} />
+                    <Row k="Relationship" v={a.emergency_relationship} />
+                    {a.emergency_phone && <div><dt className="inline font-semibold">Contact no.: </dt><dd className="inline"><a href={telLink(a.emergency_phone)} className="text-brand-navy underline">{a.emergency_phone}</a></dd></div>}
                   </dl>
+                  {parentBox("Mother", { name: a.mother_name, address: a.mother_address, phone: a.mother_phone, occupation: a.mother_occupation, office: a.mother_office_phone, email: a.mother_email })}
+                  {parentBox("Father", { name: a.father_name, address: a.father_address, phone: a.father_phone, occupation: a.father_occupation, office: a.father_office_phone, email: a.father_email })}
                 </div>
 
                 {docs.length > 0 && (
@@ -144,9 +152,22 @@ export default async function ApplicationsPage({ searchParams }: { searchParams:
                 )}
 
                 <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <a href={whatsAppLink(wa, msg)} target="_blank" rel="noopener noreferrer" className="btn-green"><WhatsAppIcon className="h-4 w-4" /> Open WhatsApp chat</a>
-                  <a href={telLink(a.phone)} className="btn-outline"><Phone className="h-4 w-4" aria-hidden /> Call</a>
+                  {contact && <a href={whatsAppLink(contact, msg)} target="_blank" rel="noopener noreferrer" className="btn-green"><WhatsAppIcon className="h-4 w-4" /> Open WhatsApp chat</a>}
+                  {contact && <a href={telLink(contact)} className="btn-outline"><Phone className="h-4 w-4" aria-hidden /> Call</a>}
                 </div>
+
+                <form action={saveOfficeUse} className="mt-3 grid gap-2 rounded-xl bg-brand-cream p-3 sm:grid-cols-[1fr_1fr_auto] sm:items-end">
+                  <input type="hidden" name="id" value={a.id} />
+                  <div>
+                    <label className="label" htmlFor={`ad-${a.id}`}>Date of admission (office use)</label>
+                    <input id={`ad-${a.id}`} name="admission_date" type="date" defaultValue={a.admission_date ?? ""} className="input" />
+                  </div>
+                  <div>
+                    <label className="label" htmlFor={`an-${a.id}`}>Admission No (office use)</label>
+                    <input id={`an-${a.id}`} name="admission_no" defaultValue={a.admission_no ?? ""} maxLength={40} className="input" />
+                  </div>
+                  <SubmitButton className="btn-outline !min-h-10" pendingText="…">Save</SubmitButton>
+                </form>
 
                 <form action={saveApplicationNote} className="mt-3 flex flex-wrap items-end gap-2">
                   <input type="hidden" name="id" value={a.id} />
