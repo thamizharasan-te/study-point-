@@ -42,7 +42,7 @@ export default async function ApplyPage({ params }: Props) {
           )}
           <div className="rounded-3xl bg-white p-5 shadow-card sm:p-8">
             <h2 id="apply-heading" className="text-2xl font-extrabold text-brand-navy">{a.formTitle}</h2>
-            <p className="mb-5 mt-1 text-gray-600">{a.formText}</p>
+            <p className="mb-5 mt-1 text-gray-600">{a.formText.split("*").map((part, i, all) => (i < all.length - 1 ? <span key={i}>{part}<span className="font-bold text-red-600">*</span></span> : part))}</p>
             <ApplicationForm branches={options} />
           </div>
         </div>
