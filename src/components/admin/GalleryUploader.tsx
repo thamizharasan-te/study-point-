@@ -6,7 +6,7 @@ import { CheckCircle2, ImagePlus, Loader2, Upload, X, XCircle } from "lucide-rea
 import { GALLERY_ALBUMS } from "@/lib/defaults";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { addGalleryItems } from "@/app/admin/(panel)/gallery/actions";
-import { MAX_UPLOAD_BYTES, shrinkImage } from "@/lib/shrink-image";
+import { compressToFit } from "@/lib/shrink-image";
 
 type Status = "waiting" | "uploading" | "done" | "error";
 type Entry = { id: string; file: File; preview: string; status: Status; error?: string; url?: string; path?: string };
@@ -73,8 +73,10 @@ export function GalleryUploader() {
         const entry = todo[next++];
         patch(entry.id, { status: "uploading", error: undefined });
         try {
-          const { blob, ext } = await shrinkImage(entry.file, 4 / 3);
-          if (blob.size > MAX_UPLOAD_BYTES) throw new Error("Too large (max 5 MB)");
+          // Any size is fine: each photo is cropped to 4:3 and compressed until it is about 1 MB or less.
+          const out = await compressToFit(entry.file, 1024 * 1024, 4 / 3, [1600, 1400, 1200, 1000, 800]);
+          if (!out) throw new Error("Not a picture this browser can open");
+          const { blob, ext } = out;
           const path = `${folder}/${crypto.randomUUID()}.${ext}`;
           const { error } = await supabase.storage.from("gallery").upload(path, blob, { contentType: blob.type || "image/jpeg", cacheControl: "31536000" });
           if (error) throw new Error(error.message);

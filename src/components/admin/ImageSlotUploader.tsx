@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Loader2, Upload } from "lucide-react";
-import { MAX_UPLOAD_BYTES, shrinkImage } from "@/lib/shrink-image";
+import { compressToFit } from "@/lib/shrink-image";
 import { createBrowserSupabase } from "@/lib/supabase/browser";
 import { IMAGE_SLOTS } from "@/lib/defaults";
 import type { ImageSlot } from "@/lib/types";
@@ -21,8 +21,11 @@ export function ImageSlotUploader({ slot }: { slot: string }) {
     setMessage(null);
     try {
       if (!file.type.startsWith("image/")) throw new Error("Please choose a picture file.");
-      const { blob, ext } = await shrinkImage(file, slot.startsWith("logo") ? undefined : IMAGE_SLOTS[slot as ImageSlot].width / IMAGE_SLOTS[slot as ImageSlot].height);
-      if (blob.size > MAX_UPLOAD_BYTES) throw new Error("That picture is too large (max 5 MB).");
+      // Any size is fine: cropped to the picture's shape and compressed until it is about 1.5 MB or less.
+      const ratio = slot.startsWith("logo") ? undefined : IMAGE_SLOTS[slot as ImageSlot].width / IMAGE_SLOTS[slot as ImageSlot].height;
+      const out = await compressToFit(file, 1536 * 1024, ratio, [1800, 1600, 1400, 1200, 1000], slot.startsWith("logo"));
+      if (!out) throw new Error("This browser could not open that picture. Please choose a JPG, PNG or WebP photo.");
+      const { blob, ext } = out;
       const supabase = createBrowserSupabase();
       const path = `site/${slot}-${crypto.randomUUID()}.${ext}`;
       const { error } = await supabase.storage.from("gallery").upload(path, blob, { contentType: blob.type || "image/jpeg", cacheControl: "31536000" });
