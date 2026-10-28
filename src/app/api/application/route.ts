@@ -62,7 +62,12 @@ export async function POST(request: NextRequest) {
   const paths: Partial<Record<DocKind, string>> = {};
   for (const d of docs) {
     const path = `${folder}/${d.kind}.${d.ext}`;
-    const { error } = await db.storage.from(BUCKET).upload(path, d.bytes, { contentType: d.mime, upsert: false });
+    let { error } = await db.storage.from(BUCKET).upload(path, d.bytes, { contentType: d.mime, upsert: false });
+    if (error && /bucket.*not.*found/i.test(error.message)) {
+      // The private bucket was never created (storage.sql not run yet): create it, then try again.
+      await db.storage.createBucket(BUCKET, { public: false, fileSizeLimit: MAX_FILE_BYTES + 1024 * 1024, allowedMimeTypes: ["image/jpeg", "image/png", "image/webp", "application/pdf"] });
+      ({ error } = await db.storage.from(BUCKET).upload(path, d.bytes, { contentType: d.mime, upsert: false }));
+    }
     if (error) {
       console.error("application upload failed", error.message);
       await db.storage.from(BUCKET).remove(Object.values(paths));
@@ -71,34 +76,26 @@ export async function POST(request: NextRequest) {
     paths[d.kind] = path;
   }
   const v = parsed.value;
-  const n = (x: string) => x || null;
   const { error } = await db.from("applications").insert({
     program: v.program,
     branch: v.branch,
-    child_first_name: v.first_name,
-    child_last_name: n(v.last_name),
-    child_name: `${v.first_name} ${v.last_name}`.trim(),
-    child_dob: v.dob,
-    child_gender: v.gender,
-    gs_division: n(v.gs_division),
-    previous_school: n(v.school),
-    mother_name: n(v.mother.name),
-    mother_address: n(v.mother.address),
-    mother_phone: n(v.mother.phone),
-    mother_occupation: n(v.mother.occupation),
-    mother_office_phone: n(v.mother.office_phone),
-    mother_email: n(v.mother.email),
-    father_name: n(v.father.name),
-    father_address: n(v.father.address),
-    father_phone: n(v.father.phone),
-    father_occupation: n(v.father.occupation),
-    father_office_phone: n(v.father.office_phone),
-    father_email: n(v.father.email),
-    emergency_name: n(v.emergency_name),
-    emergency_relationship: n(v.emergency_relationship),
-    emergency_phone: n(v.emergency_phone),
+    child_name: v.child_name,
+    child_dob: v.child_dob,
+    child_gender: v.child_gender || null,
+    previous_school: v.previous_school || null,
+    health_notes: v.health_notes || null,
+    parent_name: v.parent_name,
+    relationship: v.relationship || null,
+    phone: v.phone,
+    whatsapp: v.whatsapp || null,
+    email: v.email || null,
+    address: v.address || null,
+    emergency_name: v.emergency_name || null,
+    emergency_phone: v.emergency_phone || null,
+    how_heard: v.how_heard || null,
     photo_path: paths.photo ?? null,
     birth_cert_path: paths.birth_cert ?? null,
+    other_doc_path: paths.other_doc ?? null,
     consent: true,
     ip_hash: ipHash,
   });
