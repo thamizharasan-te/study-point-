@@ -1,22 +1,25 @@
 import Link from "next/link";
 import { ExternalLink, LogOut } from "lucide-react";
 import { AdminNav } from "@/components/admin/AdminNav";
-import { LogoMark } from "@/components/Logo";
+import { AdminLogo } from "@/components/admin/Brand";
 import { requireAdmin } from "@/lib/admin";
+import type { SiteImages } from "@/lib/types";
 import { signOut } from "./actions";
 
 export const dynamic = "force-dynamic"; // always fresh, never cached
 
 export default async function PanelLayout({ children }: { children: React.ReactNode }) {
-  const { email } = await requireAdmin();
+  const { email, supabase } = await requireAdmin();
+  const { data: row } = await supabase.from("site_content").select("value").eq("key", "images").maybeSingle();
+  const images = (row?.value ?? {}) as SiteImages;
   return (
     <>
       <header className="bg-brand-navy text-white">
         <div className="container-page flex flex-wrap items-center justify-between gap-3 py-3">
           <div className="flex items-center gap-2">
-            <LogoMark className="h-9 w-9" />
+            <span className="rounded-xl bg-white px-2 py-1"><AdminLogo images={images} className="h-9" /></span>
             <div className="leading-tight">
-              <p className="font-bold">Study Point Admin</p>
+              <p className="font-bold">Admin</p>
               <p className="max-w-[14rem] truncate text-xs text-white/70">{email}</p>
             </div>
           </div>

@@ -39,7 +39,8 @@ export function back(path: string, flash: { saved?: string; error?: string }): n
   const q = new URLSearchParams();
   if (flash.saved) q.set("saved", flash.saved);
   if (flash.error) q.set("error", flash.error);
-  redirect(`${path}?${q.toString()}`);
+  const qs = q.toString();
+  redirect(qs ? `${path}${path.includes("?") ? "&" : "?"}${qs}` : path);
 }
 
 /** Read a trimmed string field from a form. */
