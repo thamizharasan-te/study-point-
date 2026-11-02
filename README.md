@@ -83,6 +83,9 @@ Supabase → **Project Settings** (கியர் ஐகான்) → **API** 
 | `SUPABASE_SERVICE_ROLE_KEY` | **service_role / secret** key | ⚠️ **ரகசியம்.** யாரிடமும் பகிராதே, GitHub-ல் இடாதே |
 | `NEXT_PUBLIC_SITE_URL` | உன் இணையத்தள முகவரி, எ.கா. `https://studypoint.lk` | SEO, sitemap, share படத்துக்கு |
 | `ENQUIRY_IP_SALT` | ஏதாவது நீண்ட random எழுத்துகள் | spam தடுப்புக்கு |
+| `RESEND_API_KEY` | resend.com → API Keys (Sending access) | ⚠️ **ரகசியம்.** புதிய Enquiry / Application வந்தால் மின்னஞ்சல் அறிவிப்பு |
+| `NOTIFY_EMAIL` | அறிவிப்பு வர வேண்டிய முகவரி (பல என்றால் காற்புள்ளியால் பிரி) | Resend சோதனை முறையில் உன் Resend கணக்கின் முகவரிக்கு மட்டுமே போகும் |
+| `NOTIFY_FROM` | *(விருப்பம்)* எ.கா. `Study Point <no-reply@உன்டொமைன்>` | இயல்பு `onboarding@resend.dev`; சொந்த டொமைனை Resend-ல் சரிபார்த்த பின் மட்டும் |
 | `SHOW_SAMPLE_CONTENT` | *(விருப்பம்)* `false` (இயல்பு) | `true` ஆக்கினால் மட்டும் மாதிரி உள்ளடக்கம் "Sample" குறியுடன் தெரியும் (பகுதி 8) |
 
 `.env.example` நகலெடுத்து `.env.local` என்று பெயரிட்டு நிரப்பு. `.env.local` Git-ல் சேராது.
