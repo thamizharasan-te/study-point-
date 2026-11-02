@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { DiplomaBand } from "@/components/home/DiplomaBand";
 import { Faq } from "@/components/home/Faq";
 import { FeatureBar } from "@/components/home/FeatureBar";
 import { GalleryPreview } from "@/components/home/GalleryPreview";
@@ -60,6 +61,7 @@ export default async function HomePage({ params }: Props) {
       <Hero hero={site.hero} images={site.images} lang={lang} />
       <FeatureBar lang={lang} />
       <ProgramCards nursery={site.nurseryPrograms} classes={site.classPrograms} images={site.images} lang={lang} />
+      <DiplomaBand lang={lang} />
       <GalleryPreview items={site.gallery} lang={lang} />
       <UpdatesBand social={site.social} lang={lang} />
       <Testimonials items={site.testimonials} lang={lang} />

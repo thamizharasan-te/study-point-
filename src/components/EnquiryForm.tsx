@@ -85,7 +85,7 @@ export function EnquiryForm({
         </div>
         <div>
           <label className="label" htmlFor="interest">{t.form.interest}</label>
-          <select className="input" id="interest" name="interest" defaultValue={defaultInterest ?? INTERESTS[2]}>
+          <select className="input" id="interest" name="interest" defaultValue={defaultInterest ?? INTERESTS[INTERESTS.length - 1]}>
             {INTERESTS.map((value, i) => <option key={value} value={value}>{t.form.interests[i]}</option>)}
           </select>
         </div>

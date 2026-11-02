@@ -2,7 +2,7 @@
 
 import { useRef, useState, type FormEvent } from "react";
 import { FileCheck2, Loader2, Send, Upload } from "lucide-react";
-import { MAX_FILE_BYTES, MAX_TOTAL_BYTES } from "@/lib/application";
+import { APPLICATION_PROGRAMS, MAX_FILE_BYTES, MAX_TOTAL_BYTES } from "@/lib/application";
 import { fmt } from "@/lib/i18n";
 import { compressToFit } from "@/lib/shrink-image";
 import { useLang } from "./LangProvider";
@@ -160,7 +160,7 @@ export function ApplicationForm({ branches }: { branches: { value: string; label
           <Field id="program" label={a.labels.program}>
             <select className="input" id="program" name="program" required defaultValue="">
               <option value="" disabled>{a.labels.choose}</option>
-              {["Kindergarten (3–5 years)", "Study Point Classes"].map((v, i) => <option key={v} value={v}>{a.programs[i]}</option>)}
+              {APPLICATION_PROGRAMS.map((v, i) => <option key={v} value={v}>{a.programs[i]}</option>)}
             </select>
           </Field>
           <Field id="branch" label={a.labels.branch}>

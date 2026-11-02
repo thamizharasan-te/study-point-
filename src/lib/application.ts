@@ -2,7 +2,7 @@ import { getDict, isLang, type Lang } from "./i18n";
 
 /** Admission application: shared limits and validation (used by the API route; the form mirrors them). */
 
-export const APPLICATION_PROGRAMS = ["Kindergarten (3–5 years)", "Study Point Classes"] as const;
+export const APPLICATION_PROGRAMS = ["Kindergarten (3–5 years)", "Study Point Classes", "Diploma in Elocution (6 months)", "Diploma in English (6 months)"] as const;
 export const MAX_FILE_BYTES = 2 * 1024 * 1024; // per document
 export const MAX_TOTAL_BYTES = 4 * 1024 * 1024; // all documents together (the host limits a request to ~4.5 MB)
 
