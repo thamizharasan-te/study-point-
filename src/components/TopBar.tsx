@@ -16,7 +16,7 @@ export function TopBar({ branches, lang }: { branches: Branch[]; lang: Lang }) {
         <p className="flex shrink-0 items-center gap-5">
           <span className="flex items-center gap-1.5">
             <Phone className="h-4 w-4" aria-hidden />
-            {phones.map((p, i) => (<span key={p}>{i > 0 && " / "}<a href={telLink(p)} className="hover:underline">{p}</a></span>))}
+            {phones.map((p, i) => (<span key={p}>{i > 0 && <span aria-hidden>/ </span>}<a href={telLink(p)} className="inline-block px-1.5 py-1 hover:underline">{p}</a></span>))}
           </span>
           {wa && (
             <a href={whatsAppLink(wa, t.whatsapp.message)} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:underline">
