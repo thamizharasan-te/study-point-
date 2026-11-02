@@ -5,19 +5,25 @@ import type { Branch } from "@/lib/types";
 import { telLink, whatsAppLink } from "@/lib/utils";
 import { SampleTag } from "./SampleTag";
 
+/** What to search for on the map: the branch address typed in admin (more exact than the town name alone). */
+const mapQuery = (b: Branch) => {
+  const where = b.address.trim() || b.name;
+  return `Study Point, ${/sri lanka/i.test(where) ? where : `${where}, Sri Lanka`}`;
+};
+
 /**
  * Embedded map source. If the admin pasted a Google "Embed a map" link we use
  * it as-is; otherwise we embed a search for the branch address, which needs no API key.
  */
 function mapEmbedSrc(b: Branch) {
   if (/google\.[a-z.]+\/maps\/embed/.test(b.map_url)) return b.map_url;
-  return `https://maps.google.com/maps?q=${encodeURIComponent(`Study Point ${b.name} Sri Lanka`)}&output=embed`;
+  return `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery(b))}&output=embed`;
 }
 
 export function BranchCard({ branch: b, lang }: { branch: Branch; lang: Lang }) {
   const t = getDict(lang);
   const name = b.display_name ?? b.name;
-  const linkToMap = b.map_url && /^https?:\/\//.test(b.map_url) ? b.map_url : `https://maps.google.com/?q=${encodeURIComponent(`Study Point ${b.name} Sri Lanka`)}`;
+  const linkToMap = b.map_url && /^https?:\/\//.test(b.map_url) ? b.map_url : `https://maps.google.com/?q=${encodeURIComponent(mapQuery(b))}`;
   return (
     <article className="overflow-hidden rounded-3xl bg-white shadow-card">
       <div className="space-y-3 p-5 sm:p-6">
