@@ -171,6 +171,10 @@ export const ta: Dict = {
     prev: "முந்தைய படம்",
     next: "அடுத்த படம்",
     none: "இன்னும் படங்கள் இல்லை — விரைவில் பாருங்கள்.",
+    pages: "கேலரிப் பக்கங்கள்",
+    page: "பக்கம் {n}",
+    prevPage: "முந்தைய பக்கம்",
+    nextPage: "அடுத்த பக்கம்",
     albums: { Nursery: "மழலையர் பள்ளி", Kindergarten: "மழலையர் பள்ளி", Classes: "வகுப்புகள்", Activities: "செயல்பாடுகள்", Events: "நிகழ்வுகள்", Campus: "வளாகம்", General: "பொது" },
   },
 
