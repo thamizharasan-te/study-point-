@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EnquireButton } from "@/components/EnquireButton";
+import { DiplomaBand } from "@/components/home/DiplomaBand";
 import { PageHero } from "@/components/PageHero";
 import { ProgramList } from "@/components/ProgramList";
 import { SmartImage } from "@/components/SmartImage";
@@ -35,6 +36,8 @@ export default async function ClassesPage({ params }: Props) {
         <h2 className="mb-6 text-center text-3xl font-extrabold text-brand-navy">{p.teachTitle}</h2>
         <ProgramList items={classPrograms} accent="navy" />
       </section>
+
+      <DiplomaBand lang={lang} />
 
       <section className="bg-white py-8 sm:py-10">
         <div className="container-page grid items-center gap-8 lg:grid-cols-2">

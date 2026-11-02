@@ -69,6 +69,19 @@ export const en = {
     },
   },
 
+  diplomas: {
+    aria: "Diploma courses",
+    kicker: "Diploma Courses",
+    title: "Diplomas to Speak and Write with Confidence",
+    duration: "Duration",
+    certificate: "Certificates will be provided after the completion of the course.",
+    apply: "Apply for a Diploma",
+    items: [
+      { title: "Diploma in Elocution", duration: "6 months" },
+      { title: "Diploma in English", duration: "6 months" },
+    ],
+  },
+
   why: {
     kicker: "Why choose Study Point?",
     title: "More Than Just Classes",
@@ -129,7 +142,7 @@ export const en = {
     age: "Child's age",
     agePlaceholder: "e.g. 4 years",
     interest: "Interested in",
-    interests: ["Kindergarten (3–5 years)", "Study Point Classes", "Not sure yet"],
+    interests: ["Kindergarten (3–5 years)", "Study Point Classes", "Diploma in Elocution (6 months)", "Diploma in English (6 months)", "Not sure yet"],
     branch: "Preferred branch",
     anyBranch: "Either branch",
     message: "Message (optional)",
@@ -291,7 +304,7 @@ export const en = {
     },
     months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
     genders: ["Boy", "Girl", "Prefer not to say"],
-    programs: ["Kindergarten (3–5 years)", "Study Point Classes"],
+    programs: ["Kindergarten (3–5 years)", "Study Point Classes", "Diploma in Elocution (6 months)", "Diploma in English (6 months)"],
     relationships: ["Mother", "Father", "Guardian", "Other"],
     heardOptions: ["Facebook", "Instagram", "TikTok", "Friend or family", "Passing by", "Other"],
     fileHelp: "A clear photo or scan. Documents may also be a PDF (under 2 MB). Pictures of any size are fine — they are made smaller automatically.",
