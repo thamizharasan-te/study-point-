@@ -42,34 +42,40 @@ export async function addGalleryItems(input: { items: { image_url: string; stora
   return { ok: true };
 }
 
+/** The admin list is paged, so after an action go back to the page the admin was on. */
+const here = (fd: FormData) => {
+  const n = Number(field(fd, "page"));
+  return Number.isInteger(n) && n > 1 ? `/admin/gallery?page=${n}` : "/admin/gallery";
+};
+
 export async function updateGalleryItem(fd: FormData) {
   const { supabase } = await requireAdmin();
   const { error } = await supabase
     .from("gallery_items")
     .update({ alt: field(fd, "alt").slice(0, 140), album: field(fd, "album").slice(0, 40) || "General" })
     .eq("id", field(fd, "id"));
-  if (error) back("/admin/gallery", { error: "Could not save. Please try again." });
+  if (error) back(here(fd), { error: "Could not save. Please try again." });
   refreshSite();
-  back("/admin/gallery", { saved: "Photo details saved." });
+  back(here(fd), { saved: "Photo details saved." });
 }
 
-/** Move a photo one place earlier/later by swapping positions, then renumbering 1..n. */
+/** The list is newest first (as on the website): "up" moves a photo one place towards the front. Swaps positions, then renumbers. */
 export async function moveGalleryItem(fd: FormData) {
   const { supabase } = await requireAdmin();
   const id = field(fd, "id");
   const dir = field(fd, "dir") === "up" ? -1 : 1;
-  const { data } = await supabase.from("gallery_items").select("id, sort_order").order("sort_order").order("created_at");
+  const { data } = await supabase.from("gallery_items").select("id, sort_order").order("sort_order", { ascending: false }).order("created_at", { ascending: false });
   const list = data ?? [];
   const i = list.findIndex((g) => g.id === id);
   const j = i + dir;
-  if (i < 0 || j < 0 || j >= list.length) back("/admin/gallery", {});
+  if (i < 0 || j < 0 || j >= list.length) back(here(fd), {});
   [list[i], list[j]] = [list[j], list[i]];
   const results = await Promise.all(
-    list.map((g, idx) => (g.sort_order === idx + 1 ? null : supabase.from("gallery_items").update({ sort_order: idx + 1 }).eq("id", g.id))),
+    list.map((g, idx) => (g.sort_order === list.length - idx ? null : supabase.from("gallery_items").update({ sort_order: list.length - idx }).eq("id", g.id))),
   );
-  if (results.some((r) => r?.error)) back("/admin/gallery", { error: "Could not reorder. Please try again." });
+  if (results.some((r) => r?.error)) back(here(fd), { error: "Could not reorder. Please try again." });
   refreshSite();
-  back("/admin/gallery", {});
+  back(here(fd), {});
 }
 
 export async function deleteGalleryItem(fd: FormData) {
@@ -77,8 +83,8 @@ export async function deleteGalleryItem(fd: FormData) {
   const id = field(fd, "id");
   const { data: item } = await supabase.from("gallery_items").select("storage_path").eq("id", id).maybeSingle();
   const { error } = await supabase.from("gallery_items").delete().eq("id", id);
-  if (error) back("/admin/gallery", { error: "Could not delete. Please try again." });
+  if (error) back(here(fd), { error: "Could not delete. Please try again." });
   if (item?.storage_path) await supabase.storage.from("gallery").remove([item.storage_path]);
   refreshSite();
-  back("/admin/gallery", { saved: "Photo deleted." });
+  back(here(fd), { saved: "Photo deleted." });
 }
