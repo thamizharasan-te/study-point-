@@ -29,7 +29,7 @@ export default async function GalleryPage({ params }: Props) {
         {hasSamples && (
           <p className="mb-4 text-center"><SampleTag label={p.sample} /></p>
         )}
-        <GalleryGrid items={gallery} />
+        <GalleryGrid items={[...gallery].sort((a, b) => b.sort_order - a.sort_order)} />
       </section>
     </>
   );

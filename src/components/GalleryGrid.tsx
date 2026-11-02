@@ -1,13 +1,31 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { fmt } from "@/lib/i18n";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import clsx from "clsx";
 import type { GalleryItem } from "@/lib/types";
 import { useLang } from "./LangProvider";
 import { SmartImage } from "./SmartImage";
 
-/** Photo grid with album filter chips and a full-screen lightbox (keyboard + swipe friendly). */
+/** Photos per page: divisible by the 2, 3 and 4 columns used on phones, tablets and desktops, so the last row is always full. */
+const PAGE_SIZE = 12;
+
+/** Page numbers to show: all of them when few, otherwise the first, the last and the ones around the current page. */
+function pageList(current: number, total: number): (number | "gap")[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+  const keep = new Set([1, total, current - 1, current, current + 1].filter((n) => n >= 1 && n <= total));
+  const out: (number | "gap")[] = [];
+  let last = 0;
+  for (const n of [...keep].sort((a, b) => a - b)) {
+    if (n - last > 1) out.push("gap");
+    out.push(n);
+    last = n;
+  }
+  return out;
+}
+
+/** Photo grid with album filter chips, page numbers and a full-screen lightbox (keyboard + swipe friendly). */
 export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   const { t } = useLang();
   // "All" is an internal key; labels are translated for display only.
@@ -16,12 +34,22 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
   const albums = ["All", ...Array.from(new Set(items.map(albumOf)))];
   const label = (a: string) => (a === "All" ? t.gallery.all : t.gallery.albums[a] ?? a);
   const [album, setAlbum] = useState("All");
+  const [page, setPage] = useState(1);
   const [index, setIndex] = useState<number | null>(null);
+  const gridTop = useRef<HTMLUListElement>(null);
   const lastFocus = useRef<HTMLElement | null>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const touchX = useRef<number | null>(null);
 
   const shown = album === "All" ? items : items.filter((i) => albumOf(i) === album);
+  const totalPages = Math.max(1, Math.ceil(shown.length / PAGE_SIZE));
+  const pageNo = Math.min(page, totalPages);
+  const start = (pageNo - 1) * PAGE_SIZE;
+  const visible = shown.slice(start, start + PAGE_SIZE);
+  const goTo = (n: number) => {
+    setPage(n);
+    gridTop.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+  };
 
   const close = useCallback(() => {
     setIndex(null);
@@ -58,7 +86,7 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
               key={a}
               type="button"
               aria-pressed={album === a}
-              onClick={() => setAlbum(a)}
+              onClick={() => { setAlbum(a); setPage(1); }}
               className={clsx(
                 "min-h-10 rounded-full border-2 px-4 text-sm font-bold transition-colors",
                 album === a ? "border-brand-green bg-brand-green text-white" : "border-brand-green/30 bg-white text-brand-green hover:bg-brand-green-soft",
@@ -73,20 +101,50 @@ export function GalleryGrid({ items }: { items: GalleryItem[] }) {
       {shown.length === 0 ? (
         <p className="text-center text-gray-600">{t.gallery.none}</p>
       ) : (
-        <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-          {shown.map((g, i) => (
+        <ul ref={gridTop} className="grid scroll-mt-24 grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+          {visible.map((g, i) => (
             <li key={g.id}>
               <button
                 type="button"
                 className="group block w-full overflow-hidden rounded-2xl shadow-md"
                 aria-label={`${t.gallery.open}${g.alt}`}
-                onClick={(e) => { lastFocus.current = e.currentTarget; setIndex(i); }}
+                onClick={(e) => { lastFocus.current = e.currentTarget; setIndex(start + i); }}
               >
                 <SmartImage src={g.image_url} alt={g.alt} width={600} height={450} sizes="(min-width:1024px) 280px, (min-width:640px) 33vw, 50vw" className="aspect-[4/3] w-full object-cover object-[50%_35%] transition-transform duration-300 group-hover:scale-105" />
               </button>
             </li>
           ))}
         </ul>
+      )}
+
+      {totalPages > 1 && (
+        <nav aria-label={t.gallery.pages} className="mt-8 flex flex-wrap items-center justify-center gap-2">
+          <button type="button" onClick={() => goTo(pageNo - 1)} disabled={pageNo === 1} aria-label={t.gallery.prevPage} className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-brand-green/30 bg-white text-brand-green hover:bg-brand-green-soft disabled:cursor-not-allowed disabled:opacity-40">
+            <ChevronLeft className="h-5 w-5" aria-hidden />
+          </button>
+          {pageList(pageNo, totalPages).map((n, i) =>
+            n === "gap" ? (
+              <span key={`gap-${i}`} aria-hidden className="px-1 text-gray-500">…</span>
+            ) : (
+              <button
+                key={n}
+                type="button"
+                onClick={() => goTo(n)}
+                aria-label={fmt(t.gallery.page, { n })}
+                aria-current={n === pageNo ? "page" : undefined}
+                className={clsx(
+                  "h-11 min-w-11 rounded-full border-2 px-3 text-sm font-bold transition-colors",
+                  n === pageNo ? "border-brand-green bg-brand-green text-white" : "border-brand-green/30 bg-white text-brand-green hover:bg-brand-green-soft",
+                )}
+              >
+                {n}
+              </button>
+            ),
+          )}
+          <button type="button" onClick={() => goTo(pageNo + 1)} disabled={pageNo === totalPages} aria-label={t.gallery.nextPage} className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-brand-green/30 bg-white text-brand-green hover:bg-brand-green-soft disabled:cursor-not-allowed disabled:opacity-40">
+            <ChevronRight className="h-5 w-5" aria-hidden />
+          </button>
+        </nav>
       )}
 
       {current && (

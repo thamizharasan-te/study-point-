@@ -173,6 +173,10 @@ export const en = {
     prev: "Previous photo",
     next: "Next photo",
     none: "No photos yet — please check back soon.",
+    pages: "Gallery pages",
+    page: "Page {n}",
+    prevPage: "Previous page",
+    nextPage: "Next page",
     albums: { Nursery: "Kindergarten", Kindergarten: "Kindergarten", Classes: "Classes", Activities: "Activities", Events: "Events", Campus: "Campus", General: "General" } as Record<string, string>,
   },
 
