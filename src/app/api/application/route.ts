@@ -1,5 +1,6 @@
 import { createHash, randomUUID } from "node:crypto";
-import { NextResponse, type NextRequest } from "next/server";
+import { after, NextResponse, type NextRequest } from "next/server";
+import { notifyOwner } from "@/lib/notify";
 import { createServiceClient } from "@/lib/supabase/service";
 import { getDict } from "@/lib/i18n";
 import { DOC_KINDS, MAX_FILE_BYTES, MAX_TOTAL_BYTES, langOfForm, parseApplication, sniffFile, type DocKind } from "@/lib/application";
@@ -104,5 +105,12 @@ export async function POST(request: NextRequest) {
     await db.storage.from(BUCKET).remove(Object.values(paths));
     return NextResponse.json({ error: errors.generic }, { status: 500 });
   }
+  // Health notes and documents stay in the admin; the email only carries the basics.
+  after(() =>
+    notifyOwner(`New application: ${v.child_name} (${v.program}, ${v.branch})`, [
+      ["Child", v.child_name], ["Programme", v.program], ["Branch", v.branch], ["Parent / guardian", v.parent_name],
+      ["Phone", v.phone], ["WhatsApp", v.whatsapp], ["Email", v.email],
+    ], "/admin/applications"),
+  );
   return NextResponse.json({ ok: true });
 }

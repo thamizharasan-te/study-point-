@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
-import { NextResponse, type NextRequest } from "next/server";
+import { after, NextResponse, type NextRequest } from "next/server";
+import { notifyOwner } from "@/lib/notify";
 import { createServiceClient } from "@/lib/supabase/service";
 import { getDict } from "@/lib/i18n";
 import { langOf, parseEnquiry } from "@/lib/validation";
@@ -56,5 +57,12 @@ export async function POST(request: NextRequest) {
     console.error("enquiry insert failed", error.message);
     return NextResponse.json({ error: errors.generic }, { status: 500 });
   }
+  const v = parsed.value;
+  after(() =>
+    notifyOwner(`New enquiry: ${v.parent_name} (${v.branch || "no branch"})`, [
+      ["Parent", v.parent_name], ["Phone", v.phone], ["Child", v.child_name], ["Child age", v.child_age],
+      ["Interested in", v.interest], ["Branch", v.branch], ["Message", v.message],
+    ], "/admin/enquiries"),
+  );
   return NextResponse.json({ ok: true });
 }
