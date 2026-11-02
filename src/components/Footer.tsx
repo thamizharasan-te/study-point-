@@ -50,7 +50,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
                 <p className="flex gap-2">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
                   <span className="flex flex-col">
-                    {b.phones.map((p) => <a key={p} href={telLink(p)} className="hover:underline">{p}</a>)}
+                    {b.phones.map((p) => <a key={p} href={telLink(p)} className="inline-block py-1 hover:underline">{p}</a>)}
                   </span>
                 </p>
                 {b.whatsapp && (
