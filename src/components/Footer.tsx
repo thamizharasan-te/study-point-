@@ -18,15 +18,7 @@ export function Footer({ branches, social, lang, logo }: { branches: Branch[]; s
       </svg>
       <div className="container-page grid items-start gap-x-10 gap-y-6 pb-5 pt-7 sm:grid-cols-2 sm:gap-y-9 sm:pb-8 sm:pt-10 lg:grid-cols-12 lg:gap-x-8 lg:pt-12">
         <div className="space-y-2.5 sm:space-y-4 lg:col-span-4 lg:pr-4">
-          {/* On phones the logo and the main phone number share one row, to save height. */}
-          <div className="flex items-center justify-between gap-3 sm:block sm:space-y-4">
-            <Logo light icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
-            {branches[0]?.phones[0] && (
-              <a href={telLink(branches[0].phones[0])} className="flex items-center gap-2 text-lg font-bold hover:underline sm:text-xl">
-                <WhatsAppIcon className="h-6 w-6 text-[#25d366]" />{branches[0].phones[0]}
-              </a>
-            )}
-          </div>
+          <Logo light icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
           <p className="max-w-xs text-[13px] leading-snug text-white/80 sm:text-sm sm:leading-normal">{t.footer.about}</p>
           <SocialLinks social={social} tone="color" lang={lang} />
         </div>
