@@ -24,6 +24,7 @@ export function Hero({ hero, images, lang }: { hero: HeroContent; images: SiteIm
           width={pic.width}
           height={pic.height}
           priority
+          fetchPriority="high"
           sizes="(min-width: 1024px) 66vw, 100vw"
           className="h-full w-full object-cover object-[50%_30%]"
         />
