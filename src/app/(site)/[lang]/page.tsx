@@ -14,7 +14,7 @@ import { getSiteData } from "@/lib/data";
 import { getDict, isLang } from "@/lib/i18n";
 import { localize } from "@/lib/i18n/localize";
 import { pageMeta } from "@/lib/i18n/meta";
-import { SITE_URL } from "@/lib/utils";
+import { internationalPhone, SITE_URL } from "@/lib/utils";
 
 type Props = { params: Promise<{ lang: string }> };
 
@@ -41,8 +41,9 @@ export default async function HomePage({ params }: Props) {
     department: site.branches.map((b) => ({
       "@type": "School",
       name: `Study Point — ${b.name}`,
-      telephone: b.phones[0],
-      address: { "@type": "PostalAddress", addressLocality: b.name, addressCountry: "LK" },
+      telephone: b.phones[0] ? internationalPhone(b.phones[0]) : undefined,
+      // The saved street address is included once the branch details are confirmed (not while they are only sample text).
+      address: { "@type": "PostalAddress", ...(b.is_placeholder ? {} : { streetAddress: b.address }), addressLocality: b.name, addressCountry: "LK" },
     })),
   };
 
