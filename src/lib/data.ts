@@ -30,16 +30,21 @@ function publicView(d: SiteData): SiteData {
  * several photos share the same description each one gets its own number, so screen readers can tell them apart.
  */
 function describeUniquely(gallery: GalleryItem[]): GalleryItem[] {
-  const clean = gallery.map((g) => ({ ...g, alt: g.alt.replace(/[\u0300-\u036f]/g, "").trim() }));
-  const total = new Map<string, number>();
-  for (const g of clean) total.set(g.alt, (total.get(g.alt) ?? 0) + 1);
-  const seen = new Map<string, number>();
-  return clean.map((g) => {
-    if ((total.get(g.alt) ?? 0) < 2) return g;
-    const n = (seen.get(g.alt) ?? 0) + 1;
-    seen.set(g.alt, n);
-    return { ...g, alt: `${g.alt} (${n})` };
-  });
+  const strip = (t: string) => t.replace(/[\u0300-\u036f]/g, "").trim();
+  const numbered = (texts: string[]) => {
+    const total = new Map<string, number>();
+    for (const t of texts) if (t) total.set(t, (total.get(t) ?? 0) + 1);
+    const seen = new Map<string, number>();
+    return texts.map((t) => {
+      if (!t || (total.get(t) ?? 0) < 2) return t;
+      const n = (seen.get(t) ?? 0) + 1;
+      seen.set(t, n);
+      return `${t} (${n})`;
+    });
+  };
+  const alts = numbered(gallery.map((g) => strip(g.alt)));
+  const altsTa = numbered(gallery.map((g) => strip(g.alt_ta ?? "")));
+  return gallery.map((g, i) => ({ ...g, alt: alts[i], alt_ta: altsTa[i] }));
 }
 
 function hideSamples(d: SiteData): SiteData {

@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { SampleTag } from "@/components/SampleTag";
 import { getSiteData } from "@/lib/data";
 import { getDict, isLang } from "@/lib/i18n";
+import { localize } from "@/lib/i18n/localize";
 import { pageMeta } from "@/lib/i18n/meta";
 
 type Props = { params: Promise<{ lang: string }> };
@@ -20,7 +21,7 @@ export default async function GalleryPage({ params }: Props) {
   const { lang } = await params;
   if (!isLang(lang)) notFound();
   const p = getDict(lang).pages.gallery;
-  const { gallery } = await getSiteData();
+  const { gallery } = localize(await getSiteData(), lang);
   const hasSamples = gallery.some((g) => g.is_sample);
   return (
     <>

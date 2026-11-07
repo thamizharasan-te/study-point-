@@ -180,6 +180,7 @@ grant execute on function public.is_admin() to anon, authenticated;
 -- ----------------------------------------------------------------------------
 alter table public.branches      add column if not exists address_ta text not null default '';
 alter table public.branches      add column if not exists hours_ta   text not null default '';
+alter table public.gallery_items add column if not exists alt_ta     text not null default '';
 alter table public.site_stats    add column if not exists label_ta   text not null default '';
 alter table public.testimonials  add column if not exists quote_ta   text not null default '';
 alter table public.announcements add column if not exists text_ta    text not null default '';

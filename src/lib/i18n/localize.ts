@@ -18,6 +18,16 @@ export function localize(data: SiteData, lang: Lang): SiteData {
   const prog = (list: SiteData["nurseryPrograms"]) =>
     list.map((p) => ({ ...p, title: pickTa(p.title, p.title_ta), description: pickTa(p.description, p.description_ta) }));
   const ta = data.hero.ta ?? {};
+  // Photo descriptions: the Tamil one typed in admin, else a plain Tamil one built from the album (numbered, so each is different).
+  const albums = getDict("ta").gallery.albums;
+  const perAlbum = new Map<string, number>();
+  const gallery = data.gallery.map((g) => {
+    if (g.alt_ta?.trim()) return { ...g, alt: g.alt_ta.trim() };
+    const album = albums[g.album === "Nursery" ? "Kindergarten" : g.album] ?? g.album;
+    const n = (perAlbum.get(album) ?? 0) + 1;
+    perAlbum.set(album, n);
+    return { ...g, alt: `Study Point ${album} புகைப்படம் ${n}` };
+  });
 
   return {
     ...data,
@@ -29,6 +39,7 @@ export function localize(data: SiteData, lang: Lang): SiteData {
       line3: pickTa(data.hero.line3, ta.line3),
       subtitle: pickTa(data.hero.subtitle, ta.subtitle),
     },
+    gallery,
     nurseryPrograms: prog(data.nurseryPrograms),
     classPrograms: prog(data.classPrograms),
     faq: prog(data.faq),

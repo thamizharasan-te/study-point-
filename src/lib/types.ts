@@ -20,6 +20,8 @@ export interface GalleryItem {
   image_url: string;
   storage_path: string | null;
   alt: string;
+  /** Optional Tamil description of the photo, typed in /admin. */
+  alt_ta?: string;
   album: string;
   sort_order: number;
   is_sample: boolean;

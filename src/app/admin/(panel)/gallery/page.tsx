@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
-import { AdminHeading, Card, Help, Notice } from "@/components/admin/Layout";
+import { AdminHeading, Card, Help, Notice, TamilSetupHelp } from "@/components/admin/Layout";
 import { GalleryUploader } from "@/components/admin/GalleryUploader";
 import { Pager } from "@/components/admin/Pager";
 import { ConfirmButton, SubmitButton } from "@/components/admin/ui";
 import { SampleTag } from "@/components/SampleTag";
 import { SmartImage } from "@/components/SmartImage";
-import { requireAdmin } from "@/lib/admin";
+import { hasColumn, requireAdmin } from "@/lib/admin";
 import { GALLERY_ALBUMS } from "@/lib/defaults";
 import type { GalleryItem } from "@/lib/types";
-import { deleteGalleryItem, moveGalleryItem, updateGalleryItem } from "./actions";
+import { deleteGalleryItem, moveGalleryItem, saveGalleryPage } from "./actions";
 
 export const metadata: Metadata = { title: "Gallery" };
 
@@ -18,6 +18,7 @@ const PAGE_SIZE = 10; // photos per page in the admin list
 export default async function AdminGallery({ searchParams }: { searchParams: Promise<{ saved?: string; error?: string; page?: string }> }) {
   const { saved, error, page: pageParam } = await searchParams;
   const { supabase } = await requireAdmin();
+  const tamilReady = await hasColumn(supabase, "gallery_items", "alt_ta");
   // Newest first, the same order as the website. Only the current page is loaded.
   const wanted = Math.max(1, Math.floor(Number(pageParam)) || 1);
   const list = () => supabase.from("gallery_items").select("*", { count: "exact" }).order("sort_order", { ascending: false }).order("created_at", { ascending: false });
@@ -53,6 +54,16 @@ export default async function AdminGallery({ searchParams }: { searchParams: Pro
       {total === 0 && <Card><p className="text-gray-600">No photos yet.</p></Card>}
 
       <Pager page={page} total={pages} href={(n) => (n === 1 ? "/admin/gallery" : `/admin/gallery?page=${n}`)} />
+      {!tamilReady && <TamilSetupHelp />}
+      <Help>
+        Describe what is in each photo in a few words, for example <em>“Study Point students on stage at the elocution exam”</em>.
+        It is read aloud to blind visitors and helps Google understand the photo. Give every photo its own description, and a Tamil one for the Tamil pages.
+        After typing, press <strong>Save descriptions on this page</strong> (once for all {items.length} photos below).
+      </Help>
+      <form id="gallery-form" action={saveGalleryPage} className="mb-3">
+        <input type="hidden" name="page" value={page} />
+        <SubmitButton className="btn-navy">Save descriptions on this page</SubmitButton>
+      </form>
       <ol className="space-y-3">
         {items.map((g, i) => (
           <li key={g.id}>
@@ -62,20 +73,26 @@ export default async function AdminGallery({ searchParams }: { searchParams: Pro
                 {g.is_sample && <div className="mt-2"><SampleTag label="Sample" always /></div>}
               </div>
               <div className="space-y-3">
-                <form action={updateGalleryItem} className="space-y-2">
-                  <input type="hidden" name="id" value={g.id} /><input type="hidden" name="page" value={page} />
+                <div className="space-y-2">
+                  {/* These boxes belong to the one "Save" form of the page (see form="gallery-form"), so a whole page is saved at once. */}
+                  <input type="hidden" name="id" value={g.id} form="gallery-form" />
                   <div className="grid gap-2 sm:grid-cols-2">
                     <div>
                       <label className="label" htmlFor={`album-${g.id}`}>Album</label>
-                      <input id={`album-${g.id}`} name="album" list="albums-list" defaultValue={g.album} className="input" maxLength={40} />
+                      <input id={`album-${g.id}`} name="album" form="gallery-form" list="albums-list" defaultValue={g.album} className="input" maxLength={40} />
                     </div>
                     <div>
                       <label className="label" htmlFor={`alt-${g.id}`}>Description</label>
-                      <input id={`alt-${g.id}`} name="alt" defaultValue={g.alt} className="input" maxLength={140} />
+                      <input id={`alt-${g.id}`} name="alt" form="gallery-form" defaultValue={g.alt} className="input" maxLength={140} placeholder="What is in this photo?" />
                     </div>
                   </div>
-                  <SubmitButton className="btn-navy !min-h-9 !py-1.5">Save details</SubmitButton>
-                </form>
+                  {tamilReady && (
+                    <div>
+                      <label className="label" htmlFor={`alt-ta-${g.id}`}>Description <span className="font-normal text-gray-500">(தமிழ்)</span></label>
+                      <input id={`alt-ta-${g.id}`} name="alt_ta" form="gallery-form" defaultValue={g.alt_ta ?? ""} lang="ta" className="input" maxLength={140} placeholder="இந்தப் படத்தில் என்ன இருக்கிறது?" />
+                    </div>
+                  )}
+                </div>
                 <div className="flex flex-wrap items-center gap-2 border-t pt-3">
                   <form action={moveGalleryItem}>
                     <input type="hidden" name="id" value={g.id} /><input type="hidden" name="page" value={page} /><input type="hidden" name="dir" value="up" />
@@ -97,6 +114,9 @@ export default async function AdminGallery({ searchParams }: { searchParams: Pro
           </li>
         ))}
       </ol>
+      <div className="mt-4">
+        <button type="submit" form="gallery-form" className="btn-navy">Save descriptions on this page</button>
+      </div>
       <Pager page={page} total={pages} href={(n) => (n === 1 ? "/admin/gallery" : `/admin/gallery?page=${n}`)} />
       <datalist id="albums-list">{GALLERY_ALBUMS.map((a) => <option key={a} value={a} />)}</datalist>
     </>

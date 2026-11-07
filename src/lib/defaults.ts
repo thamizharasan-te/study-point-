@@ -1,3 +1,4 @@
+import { BRANCHES } from "./branches";
 import type { Branch, GalleryItem, HeroContent, ImageSlot, Program, Social, SiteStat, Testimonial } from "./types";
 
 /**
@@ -59,30 +60,8 @@ export const DEFAULT_TESTIMONIALS: Testimonial[] = [
 ];
 
 /** Phone numbers come from the client's design; addresses/hours are placeholders. */
-export const DEFAULT_BRANCHES: Branch[] = [
-  {
-    id: "point-pedro",
-    name: "Point Pedro",
-    address: "Point Pedro, Northern Province, Sri Lanka",
-    phones: ["0767666826", "0767666827"],
-    whatsapp: "0767666826",
-    hours: "Please call us for class timings",
-    map_url: "",
-    sort_order: 1,
-    is_placeholder: true,
-  },
-  {
-    id: "vathiry",
-    name: "Vathiry",
-    address: "Vathiry, Northern Province, Sri Lanka",
-    phones: ["0767666826", "0767666827"],
-    whatsapp: "0767666827",
-    hours: "Please call us for class timings",
-    map_url: "",
-    sort_order: 2,
-    is_placeholder: true,
-  },
-];
+/** Built from the single branch list in ./branches.ts. */
+export const DEFAULT_BRANCHES: Branch[] = BRANCHES.map(({ confirmed, ...b }) => ({ ...b, is_placeholder: !confirmed }));
 
 export const GALLERY_ALBUMS = ["Kindergarten", "Classes", "Activities", "Events", "Campus"];
 
