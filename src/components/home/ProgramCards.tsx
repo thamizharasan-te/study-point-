@@ -59,7 +59,7 @@ export function ProgramCards({ nursery, classes, images, lang }: { nursery: Prog
         <h2 className="mt-2 text-2xl font-extrabold leading-tight text-brand-navy-dark sm:text-[1.75rem]">{t.cards.nursery.title}</h2>
         <p className="mt-2 font-bold text-brand-green-dark">{t.cards.nursery.age}</p>
         <p className="mt-2 text-sm text-gray-700">{t.cards.nursery.text}</p>
-        <Link href={localePath(lang, "/nursery")} className="btn-green mt-4">{t.cards.nursery.learnMore}<span className="sr-only">{t.cards.nursery.about}</span> <ArrowRight className="h-4 w-4" aria-hidden /></Link>
+        <Link href={localePath(lang, "/kindergarten")} className="btn-green mt-4">{t.cards.nursery.learnMore}<span className="sr-only">{t.cards.nursery.about}</span> <ArrowRight className="h-4 w-4" aria-hidden /></Link>
       </Card>
       <Card tone="blue" img={classesPic} alt={t.cards.classes.imageAlt} skills={<Skills items={classes} tones={CLASS_TONES} />}>
         <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-navy">{t.cards.classes.eyebrow}</p>

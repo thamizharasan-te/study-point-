@@ -17,8 +17,8 @@ export function whatsAppLink(phone: string, text?: string): string {
   return text ? `${base}?text=${encodeURIComponent(text)}` : base;
 }
 
-/** tel: link that works on phones. */
-export const telLink = (phone: string) => `tel:${digits(phone)}`;
+/** tel: link that works on phones and from abroad: Sri Lankan numbers are written in the +94 form. */
+export const telLink = (phone: string) => `tel:${digits(phone).startsWith("0") || digits(phone).startsWith("94") ? "+" + toWhatsAppNumber(phone) : digits(phone)}`;
 
 export const SITE_NAME = "Study Point";
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").replace(/\/$/, "");
