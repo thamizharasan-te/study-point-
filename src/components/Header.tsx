@@ -12,6 +12,13 @@ import { isDark } from "@/lib/color";
 import { Logo } from "./Logo";
 
 /**
+ * Fonts for the Tamil word on English pages. Phones, Macs and Windows already have a Tamil font, so it is tried first;
+ * the site's Tamil web font (about 50 KB) is only the last resort. Otherwise every English page would download it
+ * just to draw this one word.
+ */
+const TAMIL_LABEL_FONT = 'system-ui, "Nirmala UI", "Tamil Sangam MN", "Noto Sans Tamil", var(--font-tamil), sans-serif';
+
+/**
  * Language switch: on an English page it offers "தமிழ்", on a Tamil page
  * "English", and keeps the visitor on the same page.
  */
@@ -25,6 +32,7 @@ function LanguageSwitch({ className = "", dark = false }: { className?: string; 
       hrefLang={other}
       lang={other}
       aria-label={`${t.switchTo.label} — ${t.switchTo.aria}`}
+      style={other === "ta" ? { fontFamily: TAMIL_LABEL_FONT } : undefined}
       className={clsx("inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full border-2 px-3 text-sm font-bold", dark ? "border-white/50 text-white hover:bg-white/15" : "border-brand-navy/20 text-brand-navy hover:bg-brand-navy-soft", className)}
     >
       <Globe className="h-4 w-4" aria-hidden /> {t.switchTo.label}
