@@ -21,6 +21,28 @@ import type {
  *  - unconfirmed branch opening hours are blanked.
  */
 function publicView(d: SiteData): SiteData {
+  const v = hideSamples(d);
+  return { ...v, gallery: describeUniquely(v.gallery) };
+}
+
+/**
+ * Picture descriptions (alt text) shown to visitors: stray accent marks typed by accident are dropped, and when
+ * several photos share the same description each one gets its own number, so screen readers can tell them apart.
+ */
+function describeUniquely(gallery: GalleryItem[]): GalleryItem[] {
+  const clean = gallery.map((g) => ({ ...g, alt: g.alt.replace(/[\u0300-\u036f]/g, "").trim() }));
+  const total = new Map<string, number>();
+  for (const g of clean) total.set(g.alt, (total.get(g.alt) ?? 0) + 1);
+  const seen = new Map<string, number>();
+  return clean.map((g) => {
+    if ((total.get(g.alt) ?? 0) < 2) return g;
+    const n = (seen.get(g.alt) ?? 0) + 1;
+    seen.set(g.alt, n);
+    return { ...g, alt: `${g.alt} (${n})` };
+  });
+}
+
+function hideSamples(d: SiteData): SiteData {
   if (SHOW_SAMPLE) return d;
   const hasRealPhotos = d.gallery.some((g) => !g.is_sample);
   return {

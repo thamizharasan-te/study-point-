@@ -32,6 +32,8 @@ export default async function SiteLayout({ children, params }: { children: React
 
   return (
     <div lang={lang} className="kid">
+      {/* The page language is not known to the root layout, so set it on <html> before anything is drawn (screen readers, browser translation). */}
+      <script dangerouslySetInnerHTML={{ __html: `document.documentElement.lang=${JSON.stringify(lang)}` }} />
       {themeCss(theme.id) && <style dangerouslySetInnerHTML={{ __html: themeCss(theme.id) }} />}
       <LangProvider lang={lang} dict={dict}>
         <EnquiryProvider branches={branchOptions}>

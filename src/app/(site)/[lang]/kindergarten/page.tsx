@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang } = await params;
   if (!isLang(lang)) return {};
   const t = getDict(lang).pages.nursery;
-  return pageMeta(lang, "/nursery", t.metaTitle, t.metaDescription);
+  return pageMeta(lang, "/kindergarten", t.metaTitle, t.metaDescription);
 }
 
 export default async function NurseryPage({ params }: Props) {

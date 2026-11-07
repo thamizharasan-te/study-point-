@@ -11,7 +11,7 @@ export const en = {
     items: [
       { href: "/", label: "Home" },
       { href: "/about", label: "About Us" },
-      { href: "/nursery", label: "Early Years" },
+      { href: "/kindergarten", label: "Kindergarten" },
       { href: "/classes", label: "Study Point Classes" },
       { href: "/gallery", label: "Gallery" },
       { href: "/contact", label: "Contact" },
@@ -31,7 +31,7 @@ export const en = {
   announcements: { aria: "Announcements" },
 
   hero: {
-    exploreEarly: "Explore Early Years (3 – 5 Years)",
+    exploreEarly: "Explore Kindergarten (3 – 5 Years)",
     discoverClasses: "Discover Study Point Classes",
     badge: ["Happy", "Learners", "Brighter", "Tomorrows"],
     imageAlt: "Smiling Study Point children learning together",
@@ -50,12 +50,12 @@ export const en = {
   cards: {
     aria: "Our programs",
     nursery: {
-      eyebrow: "Kindergarten / Early Years",
+      eyebrow: "Kindergarten",
       title: "A Happy Place to Learn & Grow",
       age: "Ages 3 – 5 Years",
       text: "Through play, creativity and guided learning, we help children build confidence, curiosity and essential skills for a bright future.",
       learnMore: "Learn More",
-      about: " about our Early Years programme",
+      about: " about our Kindergarten",
       imageAlt: "A Study Point kindergarten child at play",
     },
     classes: {
@@ -218,7 +218,7 @@ export const en = {
       metaTitle: "Kindergarten (Ages 3–5)",
       metaDescription:
         "Study Point Kindergarten for children aged 3 to 5 in Point Pedro and Vathiry: phonics, creative activities, play based learning, social skills and confidence building.",
-      title: "Early Years · 3 – 5 Years",
+      title: "Kindergarten · 3 – 5 Years",
       subtitle:
         "A happy place to learn, play and grow! A strong foundation through play-based learning, creativity and structured early years activities.",
       learnTitle: "What your child will learn",
@@ -264,7 +264,7 @@ export const en = {
       metaTitle: "Study Point — Kindergarten & English Classes in Point Pedro and Vathiry",
       metaDescription:
         "Study Point is a kindergarten (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka. Phonics, spoken English, grammar, writing and exam preparation in small, caring groups.",
-      ogTitle: "Study Point — Little Learners. Brighter Tomorrows.",
+      ogTitle: "Study Point — Kindergarten & English Classes in Point Pedro and Vathiry",
       ogDescription: "Kindergarten for ages 3–5 and English classes in Point Pedro and Vathiry, Sri Lanka.",
     },
   },
