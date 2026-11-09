@@ -48,15 +48,31 @@ const here = (fd: FormData) => {
   return Number.isInteger(n) && n > 1 ? `/admin/gallery?page=${n}` : "/admin/gallery";
 };
 
-export async function updateGalleryItem(fd: FormData) {
+/** Saves the album and descriptions of every photo on the admin page in one go (the page sends parallel lists). */
+export async function saveGalleryPage(fd: FormData) {
   const { supabase } = await requireAdmin();
-  const { error } = await supabase
-    .from("gallery_items")
-    .update({ alt: field(fd, "alt").slice(0, 140), album: field(fd, "album").slice(0, 40) || "General" })
-    .eq("id", field(fd, "id"));
-  if (error) back(here(fd), { error: "Could not save. Please try again." });
+  const ids = fd.getAll("id").map(String);
+  const albums = fd.getAll("album").map(String);
+  const alts = fd.getAll("alt").map(String);
+  const altsTa = fd.has("alt_ta") ? fd.getAll("alt_ta").map(String) : null; // Tamil boxes exist only after schema.sql was re-run
+  if (!ids.length || ids.length > 50 || albums.length !== ids.length || alts.length !== ids.length || (altsTa && altsTa.length !== ids.length)) {
+    back(here(fd), { error: "Could not save. Please reload the page and try again." });
+  }
+  const results = await Promise.all(
+    ids.map((id, i) =>
+      supabase
+        .from("gallery_items")
+        .update({
+          alt: alts[i].trim().slice(0, 140),
+          album: albums[i].trim().slice(0, 40) || "General",
+          ...(altsTa ? { alt_ta: altsTa[i].trim().slice(0, 140) } : {}),
+        })
+        .eq("id", id),
+    ),
+  );
+  if (results.some((r) => r.error)) back(here(fd), { error: "Could not save all the photos. Please try again." });
   refreshSite();
-  back(here(fd), { saved: "Photo details saved." });
+  back(here(fd), { saved: `Saved ${ids.length} photo${ids.length === 1 ? "" : "s"}.` });
 }
 
 /** The list is newest first (as on the website): "up" moves a photo one place towards the front. Swaps positions, then renumbers. */

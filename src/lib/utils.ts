@@ -17,6 +17,9 @@ export function whatsAppLink(phone: string, text?: string): string {
   return text ? `${base}?text=${encodeURIComponent(text)}` : base;
 }
 
+/** International form of a phone number, for search-engine data: 0767666826 → +94767666826. */
+export const internationalPhone = (phone: string) => `+${toWhatsAppNumber(phone)}`;
+
 /** tel: link that works on phones and from abroad: Sri Lankan numbers are written in the +94 form. */
 export const telLink = (phone: string) => `tel:${digits(phone).startsWith("0") || digits(phone).startsWith("94") ? "+" + toWhatsAppNumber(phone) : digits(phone)}`;
 
