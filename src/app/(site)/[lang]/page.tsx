@@ -36,6 +36,7 @@ export default async function HomePage({ params }: Props) {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     name: "Study Point",
+    alternateName: ["Study Point LK", "StudyPointLK"],
     url: SITE_URL,
     description: "Kindergarten (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka.",
     department: site.branches.map((b) => ({
@@ -45,6 +46,17 @@ export default async function HomePage({ params }: Props) {
       // The saved street address is included once the branch details are confirmed (not while they are only sample text).
       address: { "@type": "PostalAddress", ...(b.is_placeholder ? {} : { streetAddress: b.address }), addressLocality: b.name, addressCountry: "LK" },
     })),
+  };
+
+  // Tells Google the site's name and the other ways people write it ("Study Point LK", the web address), so a search
+  // for "studypointlk" can find this site instead of a similarly named one.
+  const websiteLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Study Point",
+    alternateName: ["Study Point LK", "StudyPointLK", "studypointlk.com"],
+    url: SITE_URL,
+    inLanguage: ["en", "ta"],
   };
 
   // FAQ rich results in Google.
@@ -57,6 +69,7 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       {site.faq.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
       <Hero hero={site.hero} images={site.images} lang={lang} />
