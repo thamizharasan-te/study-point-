@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbSchema, courseSchemas } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { EnquireButton } from "@/components/EnquireButton";
 import { DiplomaBand } from "@/components/home/DiplomaBand";
@@ -28,6 +30,7 @@ export default async function ClassesPage({ params }: Props) {
   const pic = slotImage(images, "classes");
   return (
     <>
+      <JsonLd data={[breadcrumbSchema(lang, "/classes"), ...courseSchemas(lang)]} />
       <PageHero tone="navy" title={p.title} subtitle={p.subtitle}>
         <EnquireButton className="btn-navy" />
       </PageHero>

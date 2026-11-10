@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { BranchCard } from "@/components/BranchCard";
 import { EnquiryForm } from "@/components/EnquiryForm";
@@ -28,6 +30,7 @@ export default async function ContactPage({ params }: Props) {
   const options = raw.branches.map((b, i) => ({ value: b.name, label: branches[i].display_name ?? b.name }));
   return (
     <>
+      <JsonLd data={breadcrumbSchema(lang, "/contact")} />
       <PageHero title={p.title} subtitle={p.subtitle}>
         {hasSocial && (
           <div className="flex flex-col items-center gap-2">

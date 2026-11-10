@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { Download } from "lucide-react";
 import { ApplicationForm } from "@/components/ApplicationForm";
@@ -26,6 +28,7 @@ export default async function ApplyPage({ params }: Props) {
   const options = raw.branches.map((b, i) => ({ value: b.name, label: branches[i].display_name ?? b.name }));
   return (
     <>
+      <JsonLd data={breadcrumbSchema(lang, "/apply")} />
       <PageHero tone="pink" title={a.title} subtitle={a.subtitle} />
       <section className="container-page py-8 sm:py-10" aria-labelledby="apply-heading">
         <div className="mx-auto max-w-3xl space-y-6">

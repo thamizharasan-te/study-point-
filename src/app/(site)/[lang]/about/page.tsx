@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Heart, ShieldCheck, Sprout, Users } from "lucide-react";
@@ -31,6 +33,7 @@ export default async function AboutPage({ params }: Props) {
   const pic = slotImage(images, "about");
   return (
     <>
+      <JsonLd data={breadcrumbSchema(lang, "/about")} />
       <PageHero title={p.title} subtitle={p.subtitle} />
 
       <section className="container-page grid items-center gap-8 py-8 sm:py-10 lg:grid-cols-2">

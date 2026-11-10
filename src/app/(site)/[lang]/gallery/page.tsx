@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { PageHero } from "@/components/PageHero";
@@ -25,6 +27,7 @@ export default async function GalleryPage({ params }: Props) {
   const hasSamples = gallery.some((g) => g.is_sample);
   return (
     <>
+      <JsonLd data={breadcrumbSchema(lang, "/gallery")} />
       <PageHero title={p.title} subtitle={p.subtitle} />
       <section className="container-page py-8 sm:py-10">
         {hasSamples && (

@@ -217,7 +217,7 @@ export const en = {
     nursery: {
       metaTitle: "Kindergarten (Ages 3–5)",
       metaDescription:
-        "Study Point Kindergarten for children aged 3 to 5 in Point Pedro and Vathiry: phonics, creative activities, play based learning, social skills and confidence building.",
+        "Kindergarten for ages 3–5 at Study Point, Point Pedro and Vathiry: phonics, creative activities, play-based learning and confidence building.",
       title: "Kindergarten · 3 – 5 Years",
       subtitle:
         "A happy place to learn, play and grow! A strong foundation through play-based learning, creativity and structured early years activities.",
@@ -230,9 +230,9 @@ export const en = {
       imageAlt: "Kindergarten children playing with colourful blocks",
     },
     classes: {
-      metaTitle: "Study Point Classes — English, Spoken English & Exam Preparation",
+      metaTitle: "English, Spoken English & Diploma Classes",
       metaDescription:
-        "English, grammar, phonics, spoken English, writing skills and exam preparation in small groups at Study Point, Point Pedro and Vathiry.",
+        "English, grammar, spoken English and exam preparation in small groups, plus a 6-month Diploma in Elocution and Diploma in English. Point Pedro and Vathiry.",
       title: "Study Point Classes",
       subtitle:
         "Learn Today. Lead Tomorrow. English, Grammar, Phonics, Spoken English, Writing Skills, Exam Preparation and more.",
@@ -245,7 +245,7 @@ export const en = {
     },
     gallery: {
       metaTitle: "Gallery",
-      metaDescription: "Photos of learning, play and activities at Study Point kindergarten and classes in Point Pedro and Vathiry.",
+      metaDescription: "Photos of kindergarten, English classes, elocution and activities at Study Point in Point Pedro and Vathiry, Sri Lanka.",
       title: "Our Learning Moments",
       subtitle: "A look at everyday learning, play and fun at Study Point.",
       sample: "Placeholder photos — real photos coming soon",
@@ -263,7 +263,7 @@ export const en = {
     home: {
       metaTitle: "Study Point — Kindergarten & English Classes in Point Pedro and Vathiry",
       metaDescription:
-        "Study Point is a kindergarten (ages 3–5) and English tuition centre in Point Pedro and Vathiry, Sri Lanka. Phonics, spoken English, grammar, writing and exam preparation in small, caring groups.",
+        "Kindergarten (ages 3–5), English classes and Diploma in Elocution / English in Point Pedro and Vathiry, Sri Lanka. Small, caring groups.",
       ogTitle: "Study Point — Kindergarten & English Classes in Point Pedro and Vathiry",
       ogDescription: "Kindergarten for ages 3–5 and English classes in Point Pedro and Vathiry, Sri Lanka.",
     },
@@ -272,7 +272,7 @@ export const en = {
   apply: {
     metaTitle: "Apply — Admission Application",
     metaDescription:
-      "Apply online for a place at Study Point Kindergarten or Study Point Classes in Point Pedro and Vathiry. Fill in the application form and upload your child's photo and birth certificate.",
+      "Apply online for Study Point Kindergarten, Classes or a Diploma in Point Pedro and Vathiry. Upload your child's photo and birth certificate.",
     title: "Admission Application",
     subtitle: "Apply for a place for your child at Study Point. We will contact you after we receive the form.",
     formTitle: "Application form",
