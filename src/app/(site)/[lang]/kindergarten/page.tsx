@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { EnquireButton } from "@/components/EnquireButton";
 import { PageHero } from "@/components/PageHero";
@@ -27,6 +29,7 @@ export default async function NurseryPage({ params }: Props) {
   const pic = slotImage(images, "nursery");
   return (
     <>
+      <JsonLd data={breadcrumbSchema(lang, "/kindergarten")} />
       <PageHero tone="pink" title={p.title} subtitle={p.subtitle}>
         <EnquireButton />
       </PageHero>
