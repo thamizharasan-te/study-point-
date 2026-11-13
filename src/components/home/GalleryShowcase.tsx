@@ -32,8 +32,8 @@ export function GalleryShowcase({ pool }: { pool: Photo[] }) {
   return (
     <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
       {shown.map((g) => (
-        <li key={g.id}>
-          <SmartImage src={g.image_url} alt={g.alt} width={400} height={300} sizes="(min-width:1024px) 170px, (min-width:640px) 30vw, 46vw" className="aspect-[4/3] w-full rounded-2xl object-cover object-[50%_35%] shadow-md" />
+        <li key={g.id} className="group overflow-hidden rounded-2xl shadow-md">
+          <SmartImage src={g.image_url} alt={g.alt} width={400} height={300} sizes="(min-width:1024px) 170px, (min-width:640px) 30vw, 46vw" className="aspect-[4/3] w-full object-cover object-[50%_35%] transition-transform duration-500 group-hover:scale-105" />
         </li>
       ))}
     </ul>

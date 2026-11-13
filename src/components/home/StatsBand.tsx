@@ -11,7 +11,7 @@ export function StatsBand({ stats, lang }: { stats: SiteStat[]; lang: Lang }) {
   const t = getDict(lang);
   if (!stats.length) return null;
   return (
-    <section aria-label={t.stats.aria} className="container-page reveal py-8">
+    <section aria-label={t.stats.aria} className="container-page py-8 sm:py-10 lg:py-12">
       <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {stats.map((s, n) => {
           const Icon = ICONS[s.key] ?? Star;

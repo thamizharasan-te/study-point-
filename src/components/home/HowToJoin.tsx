@@ -15,10 +15,10 @@ const COLORS = [
 export function HowToJoin({ lang }: { lang: Lang }) {
   const t = getDict(lang);
   return (
-    <section className="container-page reveal py-8 sm:py-10" aria-labelledby="join-title">
-      <p className="text-center text-xs font-bold uppercase tracking-[0.25em] text-brand-navy">{t.join.kicker}</p>
-      <h2 id="join-title" className="mt-1 text-center text-3xl font-extrabold text-brand-navy sm:text-4xl">{t.join.title}</h2>
-      <span className="rainbow-bar mx-auto mt-2 block w-24" aria-hidden />
+    <section className="container-page section" aria-labelledby="join-title">
+      <p className="eyebrow text-center text-brand-navy">{t.join.kicker}</p>
+      <h2 id="join-title" className="section-title text-center">{t.join.title}</h2>
+      <span className="rainbow-bar mx-auto mt-3 block w-24" aria-hidden />
       <ol className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         {t.join.steps.map(({ title, text }, i) => {
           const Icon = ICONS[i];

@@ -15,6 +15,7 @@ import { getDict, isLang } from "@/lib/i18n";
 import { localize } from "@/lib/i18n/localize";
 import { pageMeta } from "@/lib/i18n/meta";
 import { internationalPhone, SITE_URL } from "@/lib/utils";
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
 import { courseSchemas } from "@/lib/seo";
 
@@ -93,6 +94,7 @@ export default async function HomePage({ params }: Props) {
       <StatsBand stats={site.stats} lang={lang} />
       <HowToJoin lang={lang} />
       <Faq items={site.faq} lang={lang} />
+      <CtaBand lang={lang} />
     </>
   );
 }
