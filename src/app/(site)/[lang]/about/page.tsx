@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo";
 import Link from "next/link";
@@ -76,6 +77,7 @@ export default async function AboutPage({ params }: Props) {
           <Link href={localePath(lang, "/contact")} className="btn-outline">{p.findBranches}</Link>
         </div>
       </section>
+      <CtaBand lang={lang} />
     </>
   );
 }

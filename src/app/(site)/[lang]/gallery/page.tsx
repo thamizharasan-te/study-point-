@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo";
 import { notFound } from "next/navigation";
@@ -35,6 +36,7 @@ export default async function GalleryPage({ params }: Props) {
         )}
         <GalleryGrid items={[...gallery].sort((a, b) => b.sort_order - a.sort_order)} />
       </section>
+      <CtaBand lang={lang} />
     </>
   );
 }

@@ -52,11 +52,11 @@ export function Header({ logo, color = "#ffffff" }: { logo?: { icon?: string; fu
   useEffect(() => setMenuOpen(false), [rawPath]);
 
   return (
-    <header className="sticky top-0 z-40 transform-gpu shadow-sm" style={{ backgroundColor: color }}>
+    <header className="sticky top-0 z-40 transform-gpu border-b border-black/5 shadow-[0_6px_20px_-14px_rgba(14,34,80,0.45)]" style={{ backgroundColor: color }}>
       <div className="mx-auto flex w-full max-w-[88rem] items-center justify-between gap-3 px-4 py-2.5 sm:px-6 lg:px-8">
         <Logo compact chip={dark} icon={logo?.icon} full={logo?.full} href={localePath(lang, "/")} tagline={t.brand.tagline} />
 
-        <nav aria-label={t.nav.main} className={clsx("hidden items-center", ta ? "gap-3 min-[1500px]:flex" : "gap-5 lg:flex xl:gap-6")}>
+        <nav aria-label={t.nav.main} className={clsx("hidden items-center", ta ? "gap-0.5 min-[1500px]:flex" : "gap-0.5 lg:flex xl:gap-1.5")}>
           {t.nav.items.map((n) => {
             const active = n.href === "/" ? pathname === "/" : pathname.startsWith(n.href);
             return (
@@ -65,8 +65,10 @@ export function Header({ logo, color = "#ffffff" }: { logo?: { icon?: string; fu
                 href={localePath(lang, n.href)}
                 aria-current={active ? "page" : undefined}
                 className={clsx(
-                  "whitespace-nowrap border-b-2 py-1 text-sm font-bold transition-colors",
-                  dark ? (active ? "border-white text-white" : "border-transparent text-white/85 hover:text-white") : (active ? "border-brand-green text-brand-green" : "border-transparent text-brand-navy hover:text-brand-green"),
+                  "whitespace-nowrap rounded-full px-3 py-2 text-sm font-bold transition-colors",
+                  dark
+                    ? (active ? "bg-white/20 text-white" : "text-white/85 hover:bg-white/10 hover:text-white")
+                    : (active ? "bg-brand-green-soft text-brand-green-dark" : "text-brand-navy hover:bg-brand-navy-soft"),
                 )}
               >
                 {n.label}

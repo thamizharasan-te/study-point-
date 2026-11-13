@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo";
 import { notFound } from "next/navigation";
@@ -50,6 +51,7 @@ export default async function NurseryPage({ params }: Props) {
           <SmartImage src={pic.src} alt={p.imageAlt} width={pic.width} height={pic.height} sizes="(min-width:1024px) 480px, 100vw" className="aspect-[8/7] w-full rounded-3xl object-cover object-[50%_35%] shadow-card" />
         </div>
       </section>
+      <CtaBand lang={lang} />
     </>
   );
 }

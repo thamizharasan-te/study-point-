@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CtaBand } from "@/components/CtaBand";
 import { JsonLd } from "@/components/JsonLd";
 import { breadcrumbSchema, courseSchemas } from "@/lib/seo";
 import { notFound } from "next/navigation";
@@ -53,6 +54,7 @@ export default async function ClassesPage({ params }: Props) {
           </div>
         </div>
       </section>
+      <CtaBand lang={lang} />
     </>
   );
 }

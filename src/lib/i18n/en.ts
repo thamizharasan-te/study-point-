@@ -117,6 +117,7 @@ export const en = {
   cta: {
     title: "Give Your Child the Best Start Today!",
     text: "Join the Study Point family and be part of a brighter future.",
+    crumbs: "You are here",
   },
 
   footer: {

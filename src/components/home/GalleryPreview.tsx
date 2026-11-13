@@ -15,11 +15,11 @@ export function GalleryPreview({ items, lang }: { items: GalleryItem[]; lang: La
   if (!items.length) return null;
   const pool = newestFirst(items).slice(0, POOL).map((g) => ({ id: g.id, image_url: g.image_url, alt: g.alt }));
   return (
-    <section className="container-page py-8" aria-labelledby="moments-title">
-      <div className="mb-5">
-        <p className="text-xs font-bold uppercase tracking-[0.15em] text-brand-green">{t.preview.eyebrow}</p>
-        <h2 id="moments-title" className="mt-1 text-2xl font-extrabold text-brand-navy-dark sm:text-3xl">{t.preview.title}</h2>
-        <span className="mt-2 block h-1 w-12 rounded-full bg-brand-green" aria-hidden />
+    <section className="container-page section" aria-labelledby="moments-title">
+      <div className="mb-6 text-center sm:mb-8">
+        <p className="eyebrow text-brand-green-dark">{t.preview.eyebrow}</p>
+        <h2 id="moments-title" className="section-title">{t.preview.title}</h2>
+        <span className="rainbow-bar mx-auto mt-3 block w-24" aria-hidden />
       </div>
       <GalleryShowcase pool={pool} />
       <div className="mt-6 text-center">

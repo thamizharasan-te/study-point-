@@ -24,6 +24,10 @@
   h1, h2, h3 { @apply font-display; font-family: var(--font-display), var(--font-tamil), Georgia, serif; }
   /* Clear, visible keyboard focus everywhere (accessibility). */
   :focus-visible { @apply outline-none ring-2 ring-brand-navy ring-offset-2; }
+  ::selection { background-color: rgb(var(--c-green) / 0.22); }
+  /* Headings break into even lines; paragraphs avoid a lone last word. */
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -41,6 +45,13 @@
   .btn-outline { @apply btn border-2 border-brand-green text-brand-green hover:bg-brand-green-soft; }
   .btn-white { @apply btn bg-white text-brand-green-dark hover:bg-brand-green-soft; }
 
+  /* One vertical rhythm for the sections of a page: compact on phones, roomier on large screens. */
+  .section { @apply py-8 sm:py-12 lg:py-16; }
+  /* Small label above a section title, the title itself, and the text under it. */
+  .eyebrow { @apply text-xs font-bold uppercase tracking-[0.2em]; }
+  .section-title { @apply mt-1.5 text-[1.7rem] font-extrabold leading-tight text-brand-navy-dark sm:text-4xl; }
+  .section-lead { @apply mx-auto mt-3 max-w-2xl text-base text-gray-700 sm:text-lg; }
+
   .input { @apply w-full rounded-xl border border-gray-300 bg-white px-4 py-2.5 text-base text-brand-ink placeholder:text-gray-400 focus:border-brand-navy; }
   .label { @apply mb-1 block text-sm font-semibold text-brand-navy; }
 }
@@ -50,6 +61,10 @@
 .kid h1, .kid h2, .kid h3 { font-weight: 800; }
 .kid .btn:not(.btn-outline) { border-bottom: 4px solid rgb(0 0 0 / 0.18); transition: transform 0.1s, background-color 0.2s; }
 .kid .btn:not(.btn-outline):active { transform: translateY(2px); border-bottom-width: 2px; }
+@media (hover: hover) {
+  .kid .btn:not(.btn-outline):hover { transform: translateY(-1px); box-shadow: 0 10px 22px -10px rgb(var(--c-navy-dark) / 0.45); }
+  .kid .btn:not(.btn-outline):active { transform: translateY(2px); }
+}
 .rainbow-bar { height: 6px; border-radius: 9999px; background: linear-gradient(90deg, #ff6f91, #ffc83d, #6fcf7a, #4fc3f7, #b07cf7); }
 /* Slow floating of the decorations (movement only, so it stays smooth; off for reduced-motion). */
 @keyframes bob { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-9px) rotate(var(--r, 0deg)); } }
